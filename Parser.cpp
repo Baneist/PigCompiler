@@ -5,16 +5,17 @@ using namespace std;
 
 //保留字字典
 const std::string reserve_word_list[] = {",", "!=", "==", "<",  "<=", "=",  ">", ">=", "=", 
-                          "*",  "+", "-", "/",  ";", "(",  ")", "{",  "}",
+                          "*",  "+", "-", "/",  ";", "(",  ")", "{",  "}", ".",
                           "else", "if", "int", "float", "return", "void", "while"};
 
 void Parser::throwError(int e_ptr, int err_code, string err_description){
     printf("#in Line %d-%d: %s", now_line, e_ptr, work_str.c_str());
-    printf("#Error %d: %s", 100+err_code, err_description.c_str());  
-    exit(0);
+    printf("#Error %d: %s\n", 100+err_code, err_description.c_str());
+    success = false;
+    //exit(0);
 }
 
-Parser::Parser(std::string str) : w_ptr(0), now_line(0) {
+Parser::Parser(std::string str) : w_ptr(0), now_line(0), success(true){
     input_str = str + "\r\n";
     preProcessComment();
     initReserveWord();
@@ -73,10 +74,19 @@ bool Parser::getWorkString(){ //从字符串中读取一整行的输入，并且
 */
 bool Parser::dealDigit(int e_ptr){
     int ptr = 1;
-    while(isdigit(work_str[e_ptr + ptr]))
+    while(isdigit(work_str[e_ptr + ptr]) || isalpha(work_str[e_ptr + ptr]) || work_str[e_ptr + ptr] == '.'
+        || (work_str[e_ptr + ptr - 1] == 'e' && (work_str[e_ptr + ptr] == '+' || work_str[e_ptr + ptr] == '-')))
         ptr++;
     word = work_str.substr(e_ptr, ptr);
-    word_type = TYPE_NUM_INT;
+    if(regex_match(word, regex("\\d+"))){   //整常数
+        word_type = TYPE_NUM_INT;
+    } else if(regex_match(word, regex("\\d+(\\.\\d+)?(e(\\+|-)?\\d+)?"))){   //实常数
+        word_type = TYPE_NUM_FLOAT;
+        //word = atof(word.c_str()); //转换成规范浮点数存储
+    } else {
+        throwError(e_ptr, ERROR_ILLEGAL_NUM, word + " is a illegal num.");
+        return false;
+    }
     return true;
 }
 
@@ -112,7 +122,7 @@ bool Parser::dealWorkString(){
             if(ptr == work_str.size() - 1)
                 return true;
             else
-                ptr++; 
+                ptr++;
         if(isdigit(work_str[ptr])) //当前词为常数
             dealDigit(ptr);
         else if(isalpha(work_str[ptr]) || work_str[ptr] == '_') //当前词为标识符或者保留字

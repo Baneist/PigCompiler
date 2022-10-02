@@ -1,9 +1,7 @@
-int fuck(int a,int b){
-    int abc = 14;
-    while(abc>1)
-        if((abc==12)>=(abc*2&3))
-            abc=abc+3-4*5/6;
-    return abc=0;
+void fuck(int a,int b){
+    float abc = 1+1e3+2.1e-2+4.0e+3+4.2; //cao
+    /* 这里不知道为啥return */
+    return;
 }
 
 int main(){

@@ -6,15 +6,21 @@
 
 class Parser {
 public:
-    enum {
-        ERROR_SYMBOL_NOT_REVERSE_WORD
+    enum { //Parser出错编号从101开始
+        ERROR_SYMBOL_NOT_REVERSE_WORD = 101,
+        ERROR_ILLEGAL_NUM
     };
-    static const int TYPE_NORMAL_WORD = 100, TYPE_NUM_INT = 101;
+    enum {
+        TYPE_NORMAL_WORD = 100,
+        TYPE_NUM_INT,
+        TYPE_NUM_FLOAT
+    };
 
 private:
     std::map<std::string, int> reserve_word_map;
     std::string work_str, input_str, word;
     int w_ptr, word_type, now_line;
+    bool success;
 
 private:
     void throwError(int e_ptr, int err_code, std::string err_description);
