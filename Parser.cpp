@@ -24,7 +24,6 @@ Parser::Parser(std::string str) : w_ptr(0), now_line(0) {
 }
 
 void Parser::initReserveWord(){
-    
     int begin_word_code = 60;
     for(auto str : reserve_word_list)
         reserve_word_map[str] = begin_word_code++;
@@ -42,7 +41,8 @@ int Parser::isReserveWord(const string &str){
     return iter->second;
 }
 
-std::string Parser::getReserveWord(int id){
+//通过ID反向查找保留字
+std::string Parser::getReserveWord(int id){ 
     if(id == TYPE_NORMAL_WORD)
         return "";
     return reserve_word_list[id];
@@ -50,7 +50,7 @@ std::string Parser::getReserveWord(int id){
 
 void Parser::preProcessComment(){
     input_str = regex_replace(input_str, regex("(//[^\n]*\n)"), "\n");
-    input_str = regex_replace(input_str, regex("(/\\*(.|\r|\n)*\\*/)"), " "); //匹配注释
+    input_str = regex_replace(input_str, regex("(/\\*(.|\r|\n)*\\*/)"), " "); //匹配注释并删除
 }
 
 bool Parser::getWorkString(){ //从字符串中读取一整行的输入，并且去掉前缀空格
