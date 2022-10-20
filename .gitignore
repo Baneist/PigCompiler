@@ -4,3 +4,4 @@ Makefile
 *.out
 *.bat
 .vscode
+__pycache__
