@@ -4,6 +4,8 @@ reserve_word = [
 "else", "if", "int", "float", "return", "void", "while"
 ]
 
+w_dict = []
+
 reserve_word_dict = dict()
 for i, word in enumerate(reserve_word):
     reserve_word_dict[word] = i

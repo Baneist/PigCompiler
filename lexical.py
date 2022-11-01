@@ -1,8 +1,7 @@
 import re
-from base import WordType, JudgeReverseWord, isSymbol
+from base import WordType, JudgeReverseWord, isSymbol, w_dict
 
 l_cnt, w_ptr, w_str, word, w_type = 0,0,'','',0
-w_dict = []
 
 def preProcessComment(str): #预处理注释
     str = re.sub('//[^\n]*\n', '\n', str) #处理单行注释
@@ -17,7 +16,7 @@ def getWorkString(str): #整行读取输入并返回分割后的字符串
     return False if w_ptr == len(str) else True
 
 def dealWorkString(): #词法分析
-    global l_cnt, w_ptr, w_str, word, w_type, w_dict
+    global l_cnt, w_ptr, w_str, word, w_type
     ptr = 0
     lw = len(w_str)
     while ptr < lw:
@@ -28,7 +27,7 @@ def dealWorkString(): #词法分析
             ret = re.search('\\d+(\\.\\d+)?(e(\\+|-)?\\d+)?', w_str[ptr:])
             word = ret.group()
             if w_str[ptr+ret.end()].isalpha() or w_str[ptr+ret.end()]=='_':#数字匹配失败 抛出异常
-                raise Exception('Error#101 in line {}, position {}: illegal num {}.'.format(l_cnt, ptr, word + w_str[ptr+ret.end()]))
+                raise Exception('[Error]#101 in line {}, position {}: illegal num {}.'.format(l_cnt, ptr, word + w_str[ptr+ret.end()]))
             if '.' not in word and 'e' not in word:
                 w_type = WordType.TYPE_INT
             else:
@@ -46,12 +45,12 @@ def dealWorkString(): #词法分析
                 eptr += 1
             word = w_str[ptr:eptr-1]
             if not has_re: #初始匹配失败 当前符号本身就不是关键字 抛出异常
-                raise Exception('Error#102 in line {}, position {}: illegal word {}.'.format(l_cnt, ptr, word))
+                raise Exception('[Error]#102 in line {}, position {}: illegal word {}.'.format(l_cnt, ptr, word))
             w_type = JudgeReverseWord(word)
         ptr += len(word)
         w_dict.append([w_type, word])
         
-def parser(i_str):
+def lexicalParser(i_str):
     i_str = preProcessComment(i_str + '\r\n')
     while getWorkString(i_str):
         try:
@@ -59,6 +58,5 @@ def parser(i_str):
         except Exception as err:
             print(str(err))
             return False
-    print("Parser Success!")
-    print(w_dict)
+    print("[Info]Parser Success!")
     return True
