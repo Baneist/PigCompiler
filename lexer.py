@@ -1,5 +1,5 @@
 import re
-from base import WordType, JudgeReverseWord, isSymbol, w_dict
+from base import JudgeReverseWord, isSymbol, w_dict
 
 l_cnt, w_ptr, w_str, word, w_type = 0,0,'','',0
 
@@ -29,13 +29,13 @@ def dealWorkString(): #词法分析
             if w_str[ptr+ret.end()].isalpha() or w_str[ptr+ret.end()]=='_':#数字匹配失败 抛出异常
                 raise Exception('[Error]#101 in line {}, position {}: illegal num {}.'.format(l_cnt, ptr, word + w_str[ptr+ret.end()]))
             if '.' not in word and 'e' not in word:
-                w_type = WordType.TYPE_INT
+                w_type = '$digit_int'
             else:
-                w_type = WordType.TYPE_FLOAT
+                w_type = '$digit_int'
         elif w_str[ptr].isalpha() or w_str[ptr] == '_': #处理单词
             ret = re.search('\\w*', w_str[ptr:])
             word = ret.group()
-            w_type = WordType.TYPE_WORD if JudgeReverseWord(word) == -1 else JudgeReverseWord(word)
+            w_type = '$identifier' if JudgeReverseWord(word) == -1 else JudgeReverseWord(word)
         else: #处理符号
             eptr = ptr + 1
             has_re = False 
@@ -50,11 +50,11 @@ def dealWorkString(): #词法分析
         ptr += len(word)
         w_dict.append([w_type, word])
         
-def lexicalParser(i_str):
+def Lexer(i_str): #词法分析器入口函数，输出结果会放到base的w_dict中
     i_str = preProcessComment(i_str + '\r\n')
-    while getWorkString(i_str):
+    while getWorkString(i_str): #不断获取工作串
         try:
-            dealWorkString()
+            dealWorkString() #进行分词解析
         except Exception as err:
             print(str(err))
             return False
