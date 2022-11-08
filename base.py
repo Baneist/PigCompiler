@@ -1,3 +1,4 @@
+from copy import deepcopy
 #词法分析BASE
 #保留字表
 reserve_word = [ 
@@ -5,11 +6,14 @@ reserve_word = [
     "*",  "+", "-", "/",  ";", "(",  ")", "{",  "}", ".", "&&",
     "else", "if", "int", "float", "return", "void", "while"
 ]
-#另外增加的 $identifier $digit_int
-w_dict = [] #
+#另外增加的词法分析关键词
+reserve_type = [
+    "identifier", "digit_int"
+]
+w_dict = []
+#词法分析辅助函数
 def JudgeReverseWord(w):
     return '$'+w if w in reserve_word else -1
-
 def isSymbol(c:str):
     if(c.isalpha() or c.isdigit() or c in [' ', '\n', '_']):
         return False
@@ -17,7 +21,7 @@ def isSymbol(c:str):
 
 #语法分析器BASE
 #产生式表
-production = [
+productions = [
     {'left': '<开始>', 'right': ['<程序>']},
     {'left': '<程序>', 'right': ['<类型>','$identifier','$(', '$)', '<语句块>']},
     {'left': '<类型>', 'right': ['$int']},
@@ -67,17 +71,49 @@ production = [
     {'left': '<追加实参列表>', 'right': []},
     {'left': '<追加实参列表>', 'right': ['$,','<表达式>', '<追加实参列表>']}
 ]
+project_set = []
+action_goto={}
+#goto={}
+
+symbol_list = {} #{符号:是否为终结符}
+for w in reserve_word:
+    symbol_list['$'+w] = 1
+for w in reserve_type:
+    symbol_list['$'+w] = 1
+for p in productions:
+    symbol_list[p['left']] = 0
+
 def isTerminalSymbol(word):
     if word[0] in ['$', '#']:
         return True
     return False
 
-project_set = []
-
-'''
-project = []
-for sent in production: #生成所有项目集
-    for i in range(len(sent['right'])+1):
-
-新项目 = []  # {'left': "S'", 'right': ['S'], 'point': 0, "origin": 0, "accept": "#"}
-'''   
+first = {'#':['#']} #所有非终结符的first集，空集用'@'表示
+def findSymbolFirst(sym):
+    global first
+    f=[]
+    if sym in first:
+        f=deepcopy(first[sym])
+        return f
+    if isTerminalSymbol(sym):
+        f.append(sym)
+    else:
+        for p in productions:
+            if p['left'] == sym:#遍历每条从sym开始的产生式
+                if len(p['right']) == 0:
+                    f.append('@')
+                elif isTerminalSymbol(p['right'][0]):
+                    f.append(p['right'][0])
+                else:
+                    for x in p['right']:
+                        nf = findSymbolFirst(x)
+                        if '@' in nf:#如果存在空集
+                            nf.remove('@')#那么删除空集
+                            f += nf
+                        else:
+                            f += nf
+                            break
+    first[sym] = f
+    return f
+for x in symbol_list:
+    findSymbolFirst(x)

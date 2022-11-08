@@ -1,4 +1,5 @@
 from lexer import Lexer
+from parser import Parser
 from base import w_dict
 
 if __name__ == '__main__':
@@ -6,4 +7,4 @@ if __name__ == '__main__':
     with open(src, encoding='utf-8') as f:
         str = f.read()
         Lexer(str)
-        print(w_dict)
+        Parser()

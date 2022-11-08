@@ -1,0 +1,2 @@
+[Info]Parser Success!
+[{'left': '<开始>', 'right': ['<程序>'], 'dot': 0, 'accept': '#'}, {'left': '<程序>', 'right': ['<类型>', '$identifier', '$(', '$)', '<语句块>'], 'dot': 0, 'accept': '#'}, {'left': '<类型>', 'right': ['$int'], 'dot': 0, 'accept': '$identifier'}, {'left': '<类型>', 'right': ['$void'], 'dot': 0, 'accept': '$identifier'}]get expected at least 1 argument, got 0
