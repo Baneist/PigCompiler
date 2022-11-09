@@ -1,3 +1,0 @@
-[Info]Parser Success!
-[Info] Garmmar analysis success!
-[Info]Compile success!

@@ -67,7 +67,7 @@ def initProjectSet():
                 action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
         top += 1   
 
-def Parser():
+def GParser():
     initProjectSet()
     input_st = ['#'] + w_dict[::-1]
     state_st, sym_st, id_st, son_st = [0], ['#'], [], []
@@ -83,7 +83,6 @@ def Parser():
                 id_st.append(addGrammarTreeNode(sym_st[-1], son_st))
                 son_st = []
             elif t[0] == 'r': #规约
-                #print("规约:", productions[t[1]])
                 for i in range(len(productions[t[1]]['right'])): #如果不是从空串规约而来，设置子节点
                     sym_st.pop()
                     state_st.pop()
