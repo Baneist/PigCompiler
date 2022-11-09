@@ -1,0 +1,320 @@
+// The Synatx Tree
+digraph {
+	node0 [label="$int" fontname="Microsoft YaHei"]
+	node1 [label=<类型> fontname="Microsoft YaHei"]
+	node1 -> node0
+	node2 [label="$identifier" fontname="Microsoft YaHei"]
+	node3 [label="$(" fontname="Microsoft YaHei"]
+	node4 [label="$)" fontname="Microsoft YaHei"]
+	node5 [label="${" fontname="Microsoft YaHei"]
+	node6 [label="$int" fontname="Microsoft YaHei"]
+	node7 [label="$identifier" fontname="Microsoft YaHei"]
+	node8 [label=<内部变量声明> fontname="Microsoft YaHei"]
+	node8 -> node7
+	node8 -> node6
+	node9 [label="$;" fontname="Microsoft YaHei"]
+	node10 [label="$int" fontname="Microsoft YaHei"]
+	node11 [label="$identifier" fontname="Microsoft YaHei"]
+	node12 [label=<内部变量声明> fontname="Microsoft YaHei"]
+	node12 -> node11
+	node12 -> node10
+	node13 [label="$;" fontname="Microsoft YaHei"]
+	node14 [label="$int" fontname="Microsoft YaHei"]
+	node15 [label="$identifier" fontname="Microsoft YaHei"]
+	node16 [label=<内部变量声明> fontname="Microsoft YaHei"]
+	node16 -> node15
+	node16 -> node14
+	node17 [label="$;" fontname="Microsoft YaHei"]
+	node18 [label="ε" fontname="Microsoft YaHei"]
+	node19 [label=<内部声明> fontname="Microsoft YaHei"]
+	node19 -> node18
+	node20 [label=<内部声明> fontname="Microsoft YaHei"]
+	node20 -> node19
+	node20 -> node17
+	node20 -> node16
+	node21 [label=<内部声明> fontname="Microsoft YaHei"]
+	node21 -> node20
+	node21 -> node13
+	node21 -> node12
+	node22 [label=<内部声明> fontname="Microsoft YaHei"]
+	node22 -> node21
+	node22 -> node9
+	node22 -> node8
+	node23 [label="$identifier" fontname="Microsoft YaHei"]
+	node24 [label="$=" fontname="Microsoft YaHei"]
+	node25 [label="$digit_int" fontname="Microsoft YaHei"]
+	node26 [label=<因子> fontname="Microsoft YaHei"]
+	node26 -> node25
+	node27 [label="ε" fontname="Microsoft YaHei"]
+	node28 [label=<项追加> fontname="Microsoft YaHei"]
+	node28 -> node27
+	node29 [label=<项> fontname="Microsoft YaHei"]
+	node29 -> node28
+	node29 -> node26
+	node30 [label="ε" fontname="Microsoft YaHei"]
+	node31 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node31 -> node30
+	node32 [label=<加法表达式> fontname="Microsoft YaHei"]
+	node32 -> node31
+	node32 -> node29
+	node33 [label="ε" fontname="Microsoft YaHei"]
+	node34 [label=<拓展表达式> fontname="Microsoft YaHei"]
+	node34 -> node33
+	node35 [label=<表达式> fontname="Microsoft YaHei"]
+	node35 -> node34
+	node35 -> node32
+	node36 [label="$;" fontname="Microsoft YaHei"]
+	node37 [label=<赋值语句> fontname="Microsoft YaHei"]
+	node37 -> node36
+	node37 -> node35
+	node37 -> node24
+	node37 -> node23
+	node38 [label=<语句> fontname="Microsoft YaHei"]
+	node38 -> node37
+	node39 [label="$if" fontname="Microsoft YaHei"]
+	node40 [label="$(" fontname="Microsoft YaHei"]
+	node41 [label="$(" fontname="Microsoft YaHei"]
+	node42 [label="$identifier" fontname="Microsoft YaHei"]
+	node43 [label="ε" fontname="Microsoft YaHei"]
+	node44 [label=<FTYPE> fontname="Microsoft YaHei"]
+	node44 -> node43
+	node45 [label=<因子> fontname="Microsoft YaHei"]
+	node45 -> node44
+	node45 -> node42
+	node46 [label="ε" fontname="Microsoft YaHei"]
+	node47 [label=<项追加> fontname="Microsoft YaHei"]
+	node47 -> node46
+	node48 [label=<项> fontname="Microsoft YaHei"]
+	node48 -> node47
+	node48 -> node45
+	node49 [label="$+" fontname="Microsoft YaHei"]
+	node50 [label="$digit_int" fontname="Microsoft YaHei"]
+	node51 [label=<因子> fontname="Microsoft YaHei"]
+	node51 -> node50
+	node52 [label="ε" fontname="Microsoft YaHei"]
+	node53 [label=<项追加> fontname="Microsoft YaHei"]
+	node53 -> node52
+	node54 [label=<项> fontname="Microsoft YaHei"]
+	node54 -> node53
+	node54 -> node51
+	node55 [label="$+" fontname="Microsoft YaHei"]
+	node56 [label="$digit_int" fontname="Microsoft YaHei"]
+	node57 [label=<因子> fontname="Microsoft YaHei"]
+	node57 -> node56
+	node58 [label="ε" fontname="Microsoft YaHei"]
+	node59 [label=<项追加> fontname="Microsoft YaHei"]
+	node59 -> node58
+	node60 [label=<项> fontname="Microsoft YaHei"]
+	node60 -> node59
+	node60 -> node57
+	node61 [label="ε" fontname="Microsoft YaHei"]
+	node62 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node62 -> node61
+	node63 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node63 -> node62
+	node63 -> node60
+	node63 -> node55
+	node64 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node64 -> node63
+	node64 -> node54
+	node64 -> node49
+	node65 [label=<加法表达式> fontname="Microsoft YaHei"]
+	node65 -> node64
+	node65 -> node48
+	node66 [label="ε" fontname="Microsoft YaHei"]
+	node67 [label=<拓展表达式> fontname="Microsoft YaHei"]
+	node67 -> node66
+	node68 [label=<表达式> fontname="Microsoft YaHei"]
+	node68 -> node67
+	node68 -> node65
+	node69 [label="$)" fontname="Microsoft YaHei"]
+	node70 [label=<因子> fontname="Microsoft YaHei"]
+	node70 -> node69
+	node70 -> node68
+	node70 -> node41
+	node71 [label="$*" fontname="Microsoft YaHei"]
+	node72 [label="$digit_int" fontname="Microsoft YaHei"]
+	node73 [label=<因子> fontname="Microsoft YaHei"]
+	node73 -> node72
+	node74 [label="ε" fontname="Microsoft YaHei"]
+	node75 [label=<项追加> fontname="Microsoft YaHei"]
+	node75 -> node74
+	node76 [label=<项追加> fontname="Microsoft YaHei"]
+	node76 -> node75
+	node76 -> node73
+	node76 -> node71
+	node77 [label=<项> fontname="Microsoft YaHei"]
+	node77 -> node76
+	node77 -> node70
+	node78 [label="$+" fontname="Microsoft YaHei"]
+	node79 [label="$digit_int" fontname="Microsoft YaHei"]
+	node80 [label=<因子> fontname="Microsoft YaHei"]
+	node80 -> node79
+	node81 [label="$*" fontname="Microsoft YaHei"]
+	node82 [label="$digit_int" fontname="Microsoft YaHei"]
+	node83 [label=<因子> fontname="Microsoft YaHei"]
+	node83 -> node82
+	node84 [label="ε" fontname="Microsoft YaHei"]
+	node85 [label=<项追加> fontname="Microsoft YaHei"]
+	node85 -> node84
+	node86 [label=<项追加> fontname="Microsoft YaHei"]
+	node86 -> node85
+	node86 -> node83
+	node86 -> node81
+	node87 [label=<项> fontname="Microsoft YaHei"]
+	node87 -> node86
+	node87 -> node80
+	node88 [label="ε" fontname="Microsoft YaHei"]
+	node89 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node89 -> node88
+	node90 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node90 -> node89
+	node90 -> node87
+	node90 -> node78
+	node91 [label=<加法表达式> fontname="Microsoft YaHei"]
+	node91 -> node90
+	node91 -> node77
+	node92 [label="$>=" fontname="Microsoft YaHei"]
+	node93 [label=<比较符号> fontname="Microsoft YaHei"]
+	node93 -> node92
+	node94 [label="$digit_int" fontname="Microsoft YaHei"]
+	node95 [label=<因子> fontname="Microsoft YaHei"]
+	node95 -> node94
+	node96 [label="ε" fontname="Microsoft YaHei"]
+	node97 [label=<项追加> fontname="Microsoft YaHei"]
+	node97 -> node96
+	node98 [label=<项> fontname="Microsoft YaHei"]
+	node98 -> node97
+	node98 -> node95
+	node99 [label="ε" fontname="Microsoft YaHei"]
+	node100 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node100 -> node99
+	node101 [label=<加法表达式> fontname="Microsoft YaHei"]
+	node101 -> node100
+	node101 -> node98
+	node102 [label="ε" fontname="Microsoft YaHei"]
+	node103 [label=<拓展表达式> fontname="Microsoft YaHei"]
+	node103 -> node102
+	node104 [label=<拓展表达式> fontname="Microsoft YaHei"]
+	node104 -> node103
+	node104 -> node101
+	node104 -> node93
+	node105 [label=<表达式> fontname="Microsoft YaHei"]
+	node105 -> node104
+	node105 -> node91
+	node106 [label="$)" fontname="Microsoft YaHei"]
+	node107 [label="${" fontname="Microsoft YaHei"]
+	node108 [label="ε" fontname="Microsoft YaHei"]
+	node109 [label=<内部声明> fontname="Microsoft YaHei"]
+	node109 -> node108
+	node110 [label="$return" fontname="Microsoft YaHei"]
+	node111 [label="$digit_int" fontname="Microsoft YaHei"]
+	node112 [label=<因子> fontname="Microsoft YaHei"]
+	node112 -> node111
+	node113 [label="ε" fontname="Microsoft YaHei"]
+	node114 [label=<项追加> fontname="Microsoft YaHei"]
+	node114 -> node113
+	node115 [label=<项> fontname="Microsoft YaHei"]
+	node115 -> node114
+	node115 -> node112
+	node116 [label="ε" fontname="Microsoft YaHei"]
+	node117 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node117 -> node116
+	node118 [label=<加法表达式> fontname="Microsoft YaHei"]
+	node118 -> node117
+	node118 -> node115
+	node119 [label="ε" fontname="Microsoft YaHei"]
+	node120 [label=<拓展表达式> fontname="Microsoft YaHei"]
+	node120 -> node119
+	node121 [label=<表达式> fontname="Microsoft YaHei"]
+	node121 -> node120
+	node121 -> node118
+	node122 [label=<return内容> fontname="Microsoft YaHei"]
+	node122 -> node121
+	node123 [label="$;" fontname="Microsoft YaHei"]
+	node124 [label=<return语句> fontname="Microsoft YaHei"]
+	node124 -> node123
+	node124 -> node122
+	node124 -> node110
+	node125 [label=<语句> fontname="Microsoft YaHei"]
+	node125 -> node124
+	node126 [label="ε" fontname="Microsoft YaHei"]
+	node127 [label=<语句串> fontname="Microsoft YaHei"]
+	node127 -> node126
+	node128 [label=<语句串> fontname="Microsoft YaHei"]
+	node128 -> node127
+	node128 -> node125
+	node129 [label="$}" fontname="Microsoft YaHei"]
+	node130 [label=<语句块> fontname="Microsoft YaHei"]
+	node130 -> node129
+	node130 -> node128
+	node130 -> node109
+	node130 -> node107
+	node131 [label="ε" fontname="Microsoft YaHei"]
+	node132 [label=<else内容> fontname="Microsoft YaHei"]
+	node132 -> node131
+	node133 [label=<if语句> fontname="Microsoft YaHei"]
+	node133 -> node132
+	node133 -> node130
+	node133 -> node106
+	node133 -> node105
+	node133 -> node40
+	node133 -> node39
+	node134 [label=<语句> fontname="Microsoft YaHei"]
+	node134 -> node133
+	node135 [label="$return" fontname="Microsoft YaHei"]
+	node136 [label="$digit_int" fontname="Microsoft YaHei"]
+	node137 [label=<因子> fontname="Microsoft YaHei"]
+	node137 -> node136
+	node138 [label="ε" fontname="Microsoft YaHei"]
+	node139 [label=<项追加> fontname="Microsoft YaHei"]
+	node139 -> node138
+	node140 [label=<项> fontname="Microsoft YaHei"]
+	node140 -> node139
+	node140 -> node137
+	node141 [label="ε" fontname="Microsoft YaHei"]
+	node142 [label=<加法表达式追加> fontname="Microsoft YaHei"]
+	node142 -> node141
+	node143 [label=<加法表达式> fontname="Microsoft YaHei"]
+	node143 -> node142
+	node143 -> node140
+	node144 [label="ε" fontname="Microsoft YaHei"]
+	node145 [label=<拓展表达式> fontname="Microsoft YaHei"]
+	node145 -> node144
+	node146 [label=<表达式> fontname="Microsoft YaHei"]
+	node146 -> node145
+	node146 -> node143
+	node147 [label=<return内容> fontname="Microsoft YaHei"]
+	node147 -> node146
+	node148 [label="$;" fontname="Microsoft YaHei"]
+	node149 [label=<return语句> fontname="Microsoft YaHei"]
+	node149 -> node148
+	node149 -> node147
+	node149 -> node135
+	node150 [label=<语句> fontname="Microsoft YaHei"]
+	node150 -> node149
+	node151 [label="ε" fontname="Microsoft YaHei"]
+	node152 [label=<语句串> fontname="Microsoft YaHei"]
+	node152 -> node151
+	node153 [label=<语句串> fontname="Microsoft YaHei"]
+	node153 -> node152
+	node153 -> node150
+	node154 [label=<语句串> fontname="Microsoft YaHei"]
+	node154 -> node153
+	node154 -> node134
+	node155 [label=<语句串> fontname="Microsoft YaHei"]
+	node155 -> node154
+	node155 -> node38
+	node156 [label="$}" fontname="Microsoft YaHei"]
+	node157 [label=<语句块> fontname="Microsoft YaHei"]
+	node157 -> node156
+	node157 -> node155
+	node157 -> node22
+	node157 -> node5
+	node158 [label=<程序> fontname="Microsoft YaHei"]
+	node158 -> node157
+	node158 -> node4
+	node158 -> node3
+	node158 -> node2
+	node158 -> node1
+}

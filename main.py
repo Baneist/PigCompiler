@@ -1,6 +1,7 @@
 from lexer import Lexer
 from gparser import GParser
 from base import grammar_tree
+from syntaxTree import drawSyntaxTree
 
 if __name__ == '__main__':
     src = 'input.c'
@@ -9,3 +10,4 @@ if __name__ == '__main__':
         if Lexer(str) and GParser():
             print(grammar_tree)
             print('[Info]Compile success!')
+            drawSyntaxTree()
