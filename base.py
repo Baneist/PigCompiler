@@ -37,7 +37,7 @@ productions = [
     {'left': '<语句>', 'right': ['<return语句>']},
     {'left': '<语句>', 'right': ['<赋值语句>']},
     {'left': '<赋值语句>', 'right': ['$identifier', '$=', '<表达式>', '$;']},
-    {'left': '<return语句>', 'right': ['return','<return内容>',';']},#这里略作修改
+    {'left': '<return语句>', 'right': ['$return','<return内容>','$;']},#这里略作修改
     {'left': '<return内容>', 'right': []},
     {'left': '<return内容>', 'right': ['<表达式>']},
     {'left': '<while语句>', 'right': ['$while', '$(', '<表达式>', '$)', '<语句块>']},
@@ -58,6 +58,7 @@ productions = [
     {'left': '<加法表达式追加>', 'right': ['$+' ,'<项>', '<加法表达式追加>']},
     {'left': '<加法表达式追加>', 'right': ['$-' ,'<项>', '<加法表达式追加>']},
     {'left': '<项>', 'right': ['<因子>', '<项追加>']},
+    {'left': '<项追加>', 'right': []},
     {'left': '<项追加>', 'right': ['$*' ,'<因子>', '<项追加>']},
     {'left': '<项追加>', 'right': ['$/' ,'<因子>', '<项追加>']},
     {'left': '<因子>', 'right': ['$digit_int']},
@@ -115,5 +116,5 @@ def findSymbolFirst(sym):
                             break
     first[sym] = f
     return f
-for x in symbol_list:
+for x in symbol_list: #求所有元素的first集
     findSymbolFirst(x)

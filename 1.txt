@@ -1,2 +1,60 @@
 [Info]Parser Success!
-[{'left': '<开始>', 'right': ['<程序>'], 'dot': 0, 'accept': '#'}, {'left': '<程序>', 'right': ['<类型>', '$identifier', '$(', '$)', '<语句块>'], 'dot': 0, 'accept': '#'}, {'left': '<类型>', 'right': ['$int'], 'dot': 0, 'accept': '$identifier'}, {'left': '<类型>', 'right': ['$void'], 'dot': 0, 'accept': '$identifier'}]get expected at least 1 argument, got 0
+[{'left': '<开始>', 'right': ['<程序>'], 'dot': 0, 'accept': '#'}, {'left': '<程序>', 'right': ['<类型>', '$identifier', '$(', '$)', '<语句块>'], 'dot': 0, 'accept': '#'}, {'left': '<类型>', 'right': ['$int'], 'dot': 0, 'accept': '$identifier'}, {'left': '<类型>', 'right': ['$void'], 'dot': 0, 'accept': '$identifier'}]
+['s', 1] ns= (0, '$int')
+state_st= [0]
+sym_st= ['#']
+['r', 2] ns= (1, '$identifier')
+state_st= [0, 1]
+sym_st= ['#', '$int']
+规约: {'left': '<类型>', 'right': ['$int']}
+['g', 4] ns= (0, '<类型>')
+state_st= [0]
+sym_st= ['#']
+['s', 5] ns= (4, '$identifier')
+state_st= [0, 4]
+sym_st= ['#', '<类型>']
+['s', 6] ns= (5, '$(')
+state_st= [0, 4, 5]
+sym_st= ['#', '<类型>', '$identifier']
+['s', 7] ns= (6, '$)')
+state_st= [0, 4, 5, 6]
+sym_st= ['#', '<类型>', '$identifier', '$(']
+['s', 8] ns= (7, '${')
+state_st= [0, 4, 5, 6, 7]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)']
+['s', 10] ns= (8, '$int')
+state_st= [0, 4, 5, 6, 7, 8]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${']
+['s', 13] ns= (10, '$identifier')
+state_st= [0, 4, 5, 6, 7, 8, 10]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '$int']
+['r', 7] ns= (13, '$;')
+state_st= [0, 4, 5, 6, 7, 8, 10, 13]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '$int', '$identifier']
+规约: {'left': '<内部变量声明>', 'right': ['$int', '$identifier']}
+['g', 12] ns= (8, '<内部变量声明>')
+state_st= [0, 4, 5, 6, 7, 8]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${']
+['s', 23] ns= (12, '$;')
+state_st= [0, 4, 5, 6, 7, 8, 12]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>']
+['s', 10] ns= (23, '$int')
+state_st= [0, 4, 5, 6, 7, 8, 12, 23]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>', '$;']
+['s', 13] ns= (10, '$identifier')
+state_st= [0, 4, 5, 6, 7, 8, 12, 23, 10]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>', '$;', '$int']
+['r', 7] ns= (13, '$;')
+state_st= [0, 4, 5, 6, 7, 8, 12, 23, 10, 13]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>', '$;', '$int', '$identifier']
+规约: {'left': '<内部变量声明>', 'right': ['$int', '$identifier']}
+['g', 12] ns= (23, '<内部变量声明>')
+state_st= [0, 4, 5, 6, 7, 8, 12, 23]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>', '$;']
+['s', 23] ns= (12, '$;')
+state_st= [0, 4, 5, 6, 7, 8, 12, 23, 12]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>', '$;', '<内部变量声明>']
+None ns= (23, '$identifier')
+state_st= [0, 4, 5, 6, 7, 8, 12, 23, 12, 23]
+sym_st= ['#', '<类型>', '$identifier', '$(', '$)', '${', '<内部变量声明>', '$;', '<内部变量声明>', '$;']
+[Error]#201
