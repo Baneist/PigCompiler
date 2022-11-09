@@ -1,6 +1,7 @@
 int main(){
     int abc;
     int xr;
+    int c;
     abc = 2;
     if((abc+2e5+3)*5+3*4 >= 1){
         return 1;

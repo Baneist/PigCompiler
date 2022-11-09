@@ -48,7 +48,7 @@ def dealWorkString(): #词法分析
                 raise Exception('[Error]#102 in line {}, position {}: illegal word {}.'.format(l_cnt, ptr, word))
             w_type = JudgeReverseWord(word)
         ptr += len(word)
-        w_dict.append([w_type, word])
+        w_dict.append([w_type, word, (l_cnt, ptr)])
         
 def Lexer(i_str): #词法分析器入口函数，输出结果会放到base的w_dict中
     i_str = preProcessComment(i_str + '\r\n')
