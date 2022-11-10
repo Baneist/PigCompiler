@@ -8,7 +8,7 @@ reserve_word = [
 ]
 #另外增加的词法分析关键词
 reserve_type = [
-    "identifier", "digit_int"
+    "identifier", "digit_int", "digit_float"
 ]
 w_dict = []
 #词法分析辅助函数
