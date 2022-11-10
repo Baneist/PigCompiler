@@ -89,7 +89,7 @@ def GParser():
                     state_st.pop()
                     son_st.append(id_st.pop())
                 if len(productions[t[1]]['right']) == 0: #如果是空串,额外添加ε
-                    son_st.append(addGrammarTreeNode('ε', [], 'ε'))
+                    son_st.append(addGrammarTreeNode('@', [], 'ε'))
                 input_st.append([productions[t[1]]['left'], ''])
             else:#规约成功 acc
                 print("[Info]Garmmar analysis success!")
