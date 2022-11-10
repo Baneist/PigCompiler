@@ -119,7 +119,7 @@ def findSymbolFirst(sym):
 for x in symbol_list: #求所有元素的first集
     findSymbolFirst(x)
 
-grammar_tree=[] #[{'sym': 'S', 'son':[] }]
-def addGrammarTreeNode(sym, son_st):
-    grammar_tree.append({'sym':sym, 'son':son_st})
+grammar_tree=[] #[{'sym': 'S', 'son':[] , 'cont':}]
+def addGrammarTreeNode(sym, son_st, cont=''):
+    grammar_tree.append({'sym':sym, 'son':son_st, 'cont':cont})
     return len(grammar_tree) - 1

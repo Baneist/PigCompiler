@@ -8,6 +8,5 @@ if __name__ == '__main__':
     with open(src, encoding='utf-8') as f:
         str = f.read()
         if Lexer(str) and GParser():
-            print(grammar_tree)
             print('[Info]Compile success!')
             drawSyntaxTree()

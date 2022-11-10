@@ -76,11 +76,12 @@ def GParser():
             ns = (state_st[len(state_st)-1], input_st[len(input_st)-1][0])#当前状态的元组
             t = action_goto.get(ns)
             if not t:
-                raise Exception('[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.'.format(*input_st[len(input_st)-1][2], input_st[len(input_st)-1][1], sym_st.pop()))
+                raise Exception('[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop()))
             if t[0] == 's' or t[0] == 'g': #移进或者goto,两者代码相同
-                sym_st.append(input_st.pop()[0])
+                it = input_st.pop()
+                sym_st.append(it[0])
                 state_st.append(t[1])
-                id_st.append(addGrammarTreeNode(sym_st[-1], son_st))
+                id_st.append(addGrammarTreeNode(sym_st[-1], son_st, it[1]))
                 son_st = []
             elif t[0] == 'r': #规约
                 for i in range(len(productions[t[1]]['right'])): #如果不是从空串规约而来，设置子节点
@@ -88,10 +89,10 @@ def GParser():
                     state_st.pop()
                     son_st.append(id_st.pop())
                 if len(productions[t[1]]['right']) == 0: #如果是空串,额外添加ε
-                    son_st.append(addGrammarTreeNode('ε', []))
-                input_st.append([productions[t[1]]['left']])
+                    son_st.append(addGrammarTreeNode('ε', [], 'ε'))
+                input_st.append([productions[t[1]]['left'], ''])
             else:#规约成功 acc
-                print("[Info] Garmmar analysis success!")
+                print("[Info]Garmmar analysis success!")
                 break
     except Exception as err:
         print(str(err))

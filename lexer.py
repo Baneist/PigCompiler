@@ -58,5 +58,5 @@ def Lexer(i_str): #词法分析器入口函数，输出结果会放到base的w_d
         except Exception as err:
             print(str(err))
             return False
-    print("[Info]Parser Success!")
+    print("[Info]Lexical analysis success!")
     return True

@@ -3,7 +3,7 @@ int main(){
     int xr;
     int c;
     abc = 2;
-    if((abc+2e5+3)*5+3*4 >= 1){
+    if((abc+2e5+3)*5+3*4 >= (c+2)*6){
         return 1;
     } //judge if > 1
     /*
