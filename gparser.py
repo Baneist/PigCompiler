@@ -73,7 +73,7 @@ def GParser():
     state_st, sym_st, id_st, son_st = [0], ['#'], [], []
     try:
         while len(input_st) > 0:
-            ns = (state_st[len(state_st)-1], input_st[len(input_st)-1][0])#当前状态的元组
+            ns = (state_st[-1], input_st[-1][0])#当前状态的元组
             t = action_goto.get(ns)
             if not t:
                 raise Exception('[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop()))
