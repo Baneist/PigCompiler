@@ -69,13 +69,13 @@ def initProjectSet():
 
 def GParser():
     initProjectSet()
-    input_st = ['#'] + w_dict[::-1]
+    input_st = [['#', 'INPUT_END', w_dict[-1][2]]] + w_dict[::-1]
     state_st, sym_st, id_st, son_st = [0], ['#'], [], []
     try:
         while len(input_st) > 0:
             ns = (state_st[-1], input_st[-1][0])#当前状态的元组
             t = action_goto.get(ns)
-            if not t:
+            if t is None:
                 raise Exception('[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop()))
             if t[0] == 's' or t[0] == 'g': #移进或者goto,两者代码相同
                 it = input_st.pop()

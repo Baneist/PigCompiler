@@ -10,10 +10,12 @@ def preProcessComment(str): #预处理注释
 
 def getWorkString(str): #整行读取输入并返回分割后的字符串
     global w_ptr, l_cnt, w_str
+    if w_ptr == len(str):
+        return False
     l_cnt += 1
     ret = re.search('.*\n', str[w_ptr:])
     w_ptr, w_str = ret.end() + w_ptr, ret.group()
-    return False if w_ptr == len(str) else True
+    return True
 
 def dealWorkString(): #词法分析
     global l_cnt, w_ptr, w_str, word, w_type

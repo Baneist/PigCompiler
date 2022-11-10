@@ -1,15 +1,14 @@
-int main(){
-    int abc;
-    int xr;
-    int c;
-    abc = 2;
-    if((abc+2e5+3)*5+3*4 >= (c+2)*6){
-        return 1;
-    } //judge if > 1
-    /*
-        if > 1 return 1
-        else return 0
-    */
-    return 0;
+int binary_search(){
+    int cnt;
+    int ans;
+    int l;
+    int r;
+    cnt = 0;
+    ans = 1;
+    while(l<r){
+        l=l+1;
+        cnt=cnt+1;
+        ans=ans*cnt;
+    }
+    return ans;
 }
-//fuck
