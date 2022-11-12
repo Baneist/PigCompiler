@@ -1,7 +1,7 @@
 from base import productions, project_set, symbol_list, isTerminalSymbol, action_goto, findSymbolFirst, w_dict, grammar_tree, addGrammarTreeNode
 from copy import deepcopy
 
-def findFirst(sym_list):
+def findFirst(sym_list): #找到一个符号串的first集
     f=[]
     for x in sym_list:
         nf = findSymbolFirst(x)
@@ -13,7 +13,7 @@ def findFirst(sym_list):
             break
     return f
 
-def findClosure(parent:list)->list:
+def findClosure(parent:list)->list: #输入一个项目集,将其扩充成其closure闭包
     top = 0
     closure_set=deepcopy(parent)
     while top < len(closure_set):
@@ -34,7 +34,7 @@ def findClosure(parent:list)->list:
         top += 1
     return closure_set
 
-def findGoto(proj, sym)->list:
+def findGoto(proj, sym)->list: #通过输入的项目集和sym找其goto后的closure集
     c = []
     for p in proj:
         if p['dot'] != len(p['right']) and p['right'][p['dot']] == sym:
@@ -54,7 +54,7 @@ def initProjectSet():
             next_set = findGoto(project_set[top], x)
             if len(next_set) > 0 and not next_set in project_set:#将新构造的集合放入项目簇中
                 project_set.append(next_set)
-            #if len(next_set) > 0: 调试语句
+            #if len(next_set) > 0: #调试语句
             #    print("#{}=<{},{}>:".format(project_set.index(next_set), top, x), next_set)
             if len(next_set) > 0:
                 if not isTerminalSymbol(x):
@@ -65,17 +65,20 @@ def initProjectSet():
             if wt['dot'] == len(wt['right']):#处理规约项目
                 ns = {'left':wt['left'], 'right':wt['right']}
                 action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
-        top += 1   
+        top += 1
 
 def GParser():
     initProjectSet()
     input_st = [['#', 'INPUT_END', w_dict[-1][2]]] + w_dict[::-1]
     state_st, sym_st, id_st, son_st = [0], ['#'], [], []
+    t_cnt=1
     try:
         while len(input_st) > 0:
             ns = (state_st[-1], input_st[-1][0])#当前状态的元组
             t = action_goto.get(ns)
-            if t is None:
+            print('#######\n当前轮次:{}\n当前符号栈:{},当前状态栈:{}\n当前读入字符:{},转移方程为:{}'.format(t_cnt,sym_st,state_st,input_st[-1][0], ns))
+            if t is None: #如果未找到，说明该串有问题
+                print(ns)
                 raise Exception('[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop()))
             if t[0] == 's' or t[0] == 'g': #移进或者goto,两者代码相同
                 it = input_st.pop()
@@ -94,6 +97,7 @@ def GParser():
             else:#规约成功 acc
                 print("[Info]Garmmar analysis success!")
                 break
+            t_cnt += 1
     except Exception as err:
         print(str(err))
         return False
