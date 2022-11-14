@@ -54,11 +54,13 @@ def dealWorkString(): #词法分析
         
 def Lexer(i_str): #词法分析器入口函数，输出结果会放到base的w_dict中
     i_str = preProcessComment(i_str + '\r\n')
+    print('去除注解的源程序列表:', i_str)
     while getWorkString(i_str): #不断获取工作串
         try:
             dealWorkString() #进行分词解析
         except Exception as err:
             print(str(err))
             return False
+    print('单词机内表示序列:', w_dict)
     print("[Info]Lexical analysis success!")
     return True

@@ -1,6 +1,5 @@
 from lexer import Lexer
 from gparser import GParser
-from base import grammar_tree
 from syntaxTree import drawSyntaxTree
 
 if __name__ == '__main__':
