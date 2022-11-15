@@ -9,11 +9,11 @@ int binary_search(){
         int c;
         int t;
         if(c>12){
-            l=print(r);
+            l=print(r)
         }
-        =l+1;
+        l=l+1;
         cnt=cnt+1;
         ans=ans*cnt;
     }
-    return ans;
+    return;
 }

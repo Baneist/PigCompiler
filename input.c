@@ -15,5 +15,5 @@ int binary_search(){
         cnt=cnt+1;
         ans=ans*cnt;
     }
-    return ans;
+    return;
 }
