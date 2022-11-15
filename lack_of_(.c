@@ -9,7 +9,7 @@ int binary_search(){
         int c;
         int t;
         if(c>12){
-            l=print(r);
+            l=print r);
         }
         l=l+1;
         cnt=cnt+1;

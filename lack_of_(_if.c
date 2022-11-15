@@ -8,7 +8,7 @@ int binary_search(){
     while(l<r) {
         int c;
         int t;
-        if(c>12){
+        if c>12){
             l=print(r);
         }
         l=l+1;

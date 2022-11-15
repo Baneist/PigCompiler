@@ -5,7 +5,7 @@ int binary_search(){
     int r;
     cnt = 0;
     ans = 1;
-    while(l<r) {
+    while(l<r {
         int c;
         int t;
         if(c>12){

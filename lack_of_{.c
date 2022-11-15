@@ -1,4 +1,4 @@
-int binary_search(){
+int binary_search()
     int cnt;
     int ans;
     int l;

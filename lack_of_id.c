@@ -1,13 +1,13 @@
 int binary_search(){
-    int cnt;
+    it cnt;
     int ans;
     int l;
-    int r;
+    nt r;
     cnt = 0;
     ans = 1;
     while(l<r) {
         int c;
-        int t;
+        in t;
         if(c>12){
             l=print(r);
         }

@@ -11,8 +11,8 @@ int binary_search(){
         if(c>12){
             l=print(r);
         }
-        l=l+1;
-        cnt=cnt+1;
+        l=;
+        cnt=;
         ans=ans*cnt;
     }
     return ans;

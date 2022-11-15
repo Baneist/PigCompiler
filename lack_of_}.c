@@ -14,6 +14,4 @@ int binary_search(){
         l=l+1;
         cnt=cnt+1;
         ans=ans*cnt;
-    }
     return ans;
-}

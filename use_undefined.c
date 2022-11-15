@@ -1,8 +1,4 @@
-int binary_search(){
-    int cnt;
-    int ans;
-    int l;
-    int r;
+int binary_search() {
     cnt = 0;
     ans = 1;
     while(l<r) {
