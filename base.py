@@ -8,7 +8,7 @@ reserve_word = [
 ]
 #另外增加的词法分析关键词
 reserve_type = [
-    "identifier", "digit_int"
+    "identifier", "digit_int", "digit_float"
 ]
 w_dict = []
 #词法分析辅助函数
@@ -74,7 +74,6 @@ productions = [
 ]
 project_set = []
 action_goto={}
-#goto={}
 
 symbol_list = {} #{符号:是否为终结符}
 for w in reserve_word:
@@ -119,7 +118,7 @@ def findSymbolFirst(sym):
 for x in symbol_list: #求所有元素的first集
     findSymbolFirst(x)
 
-grammar_tree=[] #[{'sym': 'S', 'son':[] , 'cont':}]
-def addGrammarTreeNode(sym, son_st, cont=''):
+grammar_tree=[] #[{'sym': 'S', 'son':[] , 'cont':''}]
+def addGrammarTreeNode(sym, son_st, cont=''): #添加树节点函数
     grammar_tree.append({'sym':sym, 'son':son_st, 'cont':cont})
     return len(grammar_tree) - 1
