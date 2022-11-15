@@ -44,7 +44,7 @@ def dealWorkString(): #词法分析
             while (not has_re and isSymbol(w_str[eptr - 1])) or JudgeReverseWord(w_str[ptr:eptr]) != -1: #匹配最长的是保留字的词
                 if JudgeReverseWord(w_str[ptr:eptr]) != -1:
                     has_re = True
-                eptr += 1
+                eptr += 1 
             word = w_str[ptr:eptr-1]
             if not has_re: #初始匹配失败 当前符号本身就不是关键字 抛出异常
                 raise Exception('[Error]#102 in line {}, position {}: illegal word {}.'.format(l_cnt, ptr, word))

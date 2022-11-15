@@ -91,29 +91,31 @@ def isTerminalSymbol(word):
 first = {'#':['#']} #所有非终结符的first集，空集用'@'表示
 def findSymbolFirst(sym):
     global first
-    f=[]
-    if sym in first:
+    f=[] #初始化first集为空
+    if sym in first: #如果它已经计算完毕，则直接返回
         f=deepcopy(first[sym])
         return f
-    if isTerminalSymbol(sym):
+    if isTerminalSymbol(sym): #如果他是终结符，直接返回它自己
         f.append(sym)
     else:
         for p in productions:
             if p['left'] == sym:#遍历每条从sym开始的产生式
-                if len(p['right']) == 0:
-                    f.append('@')
-                elif isTerminalSymbol(p['right'][0]):
-                    f.append(p['right'][0])
+                if len(p['right']) == 0: #如果它能推出空
+                    f.append('@') #将空集加入
+                elif isTerminalSymbol(p['right'][0]): #或者他是终结符
+                    f.append(p['right'][0]) #将该终结符加入
                 else:
                     for x in p['right']:
-                        nf = findSymbolFirst(x)
+                        nf = findSymbolFirst(x) #递归求解其元素
                         if '@' in nf:#如果存在空集
                             nf.remove('@')#那么删除空集
                             f += nf
                         else:
                             f += nf
                             break
-    first[sym] = f
+                    else:
+                        f.append('@') #全部都含有空，将空集加入
+    first[sym] = f #保存该元素值
     return f
 for x in symbol_list: #求所有元素的first集
     findSymbolFirst(x)
