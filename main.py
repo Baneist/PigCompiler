@@ -3,7 +3,7 @@ from gparser import GParser
 from syntaxTree import drawSyntaxTree
 
 if __name__ == '__main__':
-    src = 'use_undefined.c'
+    src = 'lack_of_leftnum.c'
     with open(src, encoding='utf-8') as f:
         str = f.read()
         if Lexer(str) and GParser():
