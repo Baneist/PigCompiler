@@ -1,4 +1,5 @@
 from base import args, productions, project_set, symbol_list, isTerminalSymbol, action_goto, findSymbolFirst, w_dict, grammar_tree, addGrammarTreeNode, getErrorCodeLine
+from analyser import analysis
 from copy import deepcopy
 
 def findFirst(sym_list): #找到一个符号串的first集
@@ -70,7 +71,8 @@ def GParser():
     initProjectSet() #初始化项目集，构建action和goto表
     input_st = [['#', 'INPUT_END', w_dict[-1][2]]] + w_dict[::-1] #设置输入机内序列
     state_st, sym_st, id_st, son_st = [0], ['#'], [], [] #设置工作栈
-    t_cnt=1 #轮次记录变量
+    last_oper = -1
+    t_cnt = 1 #轮次记录变量
     try:
         while len(input_st) > 0:
             ns = (state_st[-1], input_st[-1][0]) #记录当前状态的元组
@@ -84,11 +86,16 @@ def GParser():
                 state_st.append(t[1]) #将当前的状态提取出放入状态栈
                 id_st.append(addGrammarTreeNode(sym_st[-1], son_st, it[1])) #存放语法树节点
                 son_st = []
+                if last_oper != -1:#如果该节点是规约而来
+                    analysis(id_st[-1], last_oper)
+                    last_oper = -1
             elif t[0] == 'r': #规约
+                last_oper = t[1]
                 for i in range(len(productions[t[1]]['right'])): #如果不是从空串规约而来，设置子节点
                     sym_st.pop() #将被规约的子节点弹出
                     state_st.pop()
                     son_st.append(id_st.pop()) #并将其放入孩子栈中
+                son_st.reverse()
                 if len(productions[t[1]]['right']) == 0: #如果是空串,额外添加ε
                     son_st.append(addGrammarTreeNode('@', [], 'ε'))
                 input_st.append([productions[t[1]]['left'], '']) #将规约完的节点添加到input串中
