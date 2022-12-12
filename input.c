@@ -1,7 +1,7 @@
 int binary_search(){
     int cnt;
     int ans;
-    int l;
+    int 4anr;
     int r;
     cnt = 0;
     ans = 1;

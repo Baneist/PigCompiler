@@ -1,6 +1,18 @@
 from copy import deepcopy
+import argparse
+#参数添加
+parser = argparse.ArgumentParser(description='\033[1;34;34mPig Compiler for MIPSx54\033[0m')
+parser.add_argument('src', type=str, nargs='?', default='input.c', help='Input File.')
+parser.add_argument('-debug', type=int, default=0, help='Activate debug output.')
+parser.add_argument('-output', type=str, default='a.s', help='Output File.')
+args = parser.parse_args()
+
 #词法分析BASE
 #保留字表
+s_code=['']
+def getErrorCodeLine(l, p, str):
+    return '\033[1;31;36m{}:{}\033[1;33;33m{}\033[1;31;36m{}\033[0m'.format(l,s_code[l][:p], str, s_code[l][p+len(str):])
+
 reserve_word = [ 
     ",", "!=", "==", "<",  "<=", "=",  ">", ">=", "=", 
     "*",  "+", "-", "/",  ";", "(",  ")", "{",  "}", ".", "&&",

@@ -1,4 +1,4 @@
-from base import productions, project_set, symbol_list, isTerminalSymbol, action_goto, findSymbolFirst, w_dict, grammar_tree, addGrammarTreeNode
+from base import args, productions, project_set, symbol_list, isTerminalSymbol, action_goto, findSymbolFirst, w_dict, grammar_tree, addGrammarTreeNode, getErrorCodeLine
 from copy import deepcopy
 
 def findFirst(sym_list): #找到一个符号串的first集
@@ -75,10 +75,9 @@ def GParser():
         while len(input_st) > 0:
             ns = (state_st[-1], input_st[-1][0]) #记录当前状态的元组
             t = action_goto.get(ns) #从action和goto表中查找该元组
-            print('#######\n当前轮次:{}\n当前符号栈:{},当前状态栈:{}\n当前读入字符:{},转移方程为:{}'.format(t_cnt,sym_st,state_st,input_st[-1][0], ns))
+            if args.debug: print('#######\n当前轮次:{}\n当前符号栈:{},当前状态栈:{}\n当前读入字符:{},转移方程为:{}'.format(t_cnt,sym_st,state_st,input_st[-1][0], ns))
             if t is None: #如果未找到，说明该串存在语法错误
-                print(ns)
-                raise Exception('[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop()))
+                raise Exception('\033[1;31;31m[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.\n{}'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop(), getErrorCodeLine(input_st[-1][2][0], input_st[-1][2][1]-1,input_st[-1][1])))
             if t[0] == 's' or t[0] == 'g': #移进或者goto,两者代码相同
                 it = input_st.pop()
                 sym_st.append(it[0]) #将符号提取出符号栈中
@@ -94,7 +93,7 @@ def GParser():
                     son_st.append(addGrammarTreeNode('@', [], 'ε'))
                 input_st.append([productions[t[1]]['left'], '']) #将规约完的节点添加到input串中
             else:#规约成功 acc
-                print("[Info]Garmmar analysis success!")
+                print("\033[1;32;32m[Info]Garmmar analysis success!\033[0m")
                 break
             t_cnt += 1
     except Exception as err:#异常处理
