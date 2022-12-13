@@ -23,6 +23,8 @@ def checkVarNotDefined(name, node):
 
 #工作函数
 def emit(expr, t1, t2, s1):
+    global nextquad
+    nextquad += 1
     mid_code.append((expr,t1,t2,s1))
 
 #回填函数

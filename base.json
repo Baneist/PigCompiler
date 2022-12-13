@@ -199,6 +199,13 @@
         ]
     },
     {
+        "production":{"left": "<加法表达式>", "right": ["$-" ,"<项>"]},
+        "action": [
+            "@l.val=newVar()",
+            "emit('-', 0, @r1.val, @l.val)"
+        ]
+    },
+    {
         "production":{"left": "<加法表达式>", "right": ["<项>", "$+" ,"<加法表达式>"]},
         "action": [
             "@l.val=newVar()",

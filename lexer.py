@@ -31,9 +31,11 @@ def dealWorkString(): #词法分析
             if w_str[ptr+ret.end()].isalpha() or w_str[ptr+ret.end()]=='_':#数字匹配失败 抛出异常
                 raise Exception('\033[1;31;31m[Error]#101 in line {}, position {}: illegal num {}.\n{}'.format(l_cnt, ptr, word + w_str[ptr+ret.end()], getErrorCodeLine(l_cnt,ptr,word + w_str[ptr+ret.end()])))
             if '.' not in word and 'e' not in word: #根据其值区分整形数和浮点数
-                w_type = '$digit_int' 
+                w_type = '$digit_int'
+                word = int(word)
             else:
                 w_type = '$digit_int'#由于还没有实现浮点数，先当作整形数
+                word = int(word)
         elif w_str[ptr].isalpha() or w_str[ptr] == '_': #处理单词
             ret = re.search('\\w*', w_str[ptr:])
             word = ret.group()
@@ -49,7 +51,7 @@ def dealWorkString(): #词法分析
             if not has_re: #初始匹配失败 当前符号本身就不是关键字 抛出异常
                 raise Exception('\033[1;31;31m[Error]#102 in line {}, position {}: illegal word {}.\n,{}'.format(l_cnt, ptr, word, getErrorCodeLine(l_cnt,ptr,word)))
             w_type = JudgeReverseWord(word)
-        ptr += len(word)
+        ptr += len(str(word))
         w_dict.append([w_type, word, (l_cnt, ptr)]) #将完成分割的词语放入输出序列中
         
 def Lexer(i_str): #词法分析器入口函数，输出结果会放到base的w_dict中

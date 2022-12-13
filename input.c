@@ -5,7 +5,7 @@ int main(){
     int c;
     int d;
     a=1;
-    b=2;
-    cnt=d+5*(a>=1+b*c);
+    b=-2;
+    cnt=d+5*(a>=(-1)+b*c);
     
 }
