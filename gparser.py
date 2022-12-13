@@ -84,10 +84,10 @@ def GParser():
                 it = input_st.pop()
                 sym_st.append(it[0]) #将符号提取出符号栈中
                 state_st.append(t[1]) #将当前的状态提取出放入状态栈
-                id_st.append(addGrammarTreeNode(sym_st[-1], son_st, it[1])) #存放语法树节点
+                id_st.append(addGrammarTreeNode(sym_st[-1], son_st, it[1], (it[2][0], it[2][1]-1) )) #存放语法树节点
                 son_st = []
                 if last_oper != -1:#如果该节点是规约而来
-                    analysis(id_st[-1], last_oper)
+                    if not analysis(id_st[-1], last_oper): return False
                     last_oper = -1
             elif t[0] == 'r': #规约
                 last_oper = t[1]
@@ -97,8 +97,8 @@ def GParser():
                     son_st.append(id_st.pop()) #并将其放入孩子栈中
                 son_st.reverse()
                 if len(productions[t[1]]['right']) == 0: #如果是空串,额外添加ε
-                    son_st.append(addGrammarTreeNode('@', [], 'ε'))
-                input_st.append([productions[t[1]]['left'], '']) #将规约完的节点添加到input串中
+                    son_st.append(addGrammarTreeNode('@', [], 'ε', (0,0)))
+                input_st.append([productions[t[1]]['left'], '', (grammar_tree[son_st[0]]['debug_pos'][0],0)]) #将规约完的节点添加到input串中
             else:#规约成功 acc
                 print("\033[1;32;32m[Info]Garmmar analysis success!\033[0m")
                 break

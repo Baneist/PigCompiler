@@ -6,87 +6,88 @@
         ]
     },
     {
-        "production": {"left": "<程序>", "right": ["<类型>","$identifier","$(", "$)", "<语句块>"]},
+        "production": {"left": "<函数名>", "right": ["$identifier"]},
         "action": [
-            ""
+            "checkFuncNotDefined(@r0.cont, @r0)",
+            "ldict.func->append(@r0.cont)"
+        ]
+    },
+    {
+        "production": {"left": "<程序>", "right": ["<类型>","<函数名>","$(", "$)", "<语句块>"]},
+        "action": [
+            
         ]
     },
     {
         "production":{"left": "<类型>", "right": ["$int"]},
         "action": [
-            "pass"
+            "@l.type=@r0.cont"
         ]
     },
     {
         "production":{"left": "<类型>", "right": ["$void"]},
         "action": [
-            "pass"
+            "@l.type=@r0.cont"
         ]
     },
     {
         "production":{"left": "<语句块>", "right": ["${","<内部声明>","<语句串>","$}"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<内部声明>", "right": []},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<内部声明>", "right": ["<内部变量声明>", "$;", "<内部声明>"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<内部变量声明>", "right": ["$int", "$identifier"]},
         "action": [
-            "pass"
+            "ldict.var->append((@r1.cont, 4))"
         ]
     },
     {
         "production":{"left": "<语句串>", "right": []},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<语句串>", "right": ["<语句>", "<语句串>"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<语句>", "right": ["<if语句>"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<语句>", "right": ["<while语句>"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<语句>", "right": ["<return语句>"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<语句>", "right": ["<赋值语句>"]},
         "action": [
-            "pass"
-        ]
-    },
-    {
-        "production":{"left": "<赋值语句>", "right": ["$identifier", "$=", "<表达式>", "$;"]},
-        "action": [
-            "pass"
+            
         ]
     },
     {
@@ -131,104 +132,104 @@
         ]
     },
     {
-        "production":{"left": "<表达式>", "right": ["<加法表达式>", "<拓展表达式>"]},
+        "production":{"left": "<else内容>", "right": ["$else", "<语句块>"]},
         "action": [
             "pass"
         ]
     },
     {
-        "production":{"left": "<拓展表达式>", "right": []},
+        "production":{"left": "<赋值语句>", "right": ["$identifier", "$=", "<表达式>", "$;"]},
         "action": [
-            "pass"
+            "checkVarDefined(@r0.cont, @r0)",
+            "emit('=', @r2.val, '', @r0.cont)"
         ]
     },
     {
-        "production":{"left": "<拓展表达式>", "right": ["<比较符号>", "<加法表达式>", "<拓展表达式>"]},
+        "production":{"left": "<表达式>", "right": ["<加法表达式>"]},
         "action": [
-            "pass"
+            "@l.val=@r0.val"
+        ]
+    },
+    {
+        "production":{"left": "<表达式>", "right": ["<加法表达式>", "<比较符号>", "<表达式>"]},
+        "action": [
+            "@l.val=newVar()",
+            "emit(@r1.cont , @r0.val, @r2.val, @l.val)"
         ]
     },
     {
         "production":{"left": "<比较符号>", "right": ["$<"]},
         "action": [
-            "pass"
+            "@l.cont=@r0.cont"
         ]
     },
     {
         "production":{"left": "<比较符号>", "right": ["$<="]},
         "action": [
-            "pass"
+            "@l.cont=@r0.cont"
         ]
     },
     {
         "production":{"left": "<比较符号>", "right": ["$>"]},
         "action": [
-            "pass"
+            "@l.cont=@r0.cont"
         ]
     },
     {
         "production":{"left": "<比较符号>", "right": ["$>="]},
         "action": [
-            "pass"
+            "@l.cont=@r0.cont"
         ]
     },{
         "production":{"left": "<比较符号>", "right": ["$=="]},
         "action": [
-            "pass"
+            "@l.cont=@r0.cont"
         ]
     },
     {
         "production":{"left": "<比较符号>", "right": ["$!="]},
         "action": [
-            "pass"
+            "@l.cont=@r0.cont"
         ]
     },
     {
-        "production":{"left": "<加法表达式>", "right": ["<项>", "<加法表达式追加>"]},
+        "production":{"left": "<加法表达式>", "right": ["<项>"]},
         "action": [
-            "pass"
+            "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<加法表达式追加>", "right": []},
+        "production":{"left": "<加法表达式>", "right": ["<项>", "$+" ,"<加法表达式>"]},
         "action": [
-            "pass"
+            "@l.val=newVar()",
+            "emit('+', @r0.val, @r2.val, @l.val)"
         ]
     },
     {
-        "production":{"left": "<加法表达式追加>", "right": ["$+" ,"<项>", "<加法表达式追加>"]},
+        "production":{"left": "<加法表达式>", "right": ["<项>", "$-" ,"<加法表达式>"]},
         "action": [
-            "pass"
+            "@l.val=newVar()",
+            "emit('-', @r0.val, @r2.val, @l.val)"
         ]
     },
     {
-        "production":{"left": "<加法表达式追加>", "right": ["$-" ,"<项>", "<加法表达式追加>"]},
+        "production":{"left": "<项>", "right": ["<因子>"]},
         "action": [
-            "pass"
+            "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<项>", "right": ["<因子>", "<项追加>"]},
+        "production":{"left": "<项>", "right": ["<因子>", "$*", "<项>"]},
         "action": [
-            "pass"
+            "@l.val=newVar()",
+            "emit('*', @r0.val, @r2.val, @l.val)"
         ]
     },
     {
-        "production":{"left": "<项追加>", "right": []},
+        "production":{"left": "<项>", "right": ["<因子>", "$/", "<项>"]},
         "action": [
-            "pass"
-        ]
-    },
-    {
-        "production":{"left": "<项追加>", "right": ["$*" ,"<因子>", "<项追加>"]},
-        "action": [
-            "pass"
-        ]
-    },
-    {
-        "production":{"left": "<项追加>", "right": ["$/" ,"<因子>", "<项追加>"]},
-        "action": [
-            "pass"
+            "@l.val=newVar()",
+            "emit('/', @r0.val, @r2.val, @l.val)"
         ]
     },
     {
@@ -240,55 +241,65 @@
     {
         "production":{"left": "<因子>", "right": ["$identifier", "<FTYPE>"]},
         "action": [
-            "pass"
+            "if @r1.mode=='v': checkVarDefined(@r0.cont, @r0)",
+            "if @r1.mode=='v': @l.val=@r0.cont",
+            "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0)",
+            "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
+            "if @r1.mode=='f': @l.val='#eax'"
         ]
     },
     {
         "production":{"left": "<因子>", "right": ["$(","<表达式>","$)"]},
         "action": [
-            "pass"
+            "@l.val=@r1.val"
         ]
     },
     {
         "production":{"left": "<FTYPE>", "right": []},
         "action": [
-            "pass"
+            "@l.mode='v'"
         ]
     },
     {
         "production":{"left": "<FTYPE>", "right": ["<函数调用>"]},
         "action": [
-            "pass"
+            "@l.mode='f'"
         ]
     },
     {
         "production":{"left": "<函数调用>", "right": ["$(","<实参列表>","$)"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<实参列表>", "right": []},
         "action": [
-            "pass"
+            
         ]
     },
     {
-        "production":{"left": "<实参列表>", "right": ["<表达式>", "<追加实参列表>"]},
+        "production":{"left": "<实参>", "right": ["<表达式>"]},
         "action": [
-            "pass"
+            "emit('par', '@r0.val')"
+        ]
+    },
+    {
+        "production":{"left": "<实参列表>", "right": ["<实参>", "<追加实参列表>"]},
+        "action": [
+            
         ]
     },
     {
         "production":{"left": "<追加实参列表>", "right": []},
         "action": [
-            "pass"
+            
         ]
     },
     {
-        "production":{"left": "<追加实参列表>", "right": ["$,","<表达式>", "<追加实参列表>"]},
+        "production":{"left": "<追加实参列表>", "right": ["$,","<实参>", "<追加实参列表>"]},
         "action": [
-            "pass"
+            
         ]
     }
 

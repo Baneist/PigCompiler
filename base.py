@@ -11,8 +11,8 @@ args = parser.parse_args()
 #词法分析BASE
 #保留字表
 s_code=['']
-def getErrorCodeLine(l, p, str):
-    return '\033[1;31;36m{}:{}\033[1;33;33m{}\033[1;31;36m{}\033[0m'.format(l,s_code[l][:p], str, s_code[l][p+len(str):])
+def getErrorCodeLine(l, p, str=''):
+    return '\033[1;31;36m{}:{}\033[1;33;33m{}\033[1;31;36m{}\033[0m'.format(l,s_code[l][:p+1-len(str)], s_code[l][p+1-len(str):p+1], s_code[l][p+1:])
 reserve_word = [ 
     ",", "!=", "==", "<",  "<=", "=",  ">", ">=", "=", 
     "*",  "+", "-", "/",  ";", "(",  ")", "{",  "}", ".", "&&",
@@ -91,7 +91,14 @@ for x in symbol_list: #求所有元素的first集
     findSymbolFirst(x)
 
 grammar_tree=[] #[{'sym': 'S', 'son':[] , 'cont':''}]
-def addGrammarTreeNode(sym, son_st, cont=''): #添加树节点函数
-    grammar_tree.append({'sym':sym, 'son':son_st, 'cont':cont})
+def addGrammarTreeNode(sym, son_st, cont='', debug_pos=(0,0)): #添加树节点函数
+    grammar_tree.append({'sym':sym, 'son':son_st, 'cont':cont, 'debug_pos': debug_pos})
     return len(grammar_tree) - 1
 
+#语义分析参数
+mid_code = []
+nextquad = 100
+list_dict = {
+    'var': [],
+    'func': [],
+}
