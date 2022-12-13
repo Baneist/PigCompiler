@@ -93,18 +93,18 @@
     {
         "production":{"left": "<return语句>", "right": ["$return","<return内容>","$;"]},
         "action": [
-            "pass"
+            
         ]
     },
     {
         "production":{"left": "<return内容>", "right": []},
         "action": [
-            "pass"
+            
         ]
     },{
         "production":{"left": "<return内容>", "right": ["<表达式>"]},
         "action": [
-            "pass"
+            "emit('=', @r1.val, '', '#eax')"
         ]
     },
     {

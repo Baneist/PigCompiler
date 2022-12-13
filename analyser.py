@@ -38,8 +38,6 @@ def newVar():
     var_num += 1
     return name
 
-
-
 def analysis(id, last_oper):
     for lst in prod_actions[last_oper]:
         if lst != 'pass':
@@ -54,3 +52,8 @@ def analysis(id, last_oper):
                 print(err)
                 return False
     return True
+
+def midCodeSave(filename):
+    with open(filename, 'w', encoding='utf-8') as f:
+        lst = ['{}: {}\n'.format(i+100, mid_code[i]) for i in range(len(mid_code))]
+        f.writelines(lst)
