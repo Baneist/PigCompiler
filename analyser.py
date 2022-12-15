@@ -63,14 +63,13 @@ def batchlist(li, no):#li：需要串联的链 no：链接上的语句号
 def analysis(id, last_oper):
     for lst in prod_actions[last_oper]:
         if lst != 'pass':
-            print(lst) #输出当前执行的语句
+            #print(lst) #输出当前执行的语句
             lst = re.sub(r'\.(\w+)',lambda x: "['{}']".format(x.group(1)), lst)#翻译 将.val 翻成['val']
             lst = re.sub(r'@l',"grammar_tree[id]", lst) #翻译 将@l 翻成实际左边元素
             lst = re.sub(r'@r(\d+)',lambda x: "grammar_tree[{}]".format(grammar_tree[id]['son'][int(x.group(1))]), lst) #翻译 将@r1 翻译为实际右边元素
             lst = re.sub(r'->','.', lst)#翻译 将-> 翻成.
             try:
                 exec(lst)
-                pass
             except Exception as err:
                 print(err)
                 return False
@@ -78,13 +77,10 @@ def analysis(id, last_oper):
 
 def midCodeSave(filename):
     with open(filename, 'w', encoding='utf-8') as f:
-        lst = ['{}: {}\n'.format(i+100, mid_code[i]) for i in range(len(mid_code))]
-        f.write('中间代码:\n')
-        f.writelines(lst)
-        f.write('变量表:\n')
-        a=[];cnt=0
+        lst = ['中间代码:\n'] + ['{}: {}\n'.format(i+100, mid_code[i]) for i in range(len(mid_code))] + ['变量表:\n']
+        a=[]; cnt=0
         for i,j in enumerate(ldict['var']):
             a.append(cnt)
             cnt += j[1]
-        lst = ['{}: {}\n'.format(a[i], j) for i,j in enumerate(ldict['var'])]
+        lst += ['{}: {}\n'.format(a[i], j) for i,j in enumerate(ldict['var'])]
         f.writelines(lst)

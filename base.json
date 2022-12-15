@@ -35,7 +35,7 @@
     {
         "production":{"left": "<语句块>", "right": ["${","<内部声明>","<语句串>","$}"]},
         "action": [
-            
+            ""
         ]
     },
     {
@@ -126,37 +126,43 @@
         "production":{"left": "<真值判断>", "right": [ "<左括号>", "<布尔表达式>", "<右括号>"]},
         "action": [
             "@l.frontquad=@r0.quad",
-            "@l.backquad=@r2.quad"
+            "@l.backquad=@r2.quad",
+            "@l.t=@r1.t; @l.f=@r1.f;"
         ]
     },
     {
         "production":{"left": "<while语句>", "right": ["$while", "<真值判断>", "<语句块>"]},
         "action": [
-            "pass"
+            "batchlist(@r1.t, @r1.backquad)",
+            "batchlist(@r1.f, nextquad)",
+            "emit('j', '', '', @r1.frontquad)"
         ]
     },
     {
         "production":{"left": "<if语句>", "right": ["$if", "<真值判断>", "<语句块>", "<else内容>"]},
         "action": [
-            "pass"
+            "batchlist(@r1.t, @r1.backquad)",
+            "if not @r3.end: batchlist(@r1.f, @r3.quad)",
+            "if @r3.end: batchlist(@r1.f, nextquad)"
         ]
     },
     {
         "production":{"left": "<else内容>", "right": []},
         "action": [
-            
+            "@l.end=True"
         ]
     },
     {
         "production":{"left": "<else>", "right": ["$else"]},
         "action": [
-            "pass"
+            "@l.quad=nextquad"
         ]
     },
     {
         "production":{"left": "<else内容>", "right": ["<else>", "<语句块>"]},
         "action": [
-            "pass"
+            "@l.end=False",
+            "@l.quad=@r0.quad"
         ]
     },
     {
@@ -175,13 +181,7 @@
     {
         "production":{"left": "<布尔表达式>", "right": ["<布尔or表达式>"]},
         "action": [
-            "@l.val=newVar()",
-            "@l.quad=nextquad",
-            "emit('=','1','',@l.val)",
-            "emit('j','','',@l.quad+3)",
-            "emit('=','0','',@l.val)",
-            "batchlist(@r0.t, @l.quad)",
-            "batchlist(@r0.f, @l.quad+2)"
+            "@l.f=@r0.f; @l.t=@r0.t;"
         ]
     },
     {

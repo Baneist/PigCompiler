@@ -70,7 +70,6 @@ def initProjectSet():
 
 def GParser():
     initProjectSet() #初始化项目集，构建action和goto表
-    with open('action.txt', 'w', encoding='utf-8') as f: f.writelines(debug_)
     input_st = [['#', 'INPUT_END', w_dict[-1][2]]] + w_dict[::-1] #设置输入机内序列
     state_st, sym_st, id_st, son_st = [0], ['#'], [], [] #设置工作栈
     last_oper = -1
