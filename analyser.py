@@ -45,11 +45,11 @@ def newVar():
 def analysis(id, last_oper):
     for lst in prod_actions[last_oper]:
         if lst != 'pass':
+            #print(lst)
             lst = re.sub(r'\.(\w+)',lambda x: "['{}']".format(x.group(1)), lst)#翻译 将.val 翻成['val']
             lst = re.sub(r'@l',"grammar_tree[id]", lst) #翻译 将@l 翻成实际左边元素
             lst = re.sub(r'@r(\d+)',lambda x: "grammar_tree[{}]".format(grammar_tree[id]['son'][int(x.group(1))]), lst) #翻译 将@r1 翻译为实际右边元素
             lst = re.sub(r'->','.', lst)#翻译 将-> 翻成.
-            print(lst)
             try:
                 exec(lst)
                 pass

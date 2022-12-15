@@ -145,16 +145,67 @@
         ]
     },
     {
-        "production":{"left": "<表达式>", "right": ["<加法表达式>"]},
+        "production":{"left": "<表达式>", "right": ["<布尔or表达式>"]},
         "action": [
             "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<表达式>", "right": ["<加法表达式>", "<比较符号>", "<表达式>"]},
+        "production":{"left": "<布尔or表达式>", "right": ["<布尔and表达式>"]},
+        "action": [
+            "@l.val=@r0.val"
+        ]
+    },
+    {
+        "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>"]},
+        "action": [
+            "@l.val=@r0.val"
+        ]
+    },
+    {
+        "production":{"left": "<布尔not表达式>", "right": ["<比较表达式>"]},
+        "action": [
+            "@l.val=@r0.val"
+        ]
+    },
+    {
+        "production":{"left": "<布尔not表达式>", "right": ["$not","<比较表达式>"]},
+        "action": [
+            "@l.val=@r1.val",
+            "emit('not', @l.val, '', @l.val)"
+        ]
+    },
+    {
+        "production":{"left": "<比较表达式>", "right": ["<加法表达式>", "<M>", "<比较追加>"]},
+        "action": [
+            "@l.val=@r0.val",
+            "if not @r2.end: @l.val=@r2.val",
+            "if not @r2.end: backFill(@r2.quad, (None, @r0.val, None, None))"
+        ]
+    },
+    {
+        "production":{"left": "<比较追加>", "right": ["<比较符号>","<加法表达式>","<比较产生>","<比较追加>"]},
+        "action": [
+            "@l.end=False",
+            "@l.quad=@r2.quad-1",
+            "backFill(@r2.quad-1, (@r0.cont, None, @r1.val, None))",
+            "if not @r3.end: backFill(@r3.quad, (None, @r2.val, None, None))",
+            "@l.val=@r2.val",
+            "if not @r3.end: @l.val=@r3.val"
+        ]
+    },
+    {
+        "production":{"left": "<比较产生>", "right": []},
         "action": [
             "@l.val=newVar()",
-            "emit(@r1.cont , @r0.val, @r2.val, @l.val)"
+            "emit('', '', '', @l.val)",
+            "@l.quad=nextquad"
+        ]
+    },
+    {
+        "production":{"left": "<比较追加>", "right": []},
+        "action": [
+            "@l.end=True"
         ]
     },
     {
@@ -203,7 +254,7 @@
         "action": [
             "@l.val=@r0.val",
             "if not @r2.end: @l.val=@r2.val",
-            "if not @r2.end: backFill(@r1.quad, (None, @r0.val, None, None))"
+            "if not @r2.end: backFill(@r2.quad, (None, @r0.val, None, None))"
         ]
     },
     {
@@ -248,7 +299,7 @@
         "action": [
             "@l.val=@r0.val",
             "if not @r2.end: @l.val=@r2.val",
-            "if not @r2.end: backFill(@r1.quad, (None, @r0.val, None, None))"
+            "if not @r2.end: backFill(@r2.quad, (None, @r0.val, None, None))"
         ]
     },
     {
