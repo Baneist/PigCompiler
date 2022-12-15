@@ -45,6 +45,12 @@ def newVar():
 def makelist(i):
     return [i]
 
+def mergelist(a, b):
+    for i in b:
+        if i not in a:
+            a.append(i)
+    return a
+
 def analysis(id, last_oper):
     for lst in prod_actions[last_oper]:
         if lst != 'pass':

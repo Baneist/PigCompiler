@@ -166,7 +166,7 @@
         "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>", "<布尔and追加>"]},
         "action": [
             "if @r1.end: @l.t=@r0.t; @l.f=@r0.f;",
-            "if not @r1.end: @l.t=@r1.t; @l.f=merge(@r0.f, @r1.f);"
+            "if not @r1.end: @l.t=@r1.t; @l.f=mergelist(@r0.f, @r1.f);"
         ]
     },
     {
@@ -174,7 +174,7 @@
         "action": [
             "@l.end=False",
             "if @r2.end: @l.t=@r1.t; @l.f=@r1.f;",
-            "if not @r2.end: @l.t=@r2.t; @l.f=merge(@r1.f, @r2.f);"
+            "if not @r2.end: @l.t=@r2.t; @l.f=mergelist(@r1.f, @r2.f);"
         ]
     },
     {
