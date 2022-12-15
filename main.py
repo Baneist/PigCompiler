@@ -1,7 +1,7 @@
 from lexer import Lexer
 from gparser import GParser
 from analyser import midCodeSave
-from syntaxTree import drawSyntaxTree
+from syntax import drawSyntaxTree
 from base import args, mid_code
 
 if __name__ == '__main__':
@@ -11,6 +11,7 @@ if __name__ == '__main__':
             if Lexer(str) and GParser():
                 midCodeSave(args.output)
                 print('\033[1;32;32m[Info]Compile success!\033[0m')
+                print('中间代码已输出到同级文件夹下..')
                 if(args.debug): 
                     drawSyntaxTree()
                     print('中间代码为:', mid_code)
