@@ -4,5 +4,10 @@ int main(){
     int b;
     int c;
     int d;
-    cnt=d+5*(not(a>=(1)+b*c));
+    
+    if(
+        a == b
+    ){
+        cnt=d*2*3+5*6-4*c/b;
+    }
 }

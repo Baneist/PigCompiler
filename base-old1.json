@@ -108,13 +108,13 @@
         ]
     },
     {
-        "production":{"left": "<while语句>", "right": ["$while", "$(", "<布尔表达式>", "$)", "<语句块>"]},
+        "production":{"left": "<while语句>", "right": ["$while", "$(", "<表达式>", "$)", "<语句块>"]},
         "action": [
             "pass"
         ]
     },
     {
-        "production":{"left": "<if语句>", "right": ["$if", "$(", "<布尔表达式>", "$)", "<语句块>", "<else内容>"]},
+        "production":{"left": "<if语句>", "right": ["$if", "$(", "<表达式>", "$)", "<语句块>", "<else内容>"]},
         "action": [
             "pass"
         ]
@@ -145,94 +145,67 @@
         ]
     },
     {
-        "production":{"left": "<表达式>", "right": ["<加法表达式>"]},
+        "production":{"left": "<表达式>", "right": ["<布尔or表达式>"]},
         "action": [
             "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<布尔表达式>", "right": ["<布尔or表达式>"]},
-        "action": [
-            
-        ]
-    },
-    {
         "production":{"left": "<布尔or表达式>", "right": ["<布尔and表达式>"]},
         "action": [
-            
+            "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>", "<布尔and追加>"]},
+        "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>"]},
         "action": [
-            "if @r1.end: @l.t=@r0.t; @l.f=@r0.f;",
-            "if not @r1.end: @l.t=@r1.t; @l.f=merge(@r0.f, @r1.f);"
+            "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<布尔and追加>", "right": ["<and符号>", "<布尔not表达式>", "<布尔and追加>"]},
+        "production":{"left": "<布尔not表达式>", "right": ["<比较表达式>"]},
+        "action": [
+            "@l.val=@r0.val"
+        ]
+    },
+    {
+        "production":{"left": "<布尔not表达式>", "right": ["$not","<比较表达式>"]},
+        "action": [
+            "@l.val=@r1.val",
+            "emit('not', @l.val, '', @l.val)"
+        ]
+    },
+    {
+        "production":{"left": "<比较表达式>", "right": ["<加法表达式>", "<M>", "<比较追加>"]},
+        "action": [
+            "@l.val=@r0.val",
+            "if not @r2.end: @l.val=@r2.val",
+            "if not @r2.end: backFill(@r2.quad, (None, @r0.val, None, None))"
+        ]
+    },
+    {
+        "production":{"left": "<比较追加>", "right": ["<比较符号>","<加法表达式>","<比较产生>","<比较追加>"]},
         "action": [
             "@l.end=False",
-            "if @r2.end: @l.t=@r1.t; @l.f=@r1.f;",
-            "if not @r2.end: @l.t=@r2.t; @l.f=merge(@r1.f, @r2.f);"
+            "@l.quad=@r2.quad-1",
+            "backFill(@r2.quad-1, (@r0.cont, None, @r1.val, None))",
+            "if not @r3.end: backFill(@r3.quad, (None, @r2.val, None, None))",
+            "@l.val=@r2.val",
+            "if not @r3.end: @l.val=@r3.val"
         ]
     },
     {
-        "production":{"left": "<布尔and追加>", "right": []},
+        "production":{"left": "<比较产生>", "right": []},
         "action": [
-            "@l.end=True"
-        ]
-    },
-    {
-        "production":{"left": "<and符号>", "right": ["$and"]},
-        "action": [
+            "@l.val=newVar()",
+            "emit('', '', '', @l.val)",
             "@l.quad=nextquad"
         ]
     },
     {
-        "production":{"left": "<布尔not表达式>", "right": ["<布尔因子>"]},
+        "production":{"left": "<比较追加>", "right": []},
         "action": [
-            "@l.t=@r0.t",
-            "@l.f=@r0.f"
-        ]
-    },
-    {
-        "production":{"left": "<布尔not表达式>", "right": ["$not","<布尔因子>"]},
-        "action": [
-            "@l.t=@r1.f",
-            "@l.f=@r1.t"
-        ]
-    },
-    {
-        "production":{"left": "<布尔因子>", "right": ["$(", "<布尔表达式>", "$)"]},
-        "action": [
-            "@l.t=@r1.t",
-            "@l.f=@r1.f"
-        ]
-    },
-    {
-        "production":{"left": "<布尔因子>", "right": ["<比较表达式>"]},
-        "action": [
-            "@l.t=@r0.t",
-            "@l.f=@r0.f"
-        ]
-    },
-    {
-        "production":{"left": "<比较表达式>", "right": ["<加法表达式>", "<比较符号>", "<加法表达式>"]},
-        "action": [
-            "@l.t=makelist(nextquad)",
-            "@l.f=makelist(nextquad+1)",
-            "emit('j'+@r1.cont, @r0.val, @r2.val, 0)",
-            "emit('j', '', '', 0)"
-        ]
-    },
-    {
-        "production":{"left": "<比较表达式>", "right": ["<加法表达式>"]},
-        "action": [
-            "@l.t=makelist(nextquad)",
-            "@l.f=makelist(nextquad+1)",
-            "emit('jnz', @r0.val, '', 0)",
-            "emit('j', '', '', 0)"
+            "@l.end=True"
         ]
     },
     {

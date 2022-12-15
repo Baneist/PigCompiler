@@ -57,7 +57,6 @@ def initProjectSet():
             if len(next_set) > 0 and not next_set in project_set:#将新构造的集合放入项目簇中
                 project_set.append(next_set)
             if len(next_set) > 0: debug_.append("#{}=<{},{}>:{}\n".format(project_set.index(next_set), top, x,next_set))
-            if len(next_set) > 0 and project_set.index(next_set) == 120: print(next_set)
             if len(next_set) > 0:
                 if not isTerminalSymbol(x): #如果x不是终结符，那么填goto集
                     action_goto[(top,x)] = ['g', project_set.index(next_set)]
