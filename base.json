@@ -111,13 +111,32 @@
         ]
     },
     {
-        "production":{"left": "<while语句>", "right": ["$while", "$(", "<布尔表达式>", "$)", "<语句块>"]},
+        "production":{"left": "<左括号>", "right": [ "$("]},
+        "action": [
+            "@l.quad=nextquad"
+        ]
+    },
+    {
+        "production":{"left": "<右括号>", "right": [ "$)"]},
+        "action": [
+            "@l.quad=nextquad"
+        ]
+    },
+    {
+        "production":{"left": "<真值判断>", "right": [ "<左括号>", "<布尔表达式>", "<右括号>"]},
+        "action": [
+            "@l.frontquad=@r0.quad",
+            "@l.backquad=@r2.quad"
+        ]
+    },
+    {
+        "production":{"left": "<while语句>", "right": ["$while", "<真值判断>", "<语句块>"]},
         "action": [
             "pass"
         ]
     },
     {
-        "production":{"left": "<if语句>", "right": ["$if", "$(", "<布尔表达式>", "$)", "<语句块>", "<else内容>"]},
+        "production":{"left": "<if语句>", "right": ["$if", "<真值判断>", "<语句块>", "<else内容>"]},
         "action": [
             "pass"
         ]
@@ -125,17 +144,17 @@
     {
         "production":{"left": "<else内容>", "right": []},
         "action": [
-            "pass"
+            
         ]
     },
     {
-        "production":{"left": "<else内容>", "right": ["$else", "<语句块>"]},
+        "production":{"left": "<else>", "right": ["$else"]},
         "action": [
             "pass"
         ]
     },
     {
-        "production":{"left": "<else内容>", "right": ["$else", "<语句块>"]},
+        "production":{"left": "<else内容>", "right": ["<else>", "<语句块>"]},
         "action": [
             "pass"
         ]
