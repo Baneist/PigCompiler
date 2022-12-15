@@ -32,10 +32,10 @@ def dealWorkString(): #词法分析
                 raise Exception('\033[1;31;31m[Error]#101 in line {}, position {}: illegal num {}.\n{}'.format(l_cnt, ptr, word + w_str[ptr+ret.end()], getErrorCodeLine(l_cnt,ptr,word + w_str[ptr+ret.end()])))
             if '.' not in word and 'e' not in word: #根据其值区分整形数和浮点数
                 w_type = '$digit_int'
-                word = int(word)
+                word = word
             else:
                 w_type = '$digit_int'#由于还没有实现浮点数，先当作整形数
-                word = int(word)
+                word = word
         elif w_str[ptr].isalpha() or w_str[ptr] == '_': #处理单词
             ret = re.search('\\w*', w_str[ptr:])
             word = ret.group()

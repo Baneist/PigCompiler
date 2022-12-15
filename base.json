@@ -193,50 +193,99 @@
         ]
     },
     {
-        "production":{"left": "<加法表达式>", "right": ["<项>"]},
+        "production":{"left": "<M>", "right": []},
         "action": [
-            "@l.val=@r0.val"
+            "@l.quad=nextquad"
         ]
     },
     {
-        "production":{"left": "<加法表达式>", "right": ["$-" ,"<项>"]},
+        "production":{"left": "<加法表达式>", "right": ["<项>", "<M>", "<加法追加>"]},
+        "action": [
+            "@l.val=@r0.val",
+            "if not @r2.end: @l.val=@r2.val",
+            "if not @r2.end: backFill(@r1.quad, (None, @r0.val, None, None))"
+        ]
+    },
+    {
+        "production":{"left": "<加法追加>", "right": ["<加法符号>","<项>","<加法产生>","<加法追加>"]},
+        "action": [
+            "@l.end=False",
+            "@l.quad=@r2.quad-1",
+            "backFill(@r2.quad-1, (@r0.cont, None, @r1.val, None))",
+            "if not @r3.end: backFill(@r3.quad, (None, @r2.val, None, None))",
+            "@l.val=@r2.val",
+            "if not @r3.end: @l.val=@r3.val"
+        ]
+    },
+    {
+        "production":{"left": "<加法产生>", "right": []},
         "action": [
             "@l.val=newVar()",
-            "emit('-', 0, @r1.val, @l.val)"
+            "emit('', '', '', @l.val)",
+            "@l.quad=nextquad"
         ]
     },
     {
-        "production":{"left": "<加法表达式>", "right": ["<项>", "$+" ,"<加法表达式>"]},
+        "production":{"left": "<加法追加>", "right": []},
+        "action": [
+            "@l.end=True"
+        ]
+    },
+    {
+        "production":{"left": "<加法符号>", "right": ["$+"]},
+        "action": [
+            "@l.cont=@r0.cont"
+        ]
+    },
+    {
+        "production":{"left": "<加法符号>", "right": ["$-"]},
+        "action": [
+            "@l.cont=@r0.cont"
+        ]
+    },
+    {
+        "production":{"left": "<项>", "right": ["<因子>", "<M>", "<项追加>"]},
+        "action": [
+            "@l.val=@r0.val",
+            "if not @r2.end: @l.val=@r2.val",
+            "if not @r2.end: backFill(@r1.quad, (None, @r0.val, None, None))"
+        ]
+    },
+    {
+        "production":{"left": "<项追加>", "right": ["<项符号>","<因子>","<项产生>","<项追加>"]},
+        "action": [
+            "@l.end=False",
+            "@l.quad=@r2.quad-1",
+            "backFill(@r2.quad-1, (@r0.cont, None, @r1.val, None))",
+            "if not @r3.end: backFill(@r3.quad, (None, @r2.val, None, None))",
+            "@l.val=@r2.val",
+            "if not @r3.end: @l.val=@r3.val"
+        ]
+    },
+    {
+        "production":{"left": "<项产生>", "right": []},
         "action": [
             "@l.val=newVar()",
-            "emit('+', @r0.val, @r2.val, @l.val)"
+            "emit('', '', '', @l.val)",
+            "@l.quad=nextquad"
         ]
     },
     {
-        "production":{"left": "<加法表达式>", "right": ["<项>", "$-" ,"<加法表达式>"]},
+        "production":{"left": "<项追加>", "right": []},
         "action": [
-            "@l.val=newVar()",
-            "emit('-', @r0.val, @r2.val, @l.val)"
+            "@l.end=True"
         ]
     },
     {
-        "production":{"left": "<项>", "right": ["<因子>"]},
+        "production":{"left": "<项符号>", "right": ["$*"]},
         "action": [
-            "@l.val=@r0.val"
+            "@l.cont=@r0.cont"
         ]
     },
     {
-        "production":{"left": "<项>", "right": ["<因子>", "$*", "<项>"]},
+        "production":{"left": "<项符号>", "right": ["$/"]},
         "action": [
-            "@l.val=newVar()",
-            "emit('*', @r0.val, @r2.val, @l.val)"
-        ]
-    },
-    {
-        "production":{"left": "<项>", "right": ["<因子>", "$/", "<项>"]},
-        "action": [
-            "@l.val=newVar()",
-            "emit('/', @r0.val, @r2.val, @l.val)"
+            "@l.cont=@r0.cont"
         ]
     },
     {

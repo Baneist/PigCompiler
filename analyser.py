@@ -28,8 +28,12 @@ def emit(expr, t1, t2, s1):
     mid_code.append((expr,t1,t2,s1))
 
 #回填函数
-def MidCodeFill(no, pos, name):
-    mid_code[no-100][pos] = name
+def backFill(no, tup):
+    a = list(mid_code[no-100])
+    for i in range(4):
+        if tup[i] is not None:
+            a[i] = tup[i]
+    mid_code[no-100] = (a[0],a[1],a[2],a[3])
 
 var_num = 0
 def newVar():
@@ -48,6 +52,7 @@ def analysis(id, last_oper):
             print(lst)
             try:
                 exec(lst)
+                pass
             except Exception as err:
                 print(err)
                 return False

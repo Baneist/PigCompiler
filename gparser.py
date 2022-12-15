@@ -43,6 +43,8 @@ def findGoto(proj, sym)->list: #通过输入的项目集和sym找其goto后的cl
             c.append(np) #如果可以接受,将其接受后的新串加入goto集中
     return findClosure(c) #计算计算后的goto集的闭包
 
+debug_ = []
+
 def initProjectSet():
     start = deepcopy(productions[0])
     start['dot'], start['accept'] = 0, '#'#生成初始集合
@@ -54,8 +56,8 @@ def initProjectSet():
             next_set = findGoto(project_set[top], x)
             if len(next_set) > 0 and not next_set in project_set:#将新构造的集合放入项目簇中
                 project_set.append(next_set)
-            #if len(next_set) > 0: #调试语句
-            #    print("#{}=<{},{}>:".format(project_set.index(next_set), top, x), next_set)
+            if len(next_set) > 0: debug_.append("#{}=<{},{}>:{}\n".format(project_set.index(next_set), top, x,next_set))
+            if len(next_set) > 0 and project_set.index(next_set) == 120: print(next_set)
             if len(next_set) > 0:
                 if not isTerminalSymbol(x): #如果x不是终结符，那么填goto集
                     action_goto[(top,x)] = ['g', project_set.index(next_set)]
@@ -69,6 +71,7 @@ def initProjectSet():
 
 def GParser():
     initProjectSet() #初始化项目集，构建action和goto表
+    with open('action.txt', 'w', encoding='utf-8') as f: f.writelines(debug_)
     input_st = [['#', 'INPUT_END', w_dict[-1][2]]] + w_dict[::-1] #设置输入机内序列
     state_st, sym_st, id_st, son_st = [0], ['#'], [], [] #设置工作栈
     last_oper = -1
@@ -77,7 +80,7 @@ def GParser():
         while len(input_st) > 0:
             ns = (state_st[-1], input_st[-1][0]) #记录当前状态的元组
             t = action_goto.get(ns) #从action和goto表中查找该元组
-            if args.debug: print('#######\n当前轮次:{}\n当前符号栈:{},当前状态栈:{}\n当前读入字符:{},转移方程为:{}'.format(t_cnt,sym_st,state_st,input_st[-1][0], ns))
+            if args.debug: print('#######\n当前轮次:{}\n当前符号栈:{},当前状态栈:{}\n当前读入字符:{},转移方程为:{}, t={}'.format(t_cnt,sym_st,state_st,input_st[-1][0], ns, t))
             if t is None: #如果未找到，说明该串存在语法错误
                 raise Exception('\033[1;31;31m[Error]#201 in line {}, position {}: Unexpected word \'{}\' after \'{}\'.\n{}'.format(*input_st[-1][2], input_st[-1][1], sym_st.pop(), getErrorCodeLine(input_st[-1][2][0], input_st[-1][2][1]-1,input_st[-1][1])))
             if t[0] == 's' or t[0] == 'g': #移进或者goto,两者代码相同

@@ -14,7 +14,7 @@ s_code=['']
 def getErrorCodeLine(l, p, str=''):
     return '\033[1;31;36m{}:{}\033[1;33;33m{}\033[1;31;36m{}\033[0m'.format(l,s_code[l][:p+1-len(str)], s_code[l][p+1-len(str):p+1], s_code[l][p+1:])
 reserve_word = [ 
-    ",", "!=", "==", "<",  "<=", "=",  ">", ">=", "=", 
+    ",", "!=", "==", "<",  "<=", "=",  ">", ">=", "=", "and", "or", "not",
     "*",  "+", "-", "/",  ";", "(",  ")", "{",  "}", ".", "&&",
     "else", "if", "int", "float", "return", "void", "while"
 ]
