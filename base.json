@@ -9,13 +9,15 @@
         "production": {"left": "<函数名>", "right": ["$identifier"]},
         "action": [
             "checkFuncNotDefined(@r0.cont, @r0)",
-            "ldict.func->append(@r0.cont)"
+            "ldict.func->append(@r0.cont)",
+            "@l.cont=@r0.cont",
+            "@l.debug_pos=@r0.debug_pos"
         ]
     },
     {
         "production": {"left": "<程序>", "right": ["<类型>","<函数名>","$(", "$)", "<语句块>"]},
         "action": [
-            
+            "checkHasReturn(@r1.cont, @r1); ldict.return=0;"
         ]
     },
     {
@@ -93,7 +95,8 @@
     {
         "production":{"left": "<return语句>", "right": ["$return","<return内容>","$;"]},
         "action": [
-            
+            "emit('ret','','','')",
+            "ldict.return += 1"
         ]
     },
     {
@@ -104,7 +107,7 @@
     },{
         "production":{"left": "<return内容>", "right": ["<表达式>"]},
         "action": [
-            "emit('=', @r1.val, '', '#eax')"
+            "emit('=', @r0.val, '', '#eax')"
         ]
     },
     {
@@ -153,40 +156,85 @@
     {
         "production":{"left": "<布尔表达式>", "right": ["<布尔or表达式>"]},
         "action": [
-            
+            "@l.val=newVar()",
+            "@l.quad=nextquad",
+            "emit('=','1','',@l.val)",
+            "emit('j','','',@l.quad+3)",
+            "emit('=','0','',@l.val)",
+            "batchlist(@r0.t, @l.quad)",
+            "batchlist(@r0.f, @l.quad+2)"
         ]
     },
     {
-        "production":{"left": "<布尔or表达式>", "right": ["<布尔and表达式>"]},
+        "production":{"left": "<布尔or表达式>", "right": ["<布尔and表达式>", "<布尔or追加>"]},
         "action": [
-            
+            "if @r1.end: @l.t=@r0.t; @l.f=@r0.f;",
+            "if not @r1.end: @l.f=@r1.f; @l.t=mergelist(@r0.t, @r1.t);",
+            "if not @r1.end: batchlist(@r0.f, @r1.quad)"
+        ]
+    },
+    {
+        "production":{"left": "<布尔or追加>", "right": ["<or符号>", "<布尔and表达式>", "<布尔or追加>"]},
+        "action": [
+            "@l.end=False",
+            "if @r2.end: @l.t=@r1.t; @l.f=@r1.f;",
+            "if not @r2.end: @l.f=@r2.f; @l.t=mergelist(@r1.t, @r2.t);",
+            "@l.quad=@r0.quad",
+            "if not @r2.end: batchlist(@r1.f, @r2.quad)"
+        ]
+    },
+    {
+        "production":{"left": "<布尔or追加>", "right": []},
+        "action": [
+            "@l.end=True"
+        ]
+    },
+    {
+        "production":{"left": "<or符号>", "right": ["$or"]},
+        "action": [
+            "@l.quad=nextquad"
+        ]
+    },
+    {
+        "production":{"left": "<or符号>", "right": ["$||"]},
+        "action": [
+            "@l.quad=nextquad"
         ]
     },
     {
         "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>", "<布尔and追加>"]},
         "action": [
             "if @r1.end: @l.t=@r0.t; @l.f=@r0.f;",
-            "if not @r1.end: @l.t=@r1.t; @l.f=mergelist(@r0.f, @r1.f);"
+            "if not @r1.end: @l.t=@r1.t; @l.f=mergelist(@r0.f, @r1.f);",
+            "if not @r1.end: batchlist(@r0.t, @r1.quad)"
         ]
     },
     {
-        "production":{"left": "<布尔and追加>", "right": ["<and符号>", "<布尔not表达式>", "<布尔and追加>"]},
+        "production":{"left": "<布尔and追加>", "right": ["<and符号>","<M>", "<布尔not表达式>", "<布尔and追加>"]},
         "action": [
             "@l.end=False",
-            "if @r2.end: @l.t=@r1.t; @l.f=@r1.f;",
-            "if not @r2.end: @l.t=@r2.t; @l.f=mergelist(@r1.f, @r2.f);"
+            "if @r3.end: @l.t=@r2.t; @l.f=@r2.f;",
+            "if not @r3.end: @l.t=@r3.t; @l.f=mergelist(@r2.f, @r3.f);",
+            "@l.quad=@r1.quad",
+            "if not @r3.end: batchlist(@r2.t, @r3.quad)"
+        ]
+    },
+    {
+        "production":{"left": "<and符号>", "right": ["$and"]},
+        "action": [
+            
+        ]
+    },
+    {
+        "production":{"left": "<and符号>", "right": ["$&&"]},
+        "action": [
+            
         ]
     },
     {
         "production":{"left": "<布尔and追加>", "right": []},
         "action": [
             "@l.end=True"
-        ]
-    },
-    {
-        "production":{"left": "<and符号>", "right": ["$and"]},
-        "action": [
-            "@l.quad=nextquad"
         ]
     },
     {
@@ -197,10 +245,28 @@
         ]
     },
     {
-        "production":{"left": "<布尔not表达式>", "right": ["$not","<布尔因子>"]},
+        "production":{"left": "<布尔not表达式>", "right": ["<not符号>","<布尔因子>"]},
         "action": [
             "@l.t=@r1.f",
             "@l.f=@r1.t"
+        ]
+    },
+    {
+        "production":{"left": "<not符号>", "right": ["$not"]},
+        "action": [
+
+        ]
+    },
+    {
+        "production":{"left": "<not符号>", "right": ["$~"]},
+        "action": [
+
+        ]
+    },
+    {
+        "production":{"left": "<not符号>", "right": ["$!"]},
+        "action": [
+
         ]
     },
     {
