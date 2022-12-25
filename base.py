@@ -74,17 +74,19 @@ def findSymbolFirst(sym):
                     f.append('@') #将空集加入
                 elif isTerminalSymbol(p['right'][0]): #或者他是终结符
                     f.append(p['right'][0]) #将该终结符加入
-                else:
-                    for x in p['right']:
+                for x in p['right']:
+                    if x != sym:
                         nf = findSymbolFirst(x) #递归求解其元素
-                        if '@' in nf:#如果存在空集
-                            nf.remove('@')#那么删除空集
-                            f += nf
-                        else:
-                            f += nf
-                            break
                     else:
-                        f.append('@') #全部都含有空，将空集加入
+                        break
+                    if '@' in nf:#如果存在空集
+                        nf.remove('@')#那么删除空集
+                        f += nf
+                    else:
+                        f += nf
+                        break
+                else:
+                    f.append('@') #全部都含有空，将空集加入
     first[sym] = f #保存该元素值
     return f
 for x in symbol_list: #求所有元素的first集

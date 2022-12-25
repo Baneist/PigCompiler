@@ -4,10 +4,6 @@ int main(){
     int b;
     int c;
     int d;
-    if(a == b && b==c || b){
-        cnt=1;
-    } else {
-        cnt=2;
-    }
+    c = 3+4+5+6;
     return cnt;
 }
