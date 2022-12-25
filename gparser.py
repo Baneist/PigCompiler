@@ -58,14 +58,21 @@ def initProjectSet():
                 project_set.append(next_set)
             if len(next_set) > 0: debug_.append("#{}=<{},{}>:{}\n".format(project_set.index(next_set), top, x,next_set))
             if len(next_set) > 0:
-                if not isTerminalSymbol(x): #如果x不是终结符，那么填goto集
-                    action_goto[(top,x)] = ['g', project_set.index(next_set)]
-                else: #否则填在移进集
-                    action_goto[(top, x)] = ['s', project_set.index(next_set)]
+                t = action_goto.get((top, x))
+                if t is not None:
+                    print("工程错误: 规约与规约冲突,状态号为#{} #{},接受字符为 {} .\n".format(t[0], project_set.index(next_set), x))
+                action_goto[(top,x)] = ['g' if not isTerminalSymbol(x) else 's', project_set.index(next_set)] #如果x不是终结符，那么填goto集, 否则填在移进集
         for wt in project_set[top]:
             if wt['dot'] == len(wt['right']):#遍历next集中的规约项目
                 ns = {'left':wt['left'], 'right':wt['right']} #将action_goto集的accept位设为规约
-                action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
+                t = action_goto.get((top, wt['accept']))
+                if t is None:#正确填入
+                    action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
+                elif t[0] == 'r': #两个规约项目冲突：
+                    raise Exception("工程错误: 规约项目冲突,接受字符为 {} .\n{}\n{}".format(wt['accept'], productions[t[1]], ns))
+                else:
+                    action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
+                    print("工程错误: #{} 规约与移进冲突,状态号为#{},接受字符为 {} .\n{}".format(top, t[1],wt['accept'], ns))
         top += 1 #选取下一个集合进行操作
 
 def GParser():

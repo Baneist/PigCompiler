@@ -102,6 +102,7 @@ mid_code = []
 nextquad = 100
 list_dict = {
     'var': [],
-    'func': [],
+    'func': {},
     'return': 0,
+    'funcstack': [],
 }

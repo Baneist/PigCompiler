@@ -9,13 +9,14 @@
         "production": {"left": "<函数名>", "right": ["$identifier"]},
         "action": [
             "checkFuncNotDefined(@r0.cont, @r0)",
-            "ldict.func->append(@r0.cont)",
+            "ldict.func[@r0.cont]=0",
             "@l.cont=@r0.cont",
-            "@l.debug_pos=@r0.debug_pos"
+            "@l.debug_pos=@r0.debug_pos",
+            "ldict.nowfunc = @r0.cont"
         ]
     },
     {
-        "production": {"left": "<程序>", "right": ["<类型>","<函数名>","$(", "$)", "<语句块>"]},
+        "production": {"left": "<程序>", "right": ["<类型>","<函数名>","$(","$)", "<语句块>"]},
         "action": [
             "checkHasReturn(@r1.cont, @r1); ldict.return=0;"
         ]
@@ -221,21 +222,16 @@
         ]
     },
     {
-        "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>", "<布尔and追加>"]},
+        "production":{"left": "<布尔and表达式>", "right": ["<布尔not表达式>"]},
         "action": [
-            "if @r1.end: @l.t=@r0.t; @l.f=@r0.f;",
-            "if not @r1.end: @l.t=@r1.t; @l.f=mergelist(@r0.f, @r1.f);",
-            "if not @r1.end: batchlist(@r0.t, @r1.quad)"
+            "@l.t=@r0.t; @l.f=@r0.f;"
         ]
     },
     {
-        "production":{"left": "<布尔and追加>", "right": ["<and符号>","<M>", "<布尔not表达式>", "<布尔and追加>"]},
+        "production":{"left": "<布尔and表达式>", "right": ["<布尔and表达式>", "<and符号>","<M>", "<布尔not表达式>"]},
         "action": [
-            "@l.end=False",
-            "if @r3.end: @l.t=@r2.t; @l.f=@r2.f;",
-            "if not @r3.end: @l.t=@r3.t; @l.f=mergelist(@r2.f, @r3.f);",
-            "@l.quad=@r1.quad",
-            "if not @r3.end: batchlist(@r2.t, @r3.quad)"
+            "@l.t=@r3.t; @l.f=mergelist(@r0.f, @r3.f);",
+            "batchlist(@r0.t, @r2.quad)"
         ]
     },
     {
@@ -248,12 +244,6 @@
         "production":{"left": "<and符号>", "right": ["$&&"]},
         "action": [
             
-        ]
-    },
-    {
-        "production":{"left": "<布尔and追加>", "right": []},
-        "action": [
-            "@l.end=True"
         ]
     },
     {
@@ -303,21 +293,25 @@
         ]
     },
     {
-        "production":{"left": "<比较表达式>", "right": ["<加法表达式>", "<比较符号>", "<加法表达式>"]},
+        "production":{"left": "<比较表达式>", "right": ["<表达式>", "<比较>"]},
         "action": [
-            "@l.t=makelist(nextquad)",
-            "@l.f=makelist(nextquad+1)",
-            "emit('j'+@r1.cont, @r0.val, @r2.val, 0)",
-            "emit('j', '', '', 0)"
+            "if not @r1.has: @l.t=makelist(nextquad);@l.f=makelist(nextquad+1);emit('jnz', @r0.val,'', 0);emit('j', '', '', 0);",
+            "if @r1.has: backFill(@r1.quad, (None,@r0.val,None,None));@l.t=@r1.t;@l.f=@r1.f;"
         ]
     },
     {
-        "production":{"left": "<比较表达式>", "right": ["<加法表达式>"]},
+        "production":{"left": "<比较>", "right": []},
         "action": [
-            "@l.t=makelist(nextquad)",
-            "@l.f=makelist(nextquad+1)",
-            "emit('jnz', @r0.val, '', 0)",
-            "emit('j', '', '', 0)"
+            "@l.has=False"
+        ]
+    },
+    {
+        "production":{"left": "<比较>", "right": ["<比较符号>", "<表达式>"]},
+        "action": [
+            "@l.has=True",
+            "@l.quad=nextquad",
+            "@l.t=makelist(nextquad);@l.f=makelist(nextquad+1);",
+            "emit('j'+@r0.cont,'', @r1.val, 0);emit('j', '', '', 0);"
         ]
     },
     {
@@ -362,36 +356,16 @@
         ]
     },
     {
-        "production":{"left": "<加法表达式>", "right": ["<项>", "<M>", "<加法追加>"]},
+        "production":{"left": "<加法表达式>", "right": ["<项>"]},
         "action": [
-            "@l.val=@r0.val",
-            "if not @r2.end: @l.val=@r2.val",
-            "if not @r2.end: backFill(@r2.quad, (None, @r0.val, None, None))"
+            "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<加法追加>", "right": ["<加法符号>","<项>","<加法产生>","<加法追加>"]},
-        "action": [
-            "@l.end=False",
-            "@l.quad=@r2.quad-1",
-            "backFill(@r2.quad-1, (@r0.cont, None, @r1.val, None))",
-            "if not @r3.end: backFill(@r3.quad, (None, @r2.val, None, None))",
-            "@l.val=@r2.val",
-            "if not @r3.end: @l.val=@r3.val"
-        ]
-    },
-    {
-        "production":{"left": "<加法产生>", "right": []},
+        "production":{"left": "<加法表达式>", "right": ["<加法表达式>","<加法符号>","<项>"]},
         "action": [
             "@l.val=newVar()",
-            "emit('', '', '', @l.val)",
-            "@l.quad=nextquad"
-        ]
-    },
-    {
-        "production":{"left": "<加法追加>", "right": []},
-        "action": [
-            "@l.end=True"
+            "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
         ]
     },
     {
@@ -407,36 +381,16 @@
         ]
     },
     {
-        "production":{"left": "<项>", "right": ["<因子>", "<M>", "<项追加>"]},
+        "production":{"left": "<项>", "right": ["<因子>"]},
         "action": [
-            "@l.val=@r0.val",
-            "if not @r2.end: @l.val=@r2.val",
-            "if not @r2.end: backFill(@r2.quad, (None, @r0.val, None, None))"
+            "@l.val=@r0.val"
         ]
     },
     {
-        "production":{"left": "<项追加>", "right": ["<项符号>","<因子>","<项产生>","<项追加>"]},
-        "action": [
-            "@l.end=False",
-            "@l.quad=@r2.quad-1",
-            "backFill(@r2.quad-1, (@r0.cont, None, @r1.val, None))",
-            "if not @r3.end: backFill(@r3.quad, (None, @r2.val, None, None))",
-            "@l.val=@r2.val",
-            "if not @r3.end: @l.val=@r3.val"
-        ]
-    },
-    {
-        "production":{"left": "<项产生>", "right": []},
+        "production":{"left": "<项>", "right": ["<项>", "<项符号>", "<因子>"]},
         "action": [
             "@l.val=newVar()",
-            "emit('', '', '', @l.val)",
-            "@l.quad=nextquad"
-        ]
-    },
-    {
-        "production":{"left": "<项追加>", "right": []},
-        "action": [
-            "@l.end=True"
+            "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
         ]
     },
     {
@@ -480,46 +434,44 @@
         ]
     },
     {
-        "production":{"left": "<FTYPE>", "right": ["<函数调用>"]},
+        "production":{"left": "<FTYPE>", "right": ["<函数过程>"]},
         "action": [
-            "@l.mode='f'"
+            "@l.mode='f'",
+            "for i in @r0.varlist:\n emit('par',i,'','')"
         ]
     },
     {
-        "production":{"left": "<函数调用>", "right": ["$(","<实参列表>","$)"]},
+        "production":{"left": "<函数过程>", "right": ["$(","<参数列表>","$)"]},
         "action": [
-            
+            "@l.varlist=@r1.varlist"
         ]
     },
     {
-        "production":{"left": "<实参列表>", "right": []},
+        "production":{"left": "<参数列表>", "right": []},
         "action": [
-            
+            "@l.cnt=0",
+            "@l.varlist=[]"
         ]
     },
     {
-        "production":{"left": "<实参>", "right": ["<表达式>"]},
+        "production":{"left": "<参数列表>", "right": ["<追加参数列表>"]},
         "action": [
-            "emit('par', '@r0.val')"
+            "@l.cnt=@r0.cnt",
+            "@l.varlist=@r0.varlist"
         ]
     },
     {
-        "production":{"left": "<实参列表>", "right": ["<实参>", "<追加实参列表>"]},
+        "production":{"left": "<追加参数列表>", "right": ["<表达式>"]},
         "action": [
-            
+            "@l.cnt=1",
+            "@l.varlist=makelist(@r0.val)"
         ]
     },
     {
-        "production":{"left": "<追加实参列表>", "right": []},
+        "production":{"left": "<追加参数列表>", "right": ["<追加参数列表>", "$,", "<表达式>"]},
         "action": [
-            
-        ]
-    },
-    {
-        "production":{"left": "<追加实参列表>", "right": ["$,","<实参>", "<追加实参列表>"]},
-        "action": [
-            
+            "@l.cnt=@r0.cnt+1",
+            "@l.varlist=mergelist(@r0.varlist, makelist(@r2.val))"
         ]
     }
-
 ]
