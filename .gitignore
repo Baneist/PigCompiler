@@ -1,8 +1,5 @@
 *.o
 Makefile
-*.exe
-*.out
-*.bat
 .vscode
 __pycache__
 build
