@@ -59,11 +59,15 @@ def isTerminalSymbol(word):
     return False
 
 first = {'#':['#']} #所有非终结符的first集，空集用'@'表示
+fset = set()
 def findSymbolFirst(sym):
-    global first
+    global first, fset
+    if sym in fset: return []
+    fset.add(sym)
     f=[] #初始化first集为空
     if sym in first: #如果它已经计算完毕，则直接返回
         f=deepcopy(first[sym])
+        fset.remove(sym)
         return f
     if isTerminalSymbol(sym): #如果他是终结符，直接返回它自己
         f.append(sym)
@@ -88,6 +92,7 @@ def findSymbolFirst(sym):
                 else:
                     f.append('@') #全部都含有空，将空集加入
     first[sym] = f #保存该元素值
+    fset.remove(sym)
     return f
 for x in symbol_list: #求所有元素的first集
     findSymbolFirst(x)

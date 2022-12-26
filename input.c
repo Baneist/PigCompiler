@@ -8,7 +8,7 @@ int main(){
     int b;
     int c;
     int d;
-    if((2+3)*a){
+    if(2+a>=(1)){
         a = main(1);
         c = 1;
     } else {

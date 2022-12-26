@@ -46,6 +46,7 @@ def findGoto(proj, sym)->list: #通过输入的项目集和sym找其goto后的cl
 debug_ = []
 
 def initProjectSet():
+    rset = ['']
     start = deepcopy(productions[0])
     start['dot'], start['accept'] = 0, '#'#生成初始集合
     c = findClosure([start]) #求解初始集合的闭包并加入有效项目集中
@@ -55,7 +56,7 @@ def initProjectSet():
         for x in symbol_list: #对每一个正在被搜索的状态集：
             next_set = findGoto(project_set[top], x)
             if len(next_set) > 0 and not next_set in project_set:#将新构造的集合放入项目簇中
-                project_set.append(next_set)
+                project_set.append(next_set); rset.append(rset[top]+x);
             if len(next_set) > 0: debug_.append("#{}=<{},{}>:{}\n".format(project_set.index(next_set), top, x,next_set))
             if len(next_set) > 0:
                 t = action_goto.get((top, x))
@@ -71,8 +72,9 @@ def initProjectSet():
                 elif t[0] == 'r': #两个规约项目冲突：
                     raise Exception("工程错误: 规约项目冲突,接受字符为 {} .\n{}\n{}".format(wt['accept'], productions[t[1]], ns))
                 else:
-                    action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
-                    print("工程错误: #{} 规约与移进冲突,状态号为#{},接受字符为 {} .\n{}\n{}\n{}".format(top, t[1],wt['accept'], ns, P2LR0(project_set[t[1]]), P2LR0(project_set[top])))
+                    #action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
+                    #print("工程错误: 现状态#{} 规约与移进状态#{}冲突\n#{} :接受字符为{}.\n{}\n{}".format(top, t[1],rset[top],wt['accept'], ns, P2LR0(project_set[t[1]])))
+                    pass
         top += 1 #选取下一个集合进行操作
 
 def GParser():
