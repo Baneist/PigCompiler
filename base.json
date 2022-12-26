@@ -6,17 +6,36 @@
         ]
     },
     {
+        "production": {"left": "<程序>", "right": []},
+        "action": [
+            "#emit('j','main','',0)"
+        ]
+    },
+    {
+        "production": {"left": "<程序>", "right": ["<程序>", "<程序块>"]},
+        "action": [
+            
+        ]
+    },
+    {
+        "production": {"left": "<程序块>", "right": ["<函数>"]},
+        "action": [
+            
+        ]
+    },
+    {
         "production": {"left": "<函数名>", "right": ["$identifier"]},
         "action": [
             "checkFuncNotDefined(@r0.cont, @r0)",
             "ldict.func[@r0.cont]=0",
             "@l.cont=@r0.cont",
             "@l.debug_pos=@r0.debug_pos",
-            "ldict.nowfunc = @r0.cont"
+            "ldict.nowfunc = @r0.cont",
+            "@l.quad=nextquad"
         ]
     },
     {
-        "production": {"left": "<程序>", "right": ["<类型>","<函数名>","$(","$)", "<语句块>"]},
+        "production": {"left": "<函数>", "right": ["<类型>","<函数名>","$(","$)", "<语句块>"]},
         "action": [
             "checkHasReturn(@r1.cont, @r1); ldict.return=0;"
         ]

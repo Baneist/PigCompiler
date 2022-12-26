@@ -1,14 +1,18 @@
+int binary(){
+    return 1;
+}
+
 int main(){
     int cnt;
     int a;
     int b;
     int c;
     int d;
-    if(a == b && b == c && c == d){
-        a = main(1,2,3);
+    if((2+3)*a){
+        a = main(1);
         c = 1;
     } else {
-        b = 2;
+        b = b;
         d = b;
     }
     return cnt;

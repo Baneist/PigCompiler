@@ -106,3 +106,13 @@ list_dict = {
     'return': 0,
     'funcstack': [],
 }
+
+def P2LR0(pst):
+    lst = []
+    ret = ''
+    for p in pst:
+        a = {'left': p['left'], 'right': p['right'], 'dot': p['dot']}
+        if a not in lst:
+            lst.append(a)
+            ret += ':'+str(a)+'\n'
+    return ret

@@ -1,4 +1,4 @@
-from base import args, productions, project_set, symbol_list, isTerminalSymbol, action_goto, findSymbolFirst, w_dict, grammar_tree, addGrammarTreeNode, getErrorCodeLine
+from base import args, productions, project_set, symbol_list, isTerminalSymbol, action_goto, findSymbolFirst, w_dict, grammar_tree, addGrammarTreeNode, getErrorCodeLine, P2LR0
 from analyser import analysis
 from copy import deepcopy
 
@@ -72,7 +72,7 @@ def initProjectSet():
                     raise Exception("工程错误: 规约项目冲突,接受字符为 {} .\n{}\n{}".format(wt['accept'], productions[t[1]], ns))
                 else:
                     action_goto[(top, wt['accept'])] = ['r', productions.index(ns)] if ns['left'] != '<开始>' else ['acc']
-                    print("工程错误: #{} 规约与移进冲突,状态号为#{},接受字符为 {} .\n{}".format(top, t[1],wt['accept'], ns))
+                    print("工程错误: #{} 规约与移进冲突,状态号为#{},接受字符为 {} .\n{}\n{}\n{}".format(top, t[1],wt['accept'], ns, P2LR0(project_set[t[1]]), P2LR0(project_set[top])))
         top += 1 #选取下一个集合进行操作
 
 def GParser():
