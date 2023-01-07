@@ -505,7 +505,7 @@
         ]
     },
     {
-        "production":{"left": "<因子>", "right": ["<因子标识>", "<FTYPE>"]},
+        "production":{"left": "<因子>", "right": ["$identifier", "<FTYPE>"]},
         "action": [
             "if @r1.mode=='v': checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
             "if @r1.mode=='v': @l.val=@r0.cont; @l.type=getVarType(@r0.cont)",
@@ -513,13 +513,6 @@
             "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
             "if @r1.mode=='f': @l.val='#eax'; @l.type=ldict.functype[@r0.cont]",
             "if @l.type == 'void': ldict.last_void = @r0"
-        ]
-    },
-    {
-        "production":{"left": "<因子标识>", "right": ["$identifier"]},
-        "action": [
-            "@l.cont=@r1.cont; @l.type=@r1.type",
-            "ldict.last_var=@r1.cont"
         ]
     },
     {
