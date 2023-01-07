@@ -25,6 +25,10 @@ def checkHasReturn(fname, node):
     if ldict['return'] == 0:
         raise Exception('\033[1;31;31m[Error]#305 in line {}, position {}: Function <{}> doesn\'t have return statement.\n{}'.format(*node['debug_pos'], fname, getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
+def checkFuncParNum(fname, num, node):
+    if ldict['func'][fname] != num:
+        raise Exception('\033[1;31;31m[Error]#306 in line {}, position {}: Call <{}> mismatch parameters, need {} but give {}.\n{}'.format(*node['debug_pos'], fname,ldict['func'][fname],num,getErrorCodeLine(*node['debug_pos'], node['cont'])))
+
 #工作函数
 def emit(expr, t1, t2, s1):
     global nextquad
@@ -44,7 +48,7 @@ def newVar(): #新建一个普通变量
     global var_num
     name = 'tmp_' + str(var_num)
     var_num += 1
-    ldict['var'].append((name, 4))
+    ldict['var'].append((name, 4, ldict['nowfunc']))
     return name
 
 def makelist(i): #生成布尔表达式的链

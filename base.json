@@ -12,15 +12,27 @@
         ]
     },
     {
-        "production": {"left": "<程序>", "right": ["<程序>", "<程序块>"]},
+        "production": {"left": "<程序>", "right": ["<程序块>", "<程序>"]},
         "action": [
             
         ]
     },
     {
-        "production": {"left": "<程序块>", "right": ["<函数>"]},
+        "production": {"left": "<程序块>", "right": ["<变量与函数声明>"]},
         "action": [
             
+        ]
+    },
+    {
+        "production": {"left": "<变量与函数声明>", "right": ["<类型>", "<标识定义>"]},
+        "action": [
+            "if @r1.type == 'v': ldict.var->append((@r1.cont, 4, '$global'))"
+        ]
+    },
+    {
+        "production": {"left": "<标识定义>", "right": ["$identifier", "$;"]},
+        "action": [
+            "@l.type = 'v'; @l.cont = @r0.cont"
         ]
     },
     {
@@ -31,13 +43,45 @@
             "@l.cont=@r0.cont",
             "@l.debug_pos=@r0.debug_pos",
             "ldict.nowfunc = @r0.cont",
-            "@l.quad=nextquad"
+            "@l.quad=nextquad",
+            "emit(@r0.cont+':','','','')"
         ]
     },
     {
-        "production": {"left": "<函数>", "right": ["<类型>","<函数名>","$(","$)", "<语句块>"]},
+        "production": {"left": "<标识定义>", "right": ["<函数名>","$(","<函数形参定义>","$)", "<语句块>"]},
         "action": [
-            "checkHasReturn(@r1.cont, @r1); ldict.return=0;"
+            "@l.type='f'",
+            "checkHasReturn(@r0.cont, @r0);"
+        ]
+    },
+    {
+        "production": {"left": "<函数形参定义>", "right": []},
+        "action": [
+            "ldict.func[ldict.nowfunc]=0"
+        ]
+    },
+    {
+        "production": {"left": "<函数形参定义>", "right": ["<形参>", "<追加形参定义>"]},
+        "action": [
+            "ldict.func[ldict.nowfunc]=@r1.cnt+1"
+        ]
+    },
+    {
+        "production": {"left": "<追加形参定义>", "right": ["$,","<形参>", "<追加形参定义>"]},
+        "action": [
+            "@l.cnt=@r2.cnt+1"
+        ]
+    },
+    {
+        "production": {"left": "<追加形参定义>", "right": []},
+        "action": [
+            "@l.cnt=0"
+        ]
+    },
+    {
+        "production": {"left": "<形参>", "right": ["$int", "$identifier"]},
+        "action": [
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc))"
         ]
     },
     {
@@ -73,7 +117,7 @@
     {
         "production":{"left": "<内部变量声明>", "right": ["$int", "$identifier"]},
         "action": [
-            "ldict.var->append((@r1.cont, 4))"
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc))"
         ]
     },
     {
@@ -435,7 +479,7 @@
         "action": [
             "if @r1.mode=='v': checkVarDefined(@r0.cont, @r0)",
             "if @r1.mode=='v': @l.val=@r0.cont",
-            "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0)",
+            "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0); checkFuncParNum(@r0.cont,@r1.cnt, @r0);",
             "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
             "if @r1.mode=='f': @l.val='#eax'"
         ]
@@ -456,7 +500,8 @@
         "production":{"left": "<FTYPE>", "right": ["<函数过程>"]},
         "action": [
             "@l.mode='f'",
-            "for i in @r0.varlist:\n emit('par',i,'','')"
+            "for i in @r0.varlist:\n emit('par',i,'','')",
+            "@l.cnt=len(@r0.varlist)"
         ]
     },
     {
