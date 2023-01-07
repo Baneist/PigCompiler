@@ -34,7 +34,7 @@ def dealWorkString(): #词法分析
                 w_type = '$digit_int'
                 word = word
             else:
-                w_type = '$digit_int'#由于还没有实现浮点数，先当作整形数
+                w_type = '$digit_float'
                 word = word
         elif w_str[ptr].isalpha() or w_str[ptr] == '_': #处理单词
             ret = re.search('\\w*', w_str[ptr:])

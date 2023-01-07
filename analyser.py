@@ -1,4 +1,4 @@
-from base import prod_actions, productions, grammar_tree, getErrorCodeLine
+from base import prod_actions, productions, grammar_tree, getErrorCodeLine, args
 from base import nextquad, mid_code, list_dict as ldict
 import re
 
@@ -29,6 +29,10 @@ def checkFuncParNum(fname, num, node):
     if ldict['func'][fname] != num:
         raise Exception('\033[1;31;31m[Error]#306 in line {}, position {}: Call <{}> mismatch parameters, need {} but give {}.\n{}'.format(*node['debug_pos'], fname,ldict['func'][fname],num,getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
+def WarningVarType(type1,type2,node):
+    if maxType(type1, type1, 0) < maxType(type2, type2, 0):
+        print('\033[1;31;35m[Warning]#101 in line {}, position {}: Potential type downgrading <{}> to <{}>.\n{}'.format(*node['debug_pos'],type2,type1,getErrorCodeLine(*node['debug_pos'], node['cont'])))
+
 #工作函数
 def emit(expr, t1, t2, s1):
     global nextquad
@@ -44,12 +48,16 @@ def backFill(no, tup):
     mid_code[no-100] = (a[0],a[1],a[2],a[3])
 
 var_num = 0
-def newVar(): #新建一个普通变量
+def newVar(type): #新建一个普通变量
     global var_num
     name = 'tmp_' + str(var_num)
     var_num += 1
-    ldict['var'].append((name, 4, ldict['nowfunc']))
+    ldict['var'].append((name, 4, ldict['nowfunc'], type))
     return name
+
+def maxType(a , b, tostr=True):
+    type = ['void', 'int', 'float']
+    return type[max(type.index(a), type.index(b))] if tostr else max(type.index(a), type.index(b))
 
 def makelist(i): #生成布尔表达式的链
     return [i]
@@ -67,7 +75,7 @@ def batchlist(li, no):#li：需要串联的链 no：链接上的语句号
 def analysis(id, last_oper):
     for lst in prod_actions[last_oper]:
         if lst != 'pass':
-            #print(lst) #输出当前执行的语句
+            if args.analysis_output: print(lst) #输出当前执行的语句
             lst = re.sub(r'\.(\w+)',lambda x: "['{}']".format(x.group(1)), lst)#翻译 将.val 翻成['val']
             lst = re.sub(r'@l',"grammar_tree[id]", lst) #翻译 将@l 翻成实际左边元素
             lst = re.sub(r'@r(\d+)',lambda x: "grammar_tree[{}]".format(grammar_tree[id]['son'][int(x.group(1))]), lst) #翻译 将@r1 翻译为实际右边元素
@@ -78,6 +86,16 @@ def analysis(id, last_oper):
                 print(err)
                 return False
     return True
+
+def getVarType(var):
+    save = None
+    for t in ldict['var']:
+        if t[0] == var:
+            if t[2] == ldict['nowfunc']:
+                return t[3]
+            elif t[2] == '$global':
+                save = t[3]
+    return save
 
 def midCodeSave(filename):
     with open(filename, 'w', encoding='utf-8') as f:

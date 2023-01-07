@@ -61,7 +61,7 @@ def initProjectSet():
             if len(next_set) > 0:
                 t = action_goto.get((top, x))
                 if t is not None:
-                    print("工程错误: 规约与规约冲突,状态号为#{} #{},接受字符为 {} .\n".format(t[0], project_set.index(next_set), x))
+                    print("工程错误: 移进项目冲突,状态号为#{} #{},接受字符为 {} .\n".format(t[0], project_set.index(next_set), x))
                 action_goto[(top,x)] = ['g' if not isTerminalSymbol(x) else 's', project_set.index(next_set)] #如果x不是终结符，那么填goto集, 否则填在移进集
         for wt in project_set[top]:
             if wt['dot'] == len(wt['right']):#遍历next集中的规约项目

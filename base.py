@@ -7,6 +7,7 @@ parser.add_argument('src', type=str, nargs='?', default='input.c', help='Input F
 parser.add_argument('-debug', type=int, default=0, help='Activate debug output.')
 parser.add_argument('-output', type=str, default='output.txt', help='Output File.')
 parser.add_argument('-tree', type=int, default=1, help='Show Syntax Tree.')
+parser.add_argument('-analysis_output', type=int, default=0, help='Show Analysis Output.')
 args = parser.parse_args()
 
 #词法分析BASE
@@ -111,6 +112,7 @@ list_dict = {
     'func': {},
     'return': 0,
     'funcstack': [],
+    'functype':{},
 }
 
 def P2LR0(pst):

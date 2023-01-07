@@ -24,9 +24,18 @@
         ]
     },
     {
-        "production": {"left": "<变量与函数声明>", "right": ["<类型>", "<标识定义>"]},
+        "production": {"left": "<变量与函数声明>", "right": ["<声明类型>", "<标识定义>"]},
         "action": [
-            "if @r1.type == 'v': ldict.var->append((@r1.cont, 4, '$global'))"
+            "if @r1.type == 'v': ldict.var->append((@r1.cont, 4, '$global', @r0.type))"
+            
+        ]
+    },
+    {
+        "production": {"left": "<声明类型>", "right": ["<类型>"]},
+        "action": [
+            "@l.type = @r0.type",
+            "ldict.t_type = @r0.type"
+            
         ]
     },
     {
@@ -40,7 +49,7 @@
         "production": {"left": "<函数名>", "right": ["$identifier"]},
         "action": [
             "checkFuncNotDefined(@r0.cont, @r0)",
-            "ldict.func[@r0.cont]=0; ldict.return=0",
+            "ldict.func[@r0.cont]=0; ldict.return=0; ldict.functype[@r0.cont]=ldict.t_type",
             "@l.cont=@r0.cont",
             "@l.debug_pos=@r0.debug_pos",
             "ldict.nowfunc = @r0.cont",
@@ -80,13 +89,19 @@
         ]
     },
     {
-        "production": {"left": "<形参>", "right": ["$int", "$identifier"]},
+        "production": {"left": "<形参>", "right": ["<类型>", "$identifier"]},
         "action": [
-            "ldict.var->append((@r1.cont, 4, ldict.nowfunc))"
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type))"
         ]
     },
     {
         "production":{"left": "<类型>", "right": ["$int"]},
+        "action": [
+            "@l.type=@r0.cont"
+        ]
+    },
+    {
+        "production":{"left": "<类型>", "right": ["$float"]},
         "action": [
             "@l.type=@r0.cont"
         ]
@@ -104,10 +119,10 @@
         ]
     },
     {
-        "production":{"left": "<内部变量声明>", "right": ["$int", "$identifier", "$;"]},
+        "production":{"left": "<内部变量声明>", "right": ["<类型>", "$identifier", "$;"]},
         "action": [
             "checkVarNotDefined(@r1.cont, ldict.nowfunc, @r1)",
-            "ldict.var->append((@r1.cont, 4, ldict.nowfunc))"
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type))"
             
         ]
     },
@@ -230,13 +245,14 @@
         "production":{"left": "<赋值语句>", "right": ["$identifier", "$=", "<表达式>", "$;"]},
         "action": [
             "checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
+            "WarningVarType(getVarType(@r0.cont), @r2.type, @r0)",
             "emit('=', @r2.val, '', @r0.cont)"
         ]
     },
     {
         "production":{"left": "<表达式>", "right": ["<加法表达式>"]},
         "action": [
-            "@l.val=@r0.val"
+            "@l.type=@r0.type;@l.val=@r0.val"
         ]
     },
     {
@@ -418,13 +434,13 @@
     {
         "production":{"left": "<加法表达式>", "right": ["<项>"]},
         "action": [
-            "@l.val=@r0.val"
+            "@l.type=@r0.type;@l.val=@r0.val"
         ]
     },
     {
         "production":{"left": "<加法表达式>", "right": ["<加法表达式>","<加法符号>","<项>"]},
         "action": [
-            "@l.val=newVar()",
+            "@l.type = maxType(@r0.type, @r2.type); @l.val=newVar(@l.type)",
             "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
         ]
     },
@@ -443,13 +459,13 @@
     {
         "production":{"left": "<项>", "right": ["<因子>"]},
         "action": [
-            "@l.val=@r0.val"
+            "@l.val=@r0.val; @l.type = @r0.type"
         ]
     },
     {
         "production":{"left": "<项>", "right": ["<项>", "<项符号>", "<因子>"]},
         "action": [
-            "@l.val=newVar()",
+            "@l.type = maxType(@r0.type, @r2.type); @l.val=newVar(@l.type)",
             "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
         ]
     },
@@ -468,23 +484,31 @@
     {
         "production":{"left": "<因子>", "right": ["$digit_int"]},
         "action": [
-            "@l.val=@r0.cont"
+            "@l.val=@r0.cont",
+            "@l.type='int'"
+        ]
+    },
+    {
+        "production":{"left": "<因子>", "right": ["$digit_float"]},
+        "action": [
+            "@l.val=@r0.cont",
+            "@l.type='float'"
         ]
     },
     {
         "production":{"left": "<因子>", "right": ["$identifier", "<FTYPE>"]},
         "action": [
             "if @r1.mode=='v': checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
-            "if @r1.mode=='v': @l.val=@r0.cont",
+            "if @r1.mode=='v': @l.val=@r0.cont; @l.type=getVarType(@r0.cont)",
             "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0); checkFuncParNum(@r0.cont,@r1.cnt, @r0);",
             "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
-            "if @r1.mode=='f': @l.val='#eax'"
+            "if @r1.mode=='f': @l.val='#eax'; @l.type=ldict.functype[@r0.cont]"
         ]
     },
     {
         "production":{"left": "<因子>", "right": ["$(","<表达式>","$)"]},
         "action": [
-            "@l.val=@r1.val"
+            "@l.val=@r1.val; @l.type=@r1.type"
         ]
     },
     {
