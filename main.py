@@ -14,7 +14,7 @@ if __name__ == '__main__':
                 print('中间代码已输出到同级文件夹下..')
                 if(args.tree): 
                     drawSyntaxTree()
-                    print('中间代码为:', mid_code)
+                    #print('中间代码为:', mid_code)
     except FileNotFoundError as err:
         print('\033[1;31;31m[Error]#101\033[0m')
     if(args.debug): input("输入回车继续...")

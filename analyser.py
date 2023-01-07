@@ -11,13 +11,13 @@ def checkFuncNotDefined(name, node):
     if name in ldict['func']:
         raise Exception('\033[1;31;31m[Error]#302 in line {}, position {}: Function name <{}> has already defined.\n{}'.format(*node['debug_pos'], name, getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
-def checkVarDefined(name, node):
-    var_list = [x[0] for x in ldict['var']]
+def checkVarDefined(name,func,node):
+    var_list = [x[0] for x in ldict['var'] if x[2] == '$global' or x[2] == func]
     if name not in var_list:
         raise Exception('\033[1;31;31m[Error]#303 in line {}, position {}: Variable name <{}> not defined.\n{}'.format(*node['debug_pos'], name, getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
-def checkVarNotDefined(name, node):
-    var_list = [x[0] for x in ldict['var']]
+def checkVarNotDefined(name,func,node):
+    var_list = [x[0] for x in ldict['var'] if x[2] == func]
     if name in var_list:
         raise Exception('\033[1;31;31m[Error]#304 in line {}, position {}: Variable name <{}> has already defined.\n{}'.format(*node['debug_pos'], name, getErrorCodeLine(*node['debug_pos'], node['cont'])))
 

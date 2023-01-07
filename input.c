@@ -7,15 +7,19 @@ int t;
 int main(int x, int y){
     int cnt;
     int a;
+    
     int b;
-    int c;
-    int d;
     if(2+a>=(1)){
         a = main(1,a);
-        c = 1;
+        cnt = 1;
     } else {
-        b = b;
-        d = b;
+        int d;
+        int c;
+        c = a;
+        d = a;
+        t = 1;
     }
     return cnt;
 }
+
+int t;

@@ -32,7 +32,8 @@
     {
         "production": {"left": "<标识定义>", "right": ["$identifier", "$;"]},
         "action": [
-            "@l.type = 'v'; @l.cont = @r0.cont"
+            "@l.type = 'v'; @l.cont = @r0.cont",
+            "checkVarNotDefined(@l.cont,'$global', @r0)"
         ]
     },
     {
@@ -97,27 +98,17 @@
         ]
     },
     {
-        "production":{"left": "<语句块>", "right": ["${","<内部声明>","<语句串>","$}"]},
+        "production":{"left": "<语句块>", "right": ["${","<语句串>","$}"]},
         "action": [
             ""
         ]
     },
     {
-        "production":{"left": "<内部声明>", "right": []},
+        "production":{"left": "<内部变量声明>", "right": ["$int", "$identifier", "$;"]},
         "action": [
-            
-        ]
-    },
-    {
-        "production":{"left": "<内部声明>", "right": ["<内部变量声明>", "$;", "<内部声明>"]},
-        "action": [
-            
-        ]
-    },
-    {
-        "production":{"left": "<内部变量声明>", "right": ["$int", "$identifier"]},
-        "action": [
+            "checkVarNotDefined(@r1.cont, ldict.nowfunc, @r1)",
             "ldict.var->append((@r1.cont, 4, ldict.nowfunc))"
+            
         ]
     },
     {
@@ -152,6 +143,12 @@
     },
     {
         "production":{"left": "<语句>", "right": ["<赋值语句>"]},
+        "action": [
+            
+        ]
+    },
+    {
+        "production":{"left": "<语句>", "right": ["<内部变量声明>"]},
         "action": [
             
         ]
@@ -232,7 +229,7 @@
     {
         "production":{"left": "<赋值语句>", "right": ["$identifier", "$=", "<表达式>", "$;"]},
         "action": [
-            "checkVarDefined(@r0.cont, @r0)",
+            "checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
             "emit('=', @r2.val, '', @r0.cont)"
         ]
     },
@@ -477,7 +474,7 @@
     {
         "production":{"left": "<因子>", "right": ["$identifier", "<FTYPE>"]},
         "action": [
-            "if @r1.mode=='v': checkVarDefined(@r0.cont, @r0)",
+            "if @r1.mode=='v': checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
             "if @r1.mode=='v': @l.val=@r0.cont",
             "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0); checkFuncParNum(@r0.cont,@r1.cnt, @r0);",
             "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
