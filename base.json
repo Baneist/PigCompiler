@@ -39,7 +39,7 @@
         "production": {"left": "<函数名>", "right": ["$identifier"]},
         "action": [
             "checkFuncNotDefined(@r0.cont, @r0)",
-            "ldict.func[@r0.cont]=0",
+            "ldict.func[@r0.cont]=0; ldict.return=0",
             "@l.cont=@r0.cont",
             "@l.debug_pos=@r0.debug_pos",
             "ldict.nowfunc = @r0.cont",

@@ -6,6 +6,7 @@ parser = argparse.ArgumentParser(description='\033[1;34;34mPig Compiler for MIPS
 parser.add_argument('src', type=str, nargs='?', default='input.c', help='Input File.')
 parser.add_argument('-debug', type=int, default=0, help='Activate debug output.')
 parser.add_argument('-output', type=str, default='output.txt', help='Output File.')
+parser.add_argument('-tree', type=int, default=1, help='Show Syntax Tree.')
 args = parser.parse_args()
 
 #词法分析BASE

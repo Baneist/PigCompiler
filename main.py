@@ -12,7 +12,7 @@ if __name__ == '__main__':
                 midCodeSave(args.output)
                 print('\033[1;32;32m[Info]Compile success!\033[0m')
                 print('中间代码已输出到同级文件夹下..')
-                if(args.debug): 
+                if(args.tree): 
                     drawSyntaxTree()
                     print('中间代码为:', mid_code)
     except FileNotFoundError as err:
