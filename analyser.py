@@ -33,6 +33,8 @@ def WarningVarType(type1,type2,node):
     if maxType(type1, type1, 0) < maxType(type2, type2, 0):
         print('\033[1;31;35m[Warning]#101 in line {}, position {}: Potential type downgrading <{}> to <{}>.\n{}'.format(*node['debug_pos'],type2,type1,getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
+def WarningVoid(node):
+    print('\033[1;31;35m[Warning]#102 in line {}, position {}: Type <void> should not be used.\n{}'.format(*node['debug_pos'],getErrorCodeLine(*node['debug_pos'], node['cont'])))
 #工作函数
 def emit(expr, t1, t2, s1):
     global nextquad

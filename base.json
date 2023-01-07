@@ -35,7 +35,6 @@
         "action": [
             "@l.type = @r0.type",
             "ldict.t_type = @r0.type"
-            
         ]
     },
     {
@@ -58,40 +57,48 @@
         ]
     },
     {
-        "production": {"left": "<标识定义>", "right": ["<函数名>","$(","<函数形参定义>","$)", "<语句块>"]},
+        "production": {"left": "<标识定义>", "right": ["<函数名>","$(","<函数形参定义列表>","$)", "<语句块>"]},
         "action": [
             "@l.type='f'",
             "checkHasReturn(@r0.cont, @r0);"
         ]
     },
     {
+        "production": {"left": "<函数形参定义列表>", "right": ["<函数形参定义>"]},
+        "action": [
+            "ldict.functypestack[ldict.nowfunc]=@r0.tlist"
+        ]
+    },
+    {
         "production": {"left": "<函数形参定义>", "right": []},
         "action": [
-            "ldict.func[ldict.nowfunc]=0"
+            "ldict.func[ldict.nowfunc]=0; @l.tlist=[]"
         ]
     },
     {
         "production": {"left": "<函数形参定义>", "right": ["<形参>", "<追加形参定义>"]},
         "action": [
-            "ldict.func[ldict.nowfunc]=@r1.cnt+1"
+            "ldict.func[ldict.nowfunc]=@r1.cnt+1; @l.tlist=[@r0.type] + @r1.tlist"
         ]
     },
     {
         "production": {"left": "<追加形参定义>", "right": ["$,","<形参>", "<追加形参定义>"]},
         "action": [
-            "@l.cnt=@r2.cnt+1"
+            "@l.cnt=@r2.cnt+1; @l.tlist=[@r1.type] + @r2.tlist"
         ]
     },
     {
         "production": {"left": "<追加形参定义>", "right": []},
         "action": [
-            "@l.cnt=0"
+            "@l.cnt=0; @l.tlist=[]"
         ]
     },
     {
         "production": {"left": "<形参>", "right": ["<类型>", "$identifier"]},
         "action": [
-            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type))"
+            "checkVarNotDefined(@r1.cont, ldict.nowfunc, @r1)",
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type))",
+            "@l.type=@r0.type"
         ]
     },
     {
@@ -440,6 +447,7 @@
     {
         "production":{"left": "<加法表达式>", "right": ["<加法表达式>","<加法符号>","<项>"]},
         "action": [
+            "if @r0.type == 'void' or @r2.type == 'void': WarningVoid(ldict.last_void);",
             "@l.type = maxType(@r0.type, @r2.type); @l.val=newVar(@l.type)",
             "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
         ]
@@ -465,6 +473,7 @@
     {
         "production":{"left": "<项>", "right": ["<项>", "<项符号>", "<因子>"]},
         "action": [
+            "if @r0.type == 'void' or @r2.type == 'void': WarningVoid(ldict.last_void);",
             "@l.type = maxType(@r0.type, @r2.type); @l.val=newVar(@l.type)",
             "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
         ]
@@ -496,13 +505,21 @@
         ]
     },
     {
-        "production":{"left": "<因子>", "right": ["$identifier", "<FTYPE>"]},
+        "production":{"left": "<因子>", "right": ["<因子标识>", "<FTYPE>"]},
         "action": [
             "if @r1.mode=='v': checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
             "if @r1.mode=='v': @l.val=@r0.cont; @l.type=getVarType(@r0.cont)",
             "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0); checkFuncParNum(@r0.cont,@r1.cnt, @r0);",
             "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
-            "if @r1.mode=='f': @l.val='#eax'; @l.type=ldict.functype[@r0.cont]"
+            "if @r1.mode=='f': @l.val='#eax'; @l.type=ldict.functype[@r0.cont]",
+            "if @l.type == 'void': ldict.last_void = @r0"
+        ]
+    },
+    {
+        "production":{"left": "<因子标识>", "right": ["$identifier"]},
+        "action": [
+            "@l.cont=@r1.cont; @l.type=@r1.type",
+            "ldict.last_var=@r1.cont"
         ]
     },
     {

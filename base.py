@@ -113,6 +113,7 @@ list_dict = {
     'return': 0,
     'funcstack': [],
     'functype':{},
+    'functypestack': {},
 }
 
 def P2LR0(pst):
