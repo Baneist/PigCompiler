@@ -3,8 +3,10 @@ from gparser import GParser
 from analyser import midCodeSave
 from syntax import drawSyntaxTree
 from base import args, mid_code
+from colorama import init
 
 if __name__ == '__main__':
+    init(autoreset=True)
     try:
         with open(args.src, encoding='utf-8') as f:
             str = f.read()
@@ -17,4 +19,4 @@ if __name__ == '__main__':
                     #print('中间代码为:', mid_code)
     except FileNotFoundError as err:
         print('\033[1;31;31m[Error]#101\033[0m')
-    if(args.debug): input("输入回车继续...")
+    input("输入回车继续...")

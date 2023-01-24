@@ -8,10 +8,11 @@ def drawSyntaxTree():
     for i in grammar_tree: #对所有语法树中的节点
         nodeName = 'node'+str(cnt) #设置节点名字
         #dot.node(nodeName, i['cont'] if len(i['cont']) else i['sym'], fontname="Microsoft YaHei") #添加节点
-        show = ( i['cont'] if (i['sym'][0] == '$') else i['sym'] ) + '\n'
+        show = ( i['cont'] if (i['sym'][0] == '$') else i['sym'] ) + ' \n'
         for t in i.keys(): #绘制抽象语法树
             if t != 'sym' and t != 'son' and t != 'debug_pos' and ( t != 'cont' or t == 'cont' and len(i[t])):
-                show += t + ' = ' + str(i[t]) + '\n'
+                show += t + '=' + str(i[t]) + ' \n'
+                pass
         dot.node(nodeName, show, fontname="Microsoft YaHei") #添加节点
         for j in i['son']: #设置孩子节点名
             sonName = 'node'+str(j)
