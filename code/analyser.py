@@ -29,12 +29,18 @@ def checkFuncParNum(fname, num, node):
     if ldict['func'][fname] != num:
         raise Exception('\033[1;31;31m[Error]#306 in line {}, position {}: Call <{}> mismatch parameters, need {} but give {}.\n{}'.format(*node['debug_pos'], fname,ldict['func'][fname],num,getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
+def checkArrLength(name,length,func,node):
+    v = getVar(name, func)
+    if v is None or v[3] != 'arr' or len(v[4]) != length:
+        raise Exception('\033[1;31;31m[Error]#307 in line {}, position {}: Wrong variable <{}> dimension: should be {} but given {} .\n {}'.format(*node['debug_pos'], name,len(v[4]) if v[3] == 'arr' else 0 , length , getErrorCodeLine(*node['debug_pos'], node['cont'])))
+
 def WarningVarType(type1,type2,node):
     if maxType(type1, type1, 0) < maxType(type2, type2, 0):
         print('\033[1;31;35m[Warning]#101 in line {}, position {}: Potential type downgrading <{}> to <{}>.\n{}'.format(*node['debug_pos'],type2,type1,getErrorCodeLine(*node['debug_pos'], node['cont'])))
 
 def WarningVoid(node):
     print('\033[1;31;35m[Warning]#102 in line {}, position {}: Type <void> should not be used.\n{}'.format(*node['debug_pos'],getErrorCodeLine(*node['debug_pos'], node['cont'])))
+
 #工作函数
 def emit(expr, t1, t2, s1):
     global nextquad
@@ -48,6 +54,19 @@ def backFill(no, tup):
         if tup[i] is not None:
             a[i] = tup[i]
     mid_code[no-100] = (a[0],a[1],a[2],a[3])
+
+def removeVar(func): #删除一个函数的所有变量
+    ldict['var'] = list(filter(lambda x: x[2] != func, ldict['var']))
+
+def getVar(name, func): #获取一个变量的信息
+    save = None
+    for i in ldict['var']:
+        if i[0] == name:
+            if i[2] == func:
+                return i
+            elif i[2] == '$global':
+                save = i
+    return save
 
 var_num = 0
 def newVar(type): #新建一个普通变量
@@ -85,6 +104,7 @@ def analysis(id, last_oper):
             try:
                 exec(lst)
             except Exception as err:
+                print("#:",productions[last_oper])
                 print(err)
                 return False
     return True

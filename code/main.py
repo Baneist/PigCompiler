@@ -19,4 +19,4 @@ if __name__ == '__main__':
                     #print('中间代码为:', mid_code)
     except FileNotFoundError as err:
         print('\033[1;31;31m[Error]#101\033[0m')
-    input("输入回车继续...")
+    #input("输入回车继续...")
