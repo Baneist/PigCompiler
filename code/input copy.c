@@ -1,6 +1,6 @@
 //#include "stdio.h"
-int a[2][2];
-int s[6];
+int a[2][3];
+int b[3][4];
 
 int program(int a,int b,int c){
     int i;
@@ -11,7 +11,6 @@ int program(int a,int b,int c){
     } else {
         j=a;
     }
-    s[0] = j;
     while(i<=100){
         i=j*2;
         j=i;
@@ -22,7 +21,6 @@ int program(int a,int b,int c){
 int demo(int a)
 {
     a=a+2;
-    s[1] = a*2;
     return a*2;
 }
 

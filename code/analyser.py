@@ -46,6 +46,8 @@ def emit(expr, t1, t2, s1):
     global nextquad
     nextquad += 1
     mid_code.append((expr,t1,t2,s1))
+    if isinstance(s1, int):
+        ldict['link_point'].add(s1)
 
 #回填函数
 def backFill(no, tup):
@@ -54,6 +56,8 @@ def backFill(no, tup):
         if tup[i] is not None:
             a[i] = tup[i]
     mid_code[no-100] = (a[0],a[1],a[2],a[3])
+    if isinstance(a[3], int):
+        ldict['link_point'].add(a[3])
 
 def removeVar(func): #删除一个函数的所有变量
     ldict['var'] = list(filter(lambda x: x[2] != func, ldict['var']))
@@ -68,12 +72,29 @@ def getVar(name, func): #获取一个变量的信息
                 save = i
     return save
 
+def UpdateVarUse(name, func): #更新变量活跃信息
+    save = None
+    for j in range(len(ldict['var'])):
+        i = ldict['var'][j]
+        if i[0] == name:
+            if i[2] == func:
+                save = j
+                break
+            elif i[2] == '$global':
+                save = j
+    if save is not None:
+        t = list(ldict['var'][save])
+        t[5] = len(mid_code)
+        ldict['var'][save] = tuple(t)
+
+
+
 var_num = 0
 def newVar(type): #新建一个普通变量
     global var_num
-    name = 'tmp_' + str(var_num)
+    name = '@tmp_' + str(var_num)
     var_num += 1
-    ldict['var'].append((name, 4, ldict['nowfunc'], type))
+    ldict['var'].append((name, 4, ldict['nowfunc'], type, None, len(mid_code)))
     return name
 
 def maxType(a , b, tostr=True):
@@ -105,6 +126,7 @@ def analysis(id, last_oper):
                 exec(lst)
             except Exception as err:
                 print("#:",productions[last_oper])
+                print("@:",lst)
                 print(err)
                 return False
     return True
@@ -126,5 +148,6 @@ def midCodeSave(filename):
         for i,j in enumerate(ldict['var']):
             a.append(cnt)
             cnt += j[1]
-        lst += ['{}: {}\n'.format(a[i], j) for i,j in enumerate(ldict['var'])]
+        lst += ['{:x}: {}\n'.format(a[i], j) for i,j in enumerate(ldict['var'])]
         f.writelines(lst)
+        
