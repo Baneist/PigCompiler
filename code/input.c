@@ -1,36 +1,37 @@
-//#include "stdio.h"
-int a[2][2];
-int s[6];
+int ans;
+int a[10][10];
 
-int program(int a,int b,int c){
+int max(int a, int b){
+    int ans;
+    ans = a;
+    if(a < b){
+        ans = b;
+    }
+    return ans;
+}
+//#include <stdio.h>
+//int main(){
+void main(void){
+    a[0][0] = 1;
     int i;
     int j;
-    i=0; 
-    if(a>(b+c)){
-        j=a+(b*c+1);
-    } else {
-        j=a;
+    i = 0;
+    j = 0;
+    while(i < 10){
+        j = 0;
+        while(j < 10){
+            a[i][j] = i + j;
+            if(i + j < 10){
+                ans = ans + max(a[i][j], 10);
+            } else {
+                ans = ans + 15;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
     }
-    s[0] = j;
-    while(i<=100){
-        i=j*2;
-        j=i;
-    }
-    return i;
-}
-
-int demo(int a)
-{
-    a=a+2;
-    s[1] = a*2;
-    return a*2;
-}
-
-void main(void)
-{
-    a[0][0]=3;
-    a[0][1]=a[0][0]+1;
-    a[1][0]=a[0][1]+1;
-    a[1][1]=program(a[0][0],a[0][1],demo(a[1][0]));//3,4,10
-    return 0;
+    
+    return;
+    //printf("%d\n", ans);
+    //return 0;
 }

@@ -58,7 +58,7 @@
         "production": {"left": "<声明类型>", "right": ["<变量声明>"]},
         "action": [
             "checkVarNotDefined(ldict.newid,'$global', ldict.debug_id_node)",
-            "ldict.var->append((ldict.newid, @l.size, '$global', ldict.t_type, None, len(mid_code)))"
+            "ldict.var->append((ldict.newid, 4, '$global', ldict.t_type, None, len(mid_code)))"
             
         ]
     },
