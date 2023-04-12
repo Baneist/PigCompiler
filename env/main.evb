@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="windows-1252"?>
 <>
-  <InputFile>D:\Repos\PigCompiler\env\main.exe</InputFile>
-  <OutputFile>D:\Repos\PigCompiler\env\main_boxed.exe</OutputFile>
+  <InputFile>D:\Repos\PigCompiler\environment\main.exe</InputFile>
+  <OutputFile>D:\Repos\PigCompiler\environment\main_boxed.exe</OutputFile>
   <Files>
     <Enabled>True</Enabled>
     <DeleteExtractedOnExit>False</DeleteExtractedOnExit>
@@ -17,8 +17,92 @@
         <Files>
           <File>
             <Type>2</Type>
+            <Name>cairo.dll</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\cairo.dll</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
+            <Name>ccomps.exe</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\ccomps.exe</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
+            <Name>cdt.dll</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\cdt.dll</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
+            <Name>cdt.lib</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\cdt.lib</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
+            <Name>cgraph.dll</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\cgraph.dll</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
+            <Name>cgraph.lib</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\cgraph.lib</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
+            <Name>cgraph++.dll</Name>
+            <File>D:\Repos\PigCompiler\environment\bin\cgraph++.dll</File>
+            <ActiveX>False</ActiveX>
+            <ActiveXInstall>False</ActiveXInstall>
+            <Action>0</Action>
+            <OverwriteDateTime>False</OverwriteDateTime>
+            <OverwriteAttributes>False</OverwriteAttributes>
+            <PassCommandLine>False</PassCommandLine>
+            <HideFromDialogs>0</HideFromDialogs>
+          </File>
+          <File>
+            <Type>2</Type>
             <Name>cgraph++.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cgraph++.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\cgraph++.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -30,7 +114,7 @@
           <File>
             <Type>2</Type>
             <Name>circo.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\circo.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\circo.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -42,7 +126,7 @@
           <File>
             <Type>2</Type>
             <Name>concrt140.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\concrt140.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\concrt140.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -54,7 +138,7 @@
           <File>
             <Type>2</Type>
             <Name>config6</Name>
-            <File>D:\Repos\PigCompiler\env\bin\config6</File>
+            <File>D:\Repos\PigCompiler\environment\bin\config6</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -66,7 +150,7 @@
           <File>
             <Type>2</Type>
             <Name>dijkstra.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\dijkstra.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\dijkstra.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -78,7 +162,7 @@
           <File>
             <Type>2</Type>
             <Name>dot.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\dot.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\dot.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -90,7 +174,7 @@
           <File>
             <Type>2</Type>
             <Name>dot2gxl.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\dot2gxl.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\dot2gxl.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -102,7 +186,7 @@
           <File>
             <Type>2</Type>
             <Name>edgepaint.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\edgepaint.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\edgepaint.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -114,7 +198,7 @@
           <File>
             <Type>2</Type>
             <Name>expat.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\expat.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\expat.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -126,7 +210,7 @@
           <File>
             <Type>2</Type>
             <Name>fdp.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\fdp.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\fdp.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -138,7 +222,7 @@
           <File>
             <Type>2</Type>
             <Name>fontconfig.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\fontconfig.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\fontconfig.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -150,7 +234,7 @@
           <File>
             <Type>2</Type>
             <Name>gc.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gc.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gc.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -162,7 +246,7 @@
           <File>
             <Type>2</Type>
             <Name>getopt.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\getopt.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\getopt.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -174,7 +258,7 @@
           <File>
             <Type>2</Type>
             <Name>glib-2.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\glib-2.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\glib-2.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -186,7 +270,7 @@
           <File>
             <Type>2</Type>
             <Name>gml2gv.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gml2gv.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gml2gv.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -198,7 +282,7 @@
           <File>
             <Type>2</Type>
             <Name>gobject-2.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gobject-2.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gobject-2.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -210,7 +294,7 @@
           <File>
             <Type>2</Type>
             <Name>graphml2gv.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\graphml2gv.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\graphml2gv.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -222,7 +306,7 @@
           <File>
             <Type>2</Type>
             <Name>gv2gml.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gv2gml.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gv2gml.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -234,7 +318,7 @@
           <File>
             <Type>2</Type>
             <Name>gvc.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvc.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvc.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -246,7 +330,7 @@
           <File>
             <Type>2</Type>
             <Name>gvc.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvc.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvc.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -258,7 +342,7 @@
           <File>
             <Type>2</Type>
             <Name>gvc++.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvc++.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvc++.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -270,7 +354,7 @@
           <File>
             <Type>2</Type>
             <Name>gvc++.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvc++.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvc++.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -282,7 +366,7 @@
           <File>
             <Type>2</Type>
             <Name>gvcolor.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvcolor.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvcolor.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -294,7 +378,7 @@
           <File>
             <Type>2</Type>
             <Name>gvgen.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvgen.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvgen.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -306,7 +390,7 @@
           <File>
             <Type>2</Type>
             <Name>gvmap.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvmap.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvmap.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -318,7 +402,7 @@
           <File>
             <Type>2</Type>
             <Name>gvmap.sh</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvmap.sh</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvmap.sh</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -330,7 +414,7 @@
           <File>
             <Type>2</Type>
             <Name>gvpack.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvpack.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvpack.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -342,7 +426,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_core.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_core.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_core.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -354,7 +438,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_core.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_core.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_core.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -366,7 +450,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_dot_layout.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_dot_layout.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_dot_layout.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -378,7 +462,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_dot_layout.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_dot_layout.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_dot_layout.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -390,7 +474,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_gdiplus.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_gdiplus.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_gdiplus.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -402,7 +486,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_gdiplus.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_gdiplus.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_gdiplus.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -414,7 +498,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_neato_layout.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_neato_layout.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_neato_layout.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -426,7 +510,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_neato_layout.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_neato_layout.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_neato_layout.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -438,7 +522,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_pango.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_pango.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_pango.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -450,7 +534,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_pango.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_pango.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_pango.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -462,7 +546,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_visio.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_visio.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_visio.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -474,7 +558,7 @@
           <File>
             <Type>2</Type>
             <Name>gvplugin_visio.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvplugin_visio.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvplugin_visio.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -486,7 +570,7 @@
           <File>
             <Type>2</Type>
             <Name>gvpr.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gvpr.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gvpr.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -498,7 +582,7 @@
           <File>
             <Type>2</Type>
             <Name>gxl2gv.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\gxl2gv.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\gxl2gv.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -510,7 +594,7 @@
           <File>
             <Type>2</Type>
             <Name>libharfbuzz-0.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\libharfbuzz-0.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\libharfbuzz-0.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -522,7 +606,7 @@
           <File>
             <Type>2</Type>
             <Name>mm2gv.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\mm2gv.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\mm2gv.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -534,7 +618,7 @@
           <File>
             <Type>2</Type>
             <Name>msvcp140.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\msvcp140.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\msvcp140.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -546,7 +630,7 @@
           <File>
             <Type>2</Type>
             <Name>msvcp140_1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\msvcp140_1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\msvcp140_1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -558,7 +642,7 @@
           <File>
             <Type>2</Type>
             <Name>msvcp140_2.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\msvcp140_2.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\msvcp140_2.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -570,7 +654,7 @@
           <File>
             <Type>2</Type>
             <Name>msvcp140_codecvt_ids.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\msvcp140_codecvt_ids.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\msvcp140_codecvt_ids.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -582,7 +666,7 @@
           <File>
             <Type>2</Type>
             <Name>neato.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\neato.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\neato.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -594,7 +678,7 @@
           <File>
             <Type>2</Type>
             <Name>nop.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\nop.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\nop.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -606,7 +690,7 @@
           <File>
             <Type>2</Type>
             <Name>osage.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\osage.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\osage.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -618,7 +702,7 @@
           <File>
             <Type>2</Type>
             <Name>pango-1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pango-1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pango-1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -630,7 +714,7 @@
           <File>
             <Type>2</Type>
             <Name>pangocairo-1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pangocairo-1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pangocairo-1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -642,7 +726,7 @@
           <File>
             <Type>2</Type>
             <Name>pangoft2-1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pangoft2-1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pangoft2-1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -654,7 +738,7 @@
           <File>
             <Type>2</Type>
             <Name>pangowin32-1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pangowin32-1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pangowin32-1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -666,7 +750,7 @@
           <File>
             <Type>2</Type>
             <Name>patchwork.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\patchwork.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\patchwork.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -678,7 +762,7 @@
           <File>
             <Type>2</Type>
             <Name>pathplan.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pathplan.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pathplan.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -690,7 +774,7 @@
           <File>
             <Type>2</Type>
             <Name>pathplan.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pathplan.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pathplan.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -702,7 +786,7 @@
           <File>
             <Type>2</Type>
             <Name>pixman-1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\pixman-1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\pixman-1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -714,7 +798,7 @@
           <File>
             <Type>2</Type>
             <Name>sccmap.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\sccmap.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\sccmap.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -726,7 +810,7 @@
           <File>
             <Type>2</Type>
             <Name>sfdp.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\sfdp.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\sfdp.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -738,7 +822,7 @@
           <File>
             <Type>2</Type>
             <Name>tred.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\tred.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\tred.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -750,7 +834,7 @@
           <File>
             <Type>2</Type>
             <Name>twopi.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\twopi.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\twopi.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -762,7 +846,7 @@
           <File>
             <Type>2</Type>
             <Name>unflatten.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\unflatten.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\unflatten.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -774,7 +858,7 @@
           <File>
             <Type>2</Type>
             <Name>vcruntime140.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\vcruntime140.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\vcruntime140.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -786,7 +870,7 @@
           <File>
             <Type>2</Type>
             <Name>vcruntime140_1.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\vcruntime140_1.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\vcruntime140_1.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -798,7 +882,7 @@
           <File>
             <Type>2</Type>
             <Name>xdot.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\xdot.dll</File>
+            <File>D:\Repos\PigCompiler\environment\bin\xdot.dll</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -810,7 +894,7 @@
           <File>
             <Type>2</Type>
             <Name>xdot.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\xdot.lib</File>
+            <File>D:\Repos\PigCompiler\environment\bin\xdot.lib</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -830,7 +914,7 @@
               <File>
                 <Type>2</Type>
                 <Name>libcdt.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\libcdt.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\libcdt.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -842,7 +926,7 @@
               <File>
                 <Type>2</Type>
                 <Name>libcgraph.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\libcgraph.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\libcgraph.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -854,7 +938,7 @@
               <File>
                 <Type>2</Type>
                 <Name>libgvc.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\libgvc.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\libgvc.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -866,7 +950,7 @@
               <File>
                 <Type>2</Type>
                 <Name>libgvpr.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\libgvpr.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\libgvpr.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -878,7 +962,7 @@
               <File>
                 <Type>2</Type>
                 <Name>liblab_gamut.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\liblab_gamut.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\liblab_gamut.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -890,7 +974,7 @@
               <File>
                 <Type>2</Type>
                 <Name>libpathplan.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\libpathplan.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\libpathplan.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -902,7 +986,7 @@
               <File>
                 <Type>2</Type>
                 <Name>libxdot.pc</Name>
-                <File>D:\Repos\PigCompiler\env\bin\pkgconfig\libxdot.pc</File>
+                <File>D:\Repos\PigCompiler\environment\bin\pkgconfig\libxdot.pc</File>
                 <ActiveX>False</ActiveX>
                 <ActiveXInstall>False</ActiveXInstall>
                 <Action>0</Action>
@@ -916,7 +1000,7 @@
           <File>
             <Type>2</Type>
             <Name>acyclic.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\acyclic.exe</File>
+            <File>D:\Repos\PigCompiler\environment\bin\acyclic.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>
@@ -928,113 +1012,7 @@
           <File>
             <Type>2</Type>
             <Name>bcomps.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\bcomps.exe</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>cairo.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cairo.dll</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>ccomps.exe</Name>
-            <File>D:\Repos\PigCompiler\env\bin\ccomps.exe</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>cdt.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cdt.dll</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>cdt.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cdt.lib</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>cgraph.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cgraph.dll</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>cgraph.lib</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cgraph.lib</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-          <File>
-            <Type>2</Type>
-            <Name>cgraph++.dll</Name>
-            <File>D:\Repos\PigCompiler\env\bin\cgraph++.dll</File>
-            <ActiveX>False</ActiveX>
-            <ActiveXInstall>False</ActiveXInstall>
-            <Action>0</Action>
-            <OverwriteDateTime>False</OverwriteDateTime>
-            <OverwriteAttributes>False</OverwriteAttributes>
-            <PassCommandLine>False</PassCommandLine>
-            <HideFromDialogs>0</HideFromDialogs>
-          </File>
-        </Files>
-      </File>
-      <File>
-        <Type>3</Type>
-        <Name>%DEFAULT FOLDER%</Name>
-        <Action>0</Action>
-        <OverwriteDateTime>False</OverwriteDateTime>
-        <OverwriteAttributes>False</OverwriteAttributes>
-        <HideFromDialogs>0</HideFromDialogs>
-        <Files>
-          <File>
-            <Type>2</Type>
-            <Name>base.json</Name>
-            <File>D:\Repos\PigCompiler\env\base.json</File>
+            <File>D:\Repos\PigCompiler\environment\bin\bcomps.exe</File>
             <ActiveX>False</ActiveX>
             <ActiveXInstall>False</ActiveXInstall>
             <Action>0</Action>

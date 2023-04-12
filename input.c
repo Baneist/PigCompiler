@@ -4,5 +4,6 @@ int main(){
     int b;
     int c;
     int d;
-    cnt=d+5*(not(a>=(1)+b*c));
+    c = 3+4+5+6;
+    return cnt;
 }
