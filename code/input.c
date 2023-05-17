@@ -15,6 +15,8 @@ void main(void){
     a[0][0] = 1;
     int i;
     int j;
+    int t;
+    t = 0;
     i = 0;
     j = 0;
     while(i < 10){
@@ -22,7 +24,8 @@ void main(void){
         while(j < 10){
             a[i][j] = i + j;
             if(i + j < 10){
-                ans = ans + max(a[i][j], 10);
+                ans = 1 + ans + max(a[i][j], 10);
+                t = t + 1;
             } else {
                 ans = ans + 15;
             }

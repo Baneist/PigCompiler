@@ -1,6 +1,7 @@
 from base import list_dict as ldict, mid_code as mcode, args
 from analyser import getVar
 from random import randint
+from copy import deepcopy
 ostr = []
 ofile = open('output.s', 'w')
 dg_begin = 0x10010000
@@ -39,36 +40,52 @@ def SReg(name, func, id = 9):
     ostr.append('sw {}, {}'.format('$v0' if id == 9 else reg_list[id], getVarAddress(name, func) + dg_begin))
     return reg_list[id]
 
-'''
+def searchFuncBelongFormName(name, func):
+    for i in range(len(ldict['var'])):
+        if ldict['var'][i][0] == name:
+            if ldict['var'][i][2] == func:
+                return func
+    else:
+        return '$global' 
+
 class RegManager:
     def __init__(self):
         self.vcode = mcode
 
     def CutCode(self):
         self.cut = []
+        self.cutfunc = []
+        nowfunc = '$global'
         for i in range(len(self.vcode)):
-            if self.vcode[i][0][0] == 'j' or self.vcode[i][0] == 'call' or self.vcode[i][0] == 'ret':
+            if self.vcode[i][0][0] == 'j' or self.vcode[i][0] == 'call' or self.vcode[i][0] == 'ret' or self.vcode[i][0] == ':':
                 self.cut.append(i)
+                if self.vcode[i][0] == ':':
+                    nowfunc = self.vcode[i][1]
+                self.cutfunc.append(nowfunc)
+
         self.cut[-1] = self.cut[-1] + 1
     
     def AllocInformationGenerate(self):
         self.CutCode()
         huoyue = dict()
         self.aInfrom = []
+        nowfunc = '$global'
         def setHuoyue(chy, nt, j, n, load = False):
-            if self.vcode[j][n] not in huoyue: huoyue[self.vcode[j][n]] = (-1, False)
-            nt[self.vcode[j][n]] = huoyue[self.vcode[j][n]]
-            huoyue[self.vcode[j][n]] = (j, load) if load else (-1, False)
-            if load: chy[self.vcode[j][n]] = (-1, True)
-            elif self.vcode[j][n] in chy: chy.pop(self.vcode[j][n])
-        
+            name = searchFuncBelongFormName(self.vcode[j][n], nowfunc) + '.' + self.vcode[j][n]
+            if name not in huoyue: huoyue[name] = (-1, False)
+            nt[name] = huoyue[name]
+            huoyue[name] = (j, load) if load else (-1, False)
+            if load: chy[name] = (-1, True)
+            elif name in chy: chy.pop(name)
         for i in range(len(self.cut) - 1, -1, -1):
+            nowfunc = self.cutfunc[i]
             chuoyue = dict()
             if i != 0: l = self.cut[i-1]; r = self.cut[i]
             else: r = l; l = 0
             tinform = []
-            # print('range: ', l, r)
-            for j in range(l, r):
+            #print('range: ', l, r)
+            shuoyue = deepcopy(huoyue)
+            for j in range(r-1, l-1, -1):
                 nt = {}
                 if self.vcode[j][0] == '=':
                     if self.vcode[j][1] != '#eax': setHuoyue(chuoyue, nt, j, 1, True)
@@ -101,34 +118,35 @@ class RegManager:
                     setHuoyue(chuoyue, nt, j, 2, True)
                     setHuoyue(chuoyue, nt, j, 3, False)
                 tinform.append(nt)
-            tinform.reverse()
+            #tinform.reverse()
             self.aInfrom += tinform
-            huoyue = chuoyue
+            huoyue = shuoyue
+            for a in chuoyue:
+                if a not in huoyue: huoyue[a] = chuoyue[a]
+            print('#', l, huoyue)
         self.aInfrom.reverse()
         for i in range(len(self.vcode)):
             print('{}:'.format(i), self.vcode[i], self.aInfrom[i])
 
-    regs = [None] * 10
+    regs = [None] * 28
+    ai_save = [None] * 28
     curBlock = 0
     def calcBlock(self, line):
         for i in range(len(self.cut)):
             if line < self.cut[i]:
                 return i
         return len(self.cut) - 1
-    def GetReg(self, name, function, line):
-'''
-
-class RegManager:
-    regs = [None] * 28
-    def __init__(self) -> None:
-        pass
     def i2n(self, index):
         return '${}'.format(index+4)
     def save(self, code, func, index):
-        ostr.append('sw {}, {}'.format(self.i2n(index), getVarAddress(code, func) + dg_begin))
+        if self.ai_save[index][0] != -1 or self.ai_save[index][1] == True:
+            ostr.append('sw {}, {}'.format(self.i2n(index), getVarAddress(code, func) + dg_begin))
     def load(self, code, func, index):
         ostr.append('lw {}, {}'.format(self.i2n(index), getVarAddress(code, func) + dg_begin))
-    def get(self, code, func):
+    def getReg(self, code, func, line):
+        if(self.curBlock != self.calcBlock(line)):
+            self.curBlock = self.calcBlock(line)
+            self.clear()
         if code == '#eax': return '$v0'
         if (code, func) in self.regs:
             return self.i2n(self.regs.index((code, func)))
@@ -136,25 +154,26 @@ class RegManager:
         hasNone = (None in self.regs)
         for i in range(len(self.regs)):
             if self.regs[i] == None or (hasNone and self.regs[i] == (code, func)):
-                self.regs[i] = (code, func)
                 savei = i
                 break
         else:
             savei = randint(0, len(self.regs) - 1)
         if self.regs[savei] != None:
             self.save(self.regs[savei][0], self.regs[savei][1], savei)
-            self.load(code, func, savei)
+        self.load(code, func, savei)
+        self.regs[i] = (code, func)
+        self.ai_save[i] = self.aInfrom[line][searchFuncBelongFormName(func)+'.'+code]
 
     def clear(self):
         for i in range(len(self.regs)):
-            if self.regs[i] != None and self.regs[i][0].startswith('@'):
+            if self.regs[i] != None:
                 self.save(self.regs[i][0], self.regs[i][1], i)
                 self.regs[i] = None
 
 def genCode():
     varaddrInit()
-    #regMgr = RegManager()
-    #regMgr.AllocInformationGenerate()
+    regMgr = RegManager()
+    regMgr.AllocInformationGenerate()
     bp = 4 * len(ldict['var'])
     sp = 0
     nowfunc = '$global'
@@ -176,6 +195,7 @@ def genCode():
         elif code[0] == 'ret':
             ostr.append('jr $ra')
             ostr.append('')
+            nowfunc = '$global'
         elif code[0] == 'call':
             ostr.append('add $a0, $ra, $zero')
             ostr.append('jal ' + code[1])
