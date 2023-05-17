@@ -1,4 +1,4 @@
-from base import list_dict as ldict, mid_code as mcode
+from base import list_dict as ldict, mid_code as mcode, args
 from analyser import getVar
 from random import randint
 ostr = []
@@ -33,15 +33,129 @@ def getVarAddressFromId(id, func):
 
 reg_list = ['$t0', '$t1', '$t2', '$t3', '$t4', '$t5', '$t6', '$t7', '$t8', '$t9']
 def LReg(name, func, id = 9):
-    ostr.append('lw {}, {}'.format('$v0' if id == 99 else reg_list[id], getVarAddress(name, func) + dg_begin))
+    ostr.append('lw {}, {}'.format('$v0' if id == 9 else reg_list[id], getVarAddress(name, func) + dg_begin))
     return reg_list[id]
 def SReg(name, func, id = 9):
-    ostr.append('sw {}, {}'.format('$v0' if id == 99 else reg_list[id], getVarAddress(name, func) + dg_begin))
+    ostr.append('sw {}, {}'.format('$v0' if id == 9 else reg_list[id], getVarAddress(name, func) + dg_begin))
     return reg_list[id]
+
+'''
+class RegManager:
+    def __init__(self):
+        self.vcode = mcode
+
+    def CutCode(self):
+        self.cut = []
+        for i in range(len(self.vcode)):
+            if self.vcode[i][0][0] == 'j' or self.vcode[i][0] == 'call' or self.vcode[i][0] == 'ret':
+                self.cut.append(i)
+        self.cut[-1] = self.cut[-1] + 1
+    
+    def AllocInformationGenerate(self):
+        self.CutCode()
+        huoyue = dict()
+        self.aInfrom = []
+        def setHuoyue(chy, nt, j, n, load = False):
+            if self.vcode[j][n] not in huoyue: huoyue[self.vcode[j][n]] = (-1, False)
+            nt[self.vcode[j][n]] = huoyue[self.vcode[j][n]]
+            huoyue[self.vcode[j][n]] = (j, load) if load else (-1, False)
+            if load: chy[self.vcode[j][n]] = (-1, True)
+            elif self.vcode[j][n] in chy: chy.pop(self.vcode[j][n])
+        
+        for i in range(len(self.cut) - 1, -1, -1):
+            chuoyue = dict()
+            if i != 0: l = self.cut[i-1]; r = self.cut[i]
+            else: r = l; l = 0
+            tinform = []
+            # print('range: ', l, r)
+            for j in range(l, r):
+                nt = {}
+                if self.vcode[j][0] == '=':
+                    if self.vcode[j][1] != '#eax': setHuoyue(chuoyue, nt, j, 1, True)
+                    if self.vcode[j][3] != '#eax': setHuoyue(chuoyue, nt, j, 3, False)
+                elif self.vcode[j][0] == '=l':
+                    setHuoyue(chuoyue, nt, j, 2, True)
+                    setHuoyue(chuoyue, nt, j, 3, False)
+                elif self.vcode[j][0] == '=r':
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                    setHuoyue(chuoyue, nt, j, 2, False)
+                elif self.vcode[j][0] == 'par':
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                elif self.vcode[j][0] == '=i':
+                    setHuoyue(chuoyue, nt, j, 3, False)
+                elif self.vcode[j][0] in {'j<', 'j<=', 'j>', 'j>=', 'j==', 'j!='}:
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                    setHuoyue(chuoyue, nt, j, 2, True)
+                elif self.vcode[j][0] == 'jnz':
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                elif self.vcode[j][0] in ('+', '-'):
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                    setHuoyue(chuoyue, nt, j, 2, True)
+                    setHuoyue(chuoyue, nt, j, 3, False)
+                elif self.vcode[j][0] == '*':
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                    if not isinstance(self.vcode[j][2], int): setHuoyue(chuoyue, nt, j, 2, True)
+                    setHuoyue(chuoyue, nt, j, 3, False)
+                elif self.vcode[j][0] == '/':
+                    setHuoyue(chuoyue, nt, j, 1, True)
+                    setHuoyue(chuoyue, nt, j, 2, True)
+                    setHuoyue(chuoyue, nt, j, 3, False)
+                tinform.append(nt)
+            tinform.reverse()
+            self.aInfrom += tinform
+            huoyue = chuoyue
+        self.aInfrom.reverse()
+        for i in range(len(self.vcode)):
+            print('{}:'.format(i), self.vcode[i], self.aInfrom[i])
+
+    regs = [None] * 10
+    curBlock = 0
+    def calcBlock(self, line):
+        for i in range(len(self.cut)):
+            if line < self.cut[i]:
+                return i
+        return len(self.cut) - 1
+    def GetReg(self, name, function, line):
+'''
+
+class RegManager:
+    regs = [None] * 28
+    def __init__(self) -> None:
+        pass
+    def i2n(self, index):
+        return '${}'.format(index+4)
+    def save(self, code, func, index):
+        ostr.append('sw {}, {}'.format(self.i2n(index), getVarAddress(code, func) + dg_begin))
+    def load(self, code, func, index):
+        ostr.append('lw {}, {}'.format(self.i2n(index), getVarAddress(code, func) + dg_begin))
+    def get(self, code, func):
+        if code == '#eax': return '$v0'
+        if (code, func) in self.regs:
+            return self.i2n(self.regs.index((code, func)))
+        savei = None
+        hasNone = (None in self.regs)
+        for i in range(len(self.regs)):
+            if self.regs[i] == None or (hasNone and self.regs[i] == (code, func)):
+                self.regs[i] = (code, func)
+                savei = i
+                break
+        else:
+            savei = randint(0, len(self.regs) - 1)
+        if self.regs[savei] != None:
+            self.save(self.regs[savei][0], self.regs[savei][1], savei)
+            self.load(code, func, savei)
+
+    def clear(self):
+        for i in range(len(self.regs)):
+            if self.regs[i] != None and self.regs[i][0].startswith('@'):
+                self.save(self.regs[i][0], self.regs[i][1], i)
+                self.regs[i] = None
 
 def genCode():
     varaddrInit()
-    bp = 4*len(ldict['var'])
+    #regMgr = RegManager()
+    #regMgr.AllocInformationGenerate()
+    bp = 4 * len(ldict['var'])
     sp = 0
     nowfunc = '$global'
     ostr.append('lui $ra, 0x40') 
