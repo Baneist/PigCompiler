@@ -1,5 +1,6 @@
 from base import prod_actions, productions, grammar_tree, getErrorCodeLine, args
 from base import nextquad, mid_code, list_dict as ldict
+from copy import deepcopy
 import re
 
 #故障处理函数
@@ -33,6 +34,11 @@ def checkArrLength(name,length,func,node):
     v = getVar(name, func)
     if v is None or v[3] != 'arr' or len(v[4]) != length:
         raise Exception('\033[1;31;31m[Error]#307 in line {}, position {}: Wrong variable <{}> dimension: should be {} but given {} .\n {}'.format(*node['debug_pos'], name,len(v[4]) if v[3] == 'arr' else 0 , length , getErrorCodeLine(*node['debug_pos'], node['cont'])))
+
+def checkArrSize(size,node):
+    if not (size > 0):
+        raise Exception('\033[1;31;31m[Error]#308 in line {}, position {}: Wrong size <{}> given.\n {}'.format(*node['debug_pos'], size, getErrorCodeLine(*node['debug_pos'], node['cont'])))
+
 
 def WarningVarType(type1,type2,node):
     if maxType(type1, type1, 0) < maxType(type2, type2, 0):
@@ -125,8 +131,9 @@ def analysis(id, last_oper):
             try:
                 exec(lst)
             except Exception as err:
-                print("#:",productions[last_oper])
-                print("@:",lst)
+                if str(err)[10:17] != '[Error]':
+                    print("#:",productions[last_oper])
+                    print("@:",lst)
                 print(err)
                 return False
     return True
@@ -141,8 +148,8 @@ def getVarType(var):
                 save = t[3]
     return save
 
-def midCodeSave(filename):
-    with open(filename, 'w', encoding='utf-8') as f:
+def codeSave(filename):
+    with open(filename + '.txt', 'w', encoding='utf-8') as f:
         lst = ['中间代码:\n'] + ['{}: {}\n'.format(i+100, mid_code[i]) for i in range(len(mid_code))] + ['变量表:\n']
         a=[]; cnt=0
         for i,j in enumerate(ldict['var']):
@@ -150,4 +157,9 @@ def midCodeSave(filename):
             cnt += j[1]
         lst += ['{:x}: {}\n'.format(a[i], j) for i,j in enumerate(ldict['var'])]
         f.writelines(lst)
+    from generator import ostr
+    with open(filename + '.s', 'w', encoding='utf-8') as ofile:
+        for i in ostr:
+            ofile.write(i+'\n')
+        ofile.close()
         

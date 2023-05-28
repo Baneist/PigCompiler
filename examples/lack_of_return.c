@@ -1,4 +1,4 @@
-int binary(int x, int y){
+int test(int x, int y){
     x = 2;
 }
 
@@ -9,7 +9,7 @@ int main(int x, int y){
     int a;
     int b;
     if(2+a>=(1)){
-        a = binary(1,a);
+        a = test(1,a);
         cnt = 1;
     } else {
         int d;

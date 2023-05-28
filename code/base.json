@@ -103,7 +103,8 @@
     {
         "production": {"left": "<数组一维>", "right": ["$[","$digit_int","$]"]},
         "action": [
-            "@l.val=@r1.cont"
+            "@l.val=@r1.cont",
+            "checkArrSize(int(@r1.cont), @r1)"
         ]
     },
     {
@@ -658,7 +659,7 @@
         "production":{"left": "<追加参数列表>", "right": ["<追加参数列表>", "$,", "<表达式>"]},
         "action": [
             "@l.cnt=@r0.cnt+1",
-            "@l.varlist=mergelist(@r0.varlist, makelist(@r2.val))"
+            "@l.varlist=@r0.varlist + makelist(@r2.val)"
         ]
     },
     {

@@ -1,4 +1,4 @@
-int binary(int x, int y){
+int test(int x, int y){
     return 1;
 }
 
