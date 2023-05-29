@@ -1,4 +1,0 @@
-[Info]Lexical analysis success!
-[Info]Garmmar analysis success!
-[Info]Code generate success!
-[Info]Compile success!

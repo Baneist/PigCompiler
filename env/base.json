@@ -1,47 +1,134 @@
 [
     {
-        "production": {"left": "<开始>", "right": ["<程序>"]},
+        "production": {"left": "<开始>", "right": ["<PCC程序>", "<声明串>"]},
         "action": [
             
         ]
     },
     {
-        "production": {"left": "<程序>", "right": []},
+        "production": {"left": "<PCC程序>", "right": []},
         "action": [
             "#emit('j','main','',0)"
         ]
     },
     {
-        "production": {"left": "<程序>", "right": ["<程序块>", "<程序>"]},
+        "production": {"left": "<声明串>", "right": ["<声明>"]},
         "action": [
             
         ]
     },
     {
-        "production": {"left": "<程序块>", "right": ["<变量与函数声明>"]},
+        "production": {"left": "<声明串>", "right": ["<声明>", "<声明串>"]},
         "action": [
             
         ]
     },
     {
-        "production": {"left": "<变量与函数声明>", "right": ["<声明类型>", "<标识定义>"]},
+        "production": {"left": "<声明>", "right": ["<声明-int类型>", "<ID>", "<声明类型>"]},
         "action": [
-            "if @r1.type == 'v': ldict.var->append((@r1.cont, 4, '$global', @r0.type))"
             
         ]
     },
     {
-        "production": {"left": "<声明类型>", "right": ["<类型>"]},
+        "production": {"left": "<声明>", "right": ["<声明-void类型>", "<ID>", "<函数声明>"]},
         "action": [
-            "@l.type = @r0.type",
-            "ldict.t_type = @r0.type"
+            
+        ]
+    },
+    {
+        "production": {"left": "<声明-int类型>", "right": ["$int"]},
+        "action": [
+            "ldict.t_type = @r0.cont"
+        ]
+    },
+    {
+        "production": {"left": "<声明-void类型>", "right": ["$void"]},
+        "action": [
+            "ldict.t_type = @r0.cont"
+        ]
+        
+    },
+    {
+        "production": {"left": "<ID>", "right": ["$identifier"]},
+        "action": [
+            "ldict.newid = @r0.cont; @l.debug_pos = @r0.debug_pos; @l.cont=@r0.cont; ldict.debug_id_node = @r0"
+        ]
+    },
+    {
+        "production": {"left": "<声明类型>", "right": ["<变量声明>"]},
+        "action": [
+            "checkVarNotDefined(ldict.newid,'$global', ldict.debug_id_node)",
+            "ldict.var->append((ldict.newid, 4, '$global', ldict.t_type, None, len(mid_code)))"
+            
+        ]
+    },
+    {
+        "production": {"left": "<声明类型>", "right": ["<数组声明>"]},
+        "action": [
+            "checkVarNotDefined(ldict.newid,'$global', ldict.debug_id_node)",
+            "ldict.var->append((ldict.newid, @r0.size , '$global', 'arr', @r0.list, len(mid_code)))"
+        ]
+    },
+    {
+        "production": {"left": "<声明类型>", "right": ["<函数声明>"]},
+        "action": [
+            
+        ]
+    },
+    {
+        "production": {"left": "<变量声明>", "right": ["$;"]},
+        "action": [
+            "@l.type = 'v'; @l.cont = ldict.newid; @l.debug_pos = @r0.debug_pos"
+        ]
+    },
+    {
+        "production": {"left": "<数组声明>", "right": ["<数组维度>","$;"]},
+        "action": [
+            "@l.list = @r0.list; @l.size=4",
+            "for i in @l.list: @l.size = @l.size * int(i)"
+        ]
+    },
+    {
+        "production": {"left": "<数组维度>", "right": ["<数组一维>"]},
+        "action": [
+            "@l.list=[@r0.val]; @l.num=1;"
+        ]
+    },
+    {
+        "production": {"left": "<数组维度>", "right": ["<数组维度>", "<数组一维>"]},
+        "action": [
+            "@l.list=@r0.list + [@r1.val]; @l.num=@r0.num+1;"
+        ]
+    },
+    {
+        "production": {"left": "<数组一维>", "right": ["$[","$digit_int","$]"]},
+        "action": [
+            "@l.val=@r1.cont",
+            "checkArrSize(int(@r1.cont), @r1)"
+        ]
+    },
+    {
+        "production": {"left": "<函数声明>", "right": ["<函数头>","$(","<函数形参定义列表>","$)","<语句块>"]},
+        "action": [
+            "#removeVar(@r0.cont)"
+        ]
+    },
+    {
+        "production": {"left": "<函数头>", "right": []},
+        "action": [
+            "checkFuncNotDefined(ldict.newid, @r0)",
+            "ldict.func[ldict.newid]=0; ldict.return=0; ldict.functype[ldict.newid]=ldict.t_type",
+            "@l.cont=ldict.newid",
+            "@l.debug_pos=@r0.debug_pos",
+            "ldict.nowfunc = ldict.newid",
+            "@l.quad=nextquad",
+            "emit(':',ldict.newid,'','')"
         ]
     },
     {
         "production": {"left": "<标识定义>", "right": ["$identifier", "$;"]},
         "action": [
-            "@l.type = 'v'; @l.cont = @r0.cont",
-            "checkVarNotDefined(@l.cont,'$global', @r0)"
+            
         ]
     },
     {
@@ -53,14 +140,7 @@
             "@l.debug_pos=@r0.debug_pos",
             "ldict.nowfunc = @r0.cont",
             "@l.quad=nextquad",
-            "emit(@r0.cont+':','','','')"
-        ]
-    },
-    {
-        "production": {"left": "<标识定义>", "right": ["<函数名>","$(","<函数形参定义列表>","$)", "<语句块>"]},
-        "action": [
-            "@l.type='f'",
-            "checkHasReturn(@r0.cont, @r0);"
+            "emit(':',@r0.cont,'','')"
         ]
     },
     {
@@ -70,7 +150,7 @@
         ]
     },
     {
-        "production": {"left": "<函数形参定义>", "right": []},
+        "production": {"left": "<函数形参定义>", "right": ["$void"]},
         "action": [
             "ldict.func[ldict.nowfunc]=0; @l.tlist=[]"
         ]
@@ -97,24 +177,12 @@
         "production": {"left": "<形参>", "right": ["<类型>", "$identifier"]},
         "action": [
             "checkVarNotDefined(@r1.cont, ldict.nowfunc, @r1)",
-            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type))",
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type, None, len(mid_code)))",
             "@l.type=@r0.type"
         ]
     },
     {
         "production":{"left": "<类型>", "right": ["$int"]},
-        "action": [
-            "@l.type=@r0.cont"
-        ]
-    },
-    {
-        "production":{"left": "<类型>", "right": ["$float"]},
-        "action": [
-            "@l.type=@r0.cont"
-        ]
-    },
-    {
-        "production":{"left": "<类型>", "right": ["$void"]},
         "action": [
             "@l.type=@r0.cont"
         ]
@@ -129,10 +197,17 @@
         "production":{"left": "<内部变量声明>", "right": ["<类型>", "$identifier", "$;"]},
         "action": [
             "checkVarNotDefined(@r1.cont, ldict.nowfunc, @r1)",
-            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type))"
+            "ldict.var->append((@r1.cont, 4, ldict.nowfunc, @r0.type, None, len(mid_code)))"
             
         ]
     },
+    {
+    "production":{"left": "<内部变量声明>", "right": ["<类型>", "$identifier","<数组维度>","$;"]},
+    "action": [
+        "checkVarNotDefined(@r1.cont, ldict.nowfunc, @r1)",
+        "ldict.var->append((@r1.cont, 4, ldict.nowfunc, 'arr', @r2.list, len(mid_code)))"
+    ]
+},
     {
         "production":{"left": "<语句串>", "right": []},
         "action": [
@@ -190,7 +265,8 @@
     },{
         "production":{"left": "<return内容>", "right": ["<表达式>"]},
         "action": [
-            "emit('=', @r0.val, '', '#eax')"
+            "emit('=', @r0.val, '', '#eax')",
+            "UpdateVarUse(@r0.val, ldict.nowfunc)"
         ]
     },
     {
@@ -217,8 +293,8 @@
         "production":{"left": "<while语句>", "right": ["$while", "<真值判断>", "<语句块>"]},
         "action": [
             "batchlist(@r1.t, @r1.backquad)",
-            "batchlist(@r1.f, nextquad)",
-            "emit('j', '', '', @r1.frontquad)"
+            "emit('j', '', '', @r1.frontquad)",
+            "batchlist(@r1.f, nextquad)"
         ]
     },
     {
@@ -226,25 +302,27 @@
         "action": [
             "batchlist(@r1.t, @r1.backquad)",
             "if not @r3.end: batchlist(@r1.f, @r3.quad)",
-            "if @r3.end: batchlist(@r1.f, nextquad)"
+            "if @r3.end: batchlist(@r1.f, nextquad)",
+            "if @r3.qr != 0: backFill(@r3.qr, (None,None,None,nextquad))"
         ]
     },
     {
         "production":{"left": "<else内容>", "right": []},
         "action": [
-            "@l.end=True"
+            "@l.end=True; @l.qr = 0"
         ]
     },
     {
         "production":{"left": "<else>", "right": ["$else"]},
         "action": [
+            "emit('j','','',0); @l.qr=nextquad-1",
             "@l.quad=nextquad"
         ]
     },
     {
         "production":{"left": "<else内容>", "right": ["<else>", "<语句块>"]},
         "action": [
-            "@l.end=False",
+            "@l.end=False; @l.qr = @r0.qr",
             "@l.quad=@r0.quad"
         ]
     },
@@ -253,7 +331,18 @@
         "action": [
             "checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
             "WarningVarType(getVarType(@r0.cont), @r2.type, @r0)",
-            "emit('=', @r2.val, '', @r0.cont)"
+            "emit('=', @r2.val, '', @r0.cont)",
+            "UpdateVarUse(@r0.cont, ldict.nowfunc); UpdateVarUse(@r2.val, ldict.nowfunc)"
+            
+        ]
+    },
+    {
+        "production":{"left": "<赋值语句>", "right": ["<数组>", "$=", "<表达式>", "$;"]},
+        "action": [
+            "checkVarDefined(@r0.vname, ldict.nowfunc, @r0)",
+            "checkArrLength(@r0.vname,@r0.len, ldict.nowfunc, @r0)",
+            "emit('=r', @r2.val, @r0.offset, @r0.vname)",
+            "UpdateVarUse(@r2.val, ldict.nowfunc); UpdateVarUse(@r0.vname, ldict.nowfunc); UpdateVarUse(@r0.offset, ldict.nowfunc)"
         ]
     },
     {
@@ -379,7 +468,8 @@
         "production":{"left": "<比较表达式>", "right": ["<表达式>", "<比较>"]},
         "action": [
             "if not @r1.has: @l.t=makelist(nextquad);@l.f=makelist(nextquad+1);emit('jnz', @r0.val,'', 0);emit('j', '', '', 0);",
-            "if @r1.has: backFill(@r1.quad, (None,@r0.val,None,None));@l.t=@r1.t;@l.f=@r1.f;"
+            "if @r1.has: backFill(@r1.quad, (None,@r0.val,None,None));@l.t=@r1.t;@l.f=@r1.f;",
+            "UpdateVarUse(@r0.val, ldict.nowfunc);"
         ]
     },
     {
@@ -394,7 +484,8 @@
             "@l.has=True",
             "@l.quad=nextquad",
             "@l.t=makelist(nextquad);@l.f=makelist(nextquad+1);",
-            "emit('j'+@r0.cont,'', @r1.val, 0);emit('j', '', '', 0);"
+            "emit('j'+@r0.cont,'', @r1.val, 0);emit('j', '', '', 0);",
+            "UpdateVarUse(@r1.val, ldict.nowfunc);"
         ]
     },
     {
@@ -441,15 +532,16 @@
     {
         "production":{"left": "<加法表达式>", "right": ["<项>"]},
         "action": [
-            "@l.type=@r0.type;@l.val=@r0.val"
+            "@l.type=@r0.type; @l.val=@r0.val"
         ]
     },
     {
         "production":{"left": "<加法表达式>", "right": ["<加法表达式>","<加法符号>","<项>"]},
         "action": [
             "if @r0.type == 'void' or @r2.type == 'void': WarningVoid(ldict.last_void);",
-            "@l.type = maxType(@r0.type, @r2.type); @l.val=newVar(@l.type)",
-            "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
+            "@l.type = 'int'; @l.val=newVar(@l.type)",
+            "emit(@r1.cont, @r0.val, @r2.val, @l.val)",
+            "UpdateVarUse(@r0.val, ldict.nowfunc); UpdateVarUse(@r2.val, ldict.nowfunc)"
         ]
     },
     {
@@ -475,7 +567,8 @@
         "action": [
             "if @r0.type == 'void' or @r2.type == 'void': WarningVoid(ldict.last_void);",
             "@l.type = maxType(@r0.type, @r2.type); @l.val=newVar(@l.type)",
-            "emit(@r1.cont, @r0.val, @r2.val, @l.val)"
+            "emit(@r1.cont, @r0.val, @r2.val, @l.val)",
+            "UpdateVarUse(@r0.cont, ldict.nowfunc); UpdateVarUse(@r2.val, ldict.nowfunc)"
         ]
     },
     {
@@ -493,15 +586,15 @@
     {
         "production":{"left": "<因子>", "right": ["$digit_int"]},
         "action": [
-            "@l.val=@r0.cont",
-            "@l.type='int'"
+            "@l.val=newVar('int'); @l.type='int'; emit('=i', @r0.cont , '' , @l.val)"
         ]
     },
     {
-        "production":{"left": "<因子>", "right": ["$digit_float"]},
+        "production":{"left": "<因子>", "right": ["<数组>"]},
         "action": [
-            "@l.val=@r0.cont",
-            "@l.type='float'"
+            "checkArrLength(@r0.vname,@r0.len, ldict.nowfunc, @r0)",
+            "@l.val=newVar('int'); @l.type='int'; emit('=l', @r0.vname, @r0.offset , @l.val)",
+            "UpdateVarUse(@r0.vname, ldict.nowfunc); UpdateVarUse(@r0.offset, ldict.nowfunc)"
         ]
     },
     {
@@ -510,8 +603,8 @@
             "if @r1.mode=='v': checkVarDefined(@r0.cont,ldict.nowfunc, @r0)",
             "if @r1.mode=='v': @l.val=@r0.cont; @l.type=getVarType(@r0.cont)",
             "if @r1.mode=='f': checkFuncDefined(@r0.cont, @r0); checkFuncParNum(@r0.cont,@r1.cnt, @r0);",
-            "if @r1.mode=='f': emit('call', @r0.cont, '', '')",
-            "if @r1.mode=='f': @l.val='#eax'; @l.type=ldict.functype[@r0.cont]",
+            "if @r1.mode=='f': emit('call', @r0.cont, '', ''); @l.val=newVar('int');emit('=','#eax','',@l.val); @l.type=ldict.functype[@r0.cont]",
+            "if @r1.mode=='f': \n for i in @r1.qlist: \n  backFill(i, (None, None, None, @r0.cont))",
             "if @l.type == 'void': ldict.last_void = @r0"
         ]
     },
@@ -530,8 +623,8 @@
     {
         "production":{"left": "<FTYPE>", "right": ["<函数过程>"]},
         "action": [
-            "@l.mode='f'",
-            "for i in @r0.varlist:\n emit('par',i,'','')",
+            "@l.mode='f'; @l.qlist=[]",
+            "for j, i in enumerate(@r0.varlist):\n @l.qlist->append(nextquad);emit('par',i,j,''); UpdateVarUse(i, ldict.nowfunc);",
             "@l.cnt=len(@r0.varlist)"
         ]
     },
@@ -566,7 +659,26 @@
         "production":{"left": "<追加参数列表>", "right": ["<追加参数列表>", "$,", "<表达式>"]},
         "action": [
             "@l.cnt=@r0.cnt+1",
-            "@l.varlist=mergelist(@r0.varlist, makelist(@r2.val))"
+            "@l.varlist=@r0.varlist + makelist(@r2.val)"
+        ]
+    },
+    {
+        "production": {"left": "<数组>", "right": ["<ID>","$[","<表达式>","$]"]},
+        "action": [
+            "@l.len=1; @l.vname=@r0.cont; @l.cont=@r0.cont",
+            "@l.offset = newVar(ldict.nowfunc); emit('*', @r2.val, 4, @l.offset); UpdateVarUse(@r2.val, ldict.nowfunc);",
+            "@l.debug_pos = @r0.debug_pos"
+        ]
+    },
+    {
+        "production": {"left": "<数组>", "right": ["<数组>","$[","<表达式>","$]"]},
+        "action": [
+            "@l.len = @r0.len + 1; @l.vname = @r0.vname; @l.cont=@r0.cont",
+            "ntmp=newVar('int'); emit('*', @r0.offset, int(getVar(@l.vname, ldict.nowfunc)[4][@r0.len-1]), ntmp)",
+            "atmp = newVar(ldict.nowfunc); emit('*', @r2.val, 4, atmp); UpdateVarUse(@r2.val, ldict.nowfunc);",
+            "@l.offset=newVar('int'); emit('+', ntmp, atmp, @l.offset); UpdateVarUse(ntmp, ldict.nowfunc); UpdateVarUse(atmp, ldict.nowfunc);",
+            "@l.debug_pos = @r0.debug_pos",
+            "UpdateVarUse(@r0.offset, ldict.nowfunc); UpdateVarUse(@l.vname, ldict.nowfunc); UpdateVarUse(@r2.val, ldict.nowfunc); UpdateVarUse(ntmp, ldict.nowfunc)"
         ]
     }
 ]

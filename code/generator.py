@@ -47,6 +47,8 @@ class RegManager:
     def cutCodeBlock(self):
         self.cut = []
         self.cutfunc = []
+        self.rcnt = {}
+        self.linesave = {}
         nowfunc = '$global'
         for i in range(len(self.vcode)):
             if self.vcode[i][0][0] == 'j' or self.vcode[i][0] == 'call' or self.vcode[i][0] == 'ret' or self.vcode[i][0] == ':':
@@ -111,9 +113,9 @@ class RegManager:
             for a in chuoyue:
                 if a not in huoyue: huoyue[a] = chuoyue[a]
         self.aInfrom.reverse()
-    regs = [None] * 28
-    ai_save = [None] * 28
-    m_save = [None] * 28
+    regs = [None] * 27
+    ai_save = [None] * 27
+    m_save = [None] * 27
     curBlock = 0
     def _calcBlock(self, line):
         for i in range(len(self.cut)):
@@ -123,12 +125,18 @@ class RegManager:
     def _i2n(self, index):
         return '${}'.format(index+4)
     def _save(self, code, func, index):
-        if self.m_save[index] == False and (self.ai_save[index][0] != -1 or self.ai_save[index][1] == True or code[0] != '@'):
+        if self.m_save[index] == False and (self.ai_save[index][0] != -1 or self.ai_save[index][1] == True or code[0] != '@') or (code[0] == '@' and self.rcnt[(code, func)] == 1):
             ostr.append('sw {}, {} #save <{}> in func <{}>'.format(self._i2n(index), getVarAddress(code, func) + dg_begin, code, func))
     def _load(self, code, func, index):
             ostr.append('lw {}, {} #load <{}> in func <{}>'.format(self._i2n(index), getVarAddress(code, func) + dg_begin, code, func))
+    
     def getReg(self, code, func, line, frommemory=True):
         if code == '#eax': return '$v0'
+        if (code, func) in self.rcnt:
+            self.rcnt[(code, func)] += 1
+        else:
+            self.rcnt[(code, func)] = 1
+        self.linesave[(code, func)] = line
         if (code, func) in self.regs:
             self.ai_save[self.regs.index((code, func))] = self.aInfrom[line][searchFuncBelongFormName(code, func)+'.'+code]
             self.m_save[self.regs.index((code, func))] &= frommemory
@@ -136,7 +144,7 @@ class RegManager:
         savei = None
         hasNone = (None in self.regs)
         for i in range(len(self.regs)):
-            if self.regs[i] == None or (hasNone and self.regs[i] == (code, func)):
+            if self.regs[i] == None or (self.regs[i][0][0] == '@' and self.rcnt[self.regs[i]] == 2 and self.linesave[self.regs[i]] < line):
                 savei = i
                 break
         else:
@@ -187,9 +195,9 @@ def Generator():
             nowfunc = '$global'
         elif code[0] == 'call':
             if regMgr.isBlockPointEnd(i): regMgr.clear()
-            ostr.append('add $a0, $ra, $zero')
+            ostr.append('add $3, $ra, $zero')
             ostr.append('jal ' + code[1])
-            ostr.append('add $ra, $a0, $zero')
+            ostr.append('add $ra, $3, $zero')
         elif code[0] == 'par':
             v1 = regMgr.getReg(code[1], nowfunc, i)
             ostr.append('sw {}, {}'.format(v1, getVarAddressFromId(code[2], code[3]) + dg_begin))
